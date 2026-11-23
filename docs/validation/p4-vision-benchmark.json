@@ -1,0 +1,2756 @@
+{
+  "schema_version": "1.0",
+  "device_connected": false,
+  "device_input_requested": false,
+  "runtime_version": "v6.22.0-maatactics-p4.2",
+  "runtime_sha256": "fdd499b19fd7126ca9a841da41c7331cc7faecce7a79ee5db83fa8d8027fd202",
+  "warmup_ms": 9714.105799999743,
+  "metric_definition": "Exact field value retrieval; boolean fields also report positive-class confusion metrics. Unknown predictions count as missed known values.",
+  "frames": 24,
+  "metrics": {
+    "cost": {
+      "samples": 24,
+      "correct": 23,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.041666666666666664,
+      "median_latency_ms": 81.9688,
+      "max_latency_ms": 436.1987
+    },
+    "kills": {
+      "samples": 24,
+      "correct": 23,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.041666666666666664,
+      "median_latency_ms": 153.9797,
+      "max_latency_ms": 645.7149
+    },
+    "total_kills": {
+      "samples": 24,
+      "correct": 23,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.041666666666666664,
+      "median_latency_ms": 153.9797,
+      "max_latency_ms": 645.7149
+    },
+    "battle_speed": {
+      "samples": 24,
+      "correct": 18,
+      "false_positive": 0,
+      "missed": 5,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 0.782608695652174,
+      "unknown_ratio": 0.25,
+      "median_latency_ms": 49.7011,
+      "max_latency_ms": 282.0979
+    },
+    "paused": {
+      "samples": 24,
+      "correct": 22,
+      "false_positive": 0,
+      "missed": 1,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 0.9565217391304348,
+      "unknown_ratio": 0.08333333333333333,
+      "median_latency_ms": 19.704850000380247,
+      "max_latency_ms": 64.36670000039157,
+      "positive_class": {
+        "true_positive": 10,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 12,
+        "precision": 1.0,
+        "recall": 1.0
+      }
+    },
+    "deployment_count": {
+      "samples": 24,
+      "correct": 23,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.041666666666666664,
+      "median_latency_ms": 110.8997,
+      "max_latency_ms": 523.1857
+    },
+    "deployment_card_costs": {
+      "samples": 24,
+      "correct": 23,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.041666666666666664,
+      "median_latency_ms": 110.8997,
+      "max_latency_ms": 523.1857
+    },
+    "deployment_names": {
+      "samples": 10,
+      "correct": 0,
+      "false_positive": 0,
+      "missed": 10,
+      "correct_unknown": 0,
+      "precision": null,
+      "recall": 0.0,
+      "unknown_ratio": 1.0,
+      "median_latency_ms": 111.7407,
+      "max_latency_ms": 523.1857
+    },
+    "candidate_ready": {
+      "samples": 4,
+      "correct": 4,
+      "false_positive": 0,
+      "missed": 0,
+      "correct_unknown": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unknown_ratio": 0.0,
+      "median_latency_ms": 63.352399999999996,
+      "max_latency_ms": 1069.3136,
+      "positive_class": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      }
+    }
+  },
+  "strata": {
+    "ordinary_1-7": {
+      "cost": {
+        "samples": 23,
+        "correct": 23,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 81.9688,
+        "max_latency_ms": 436.1987
+      },
+      "kills": {
+        "samples": 23,
+        "correct": 23,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.9797,
+        "max_latency_ms": 645.7149
+      },
+      "total_kills": {
+        "samples": 23,
+        "correct": 23,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.9797,
+        "max_latency_ms": 645.7149
+      },
+      "battle_speed": {
+        "samples": 23,
+        "correct": 18,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.782608695652174,
+        "unknown_ratio": 0.21739130434782608,
+        "median_latency_ms": 49.7011,
+        "max_latency_ms": 282.0979
+      },
+      "paused": {
+        "samples": 23,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 1,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.9565217391304348,
+        "unknown_ratio": 0.043478260869565216,
+        "median_latency_ms": 19.727299999431125,
+        "max_latency_ms": 64.36670000039157,
+        "positive_class": {
+          "true_positive": 10,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 12,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 23,
+        "correct": 23,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.8997,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_card_costs": {
+        "samples": 23,
+        "correct": 23,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.8997,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_names": {
+        "samples": 10,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 10,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 111.7407,
+        "max_latency_ms": 523.1857
+      },
+      "candidate_ready": {
+        "samples": 4,
+        "correct": 4,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 63.352399999999996,
+        "max_latency_ms": 1069.3136,
+        "positive_class": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 3,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      }
+    },
+    "paused": {
+      "cost": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 82.95134999999999,
+        "max_latency_ms": 399.0463
+      },
+      "kills": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.64585,
+        "max_latency_ms": 563.4807
+      },
+      "total_kills": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.64585,
+        "max_latency_ms": 563.4807
+      },
+      "battle_speed": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 49.34025,
+        "max_latency_ms": 224.2886
+      },
+      "paused": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 19.36464999926102,
+        "max_latency_ms": 61.784899999111076,
+        "positive_class": {
+          "true_positive": 10,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_card_costs": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_names": {
+        "samples": 5,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 110.8997,
+        "max_latency_ms": 113.7607
+      },
+      "candidate_ready": {
+        "samples": 2,
+        "correct": 2,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 47.40705,
+        "max_latency_ms": 70.6325,
+        "positive_class": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 1,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      }
+    },
+    "dark_overlay": {
+      "cost": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 82.95134999999999,
+        "max_latency_ms": 399.0463
+      },
+      "kills": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.64585,
+        "max_latency_ms": 563.4807
+      },
+      "total_kills": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.64585,
+        "max_latency_ms": 563.4807
+      },
+      "battle_speed": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 49.34025,
+        "max_latency_ms": 224.2886
+      },
+      "paused": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 19.36464999926102,
+        "max_latency_ms": 61.784899999111076,
+        "positive_class": {
+          "true_positive": 10,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_card_costs": {
+        "samples": 10,
+        "correct": 10,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_names": {
+        "samples": 5,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 110.8997,
+        "max_latency_ms": 113.7607
+      },
+      "candidate_ready": {
+        "samples": 2,
+        "correct": 2,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 47.40705,
+        "max_latency_ms": 70.6325,
+        "positive_class": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 1,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      }
+    },
+    "operator_retreated": {
+      "cost": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 86.4693,
+        "max_latency_ms": 436.1987
+      },
+      "kills": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 157.7706,
+        "max_latency_ms": 645.7149
+      },
+      "total_kills": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 157.7706,
+        "max_latency_ms": 645.7149
+      },
+      "battle_speed": {
+        "samples": 3,
+        "correct": 2,
+        "false_positive": 0,
+        "missed": 1,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "unknown_ratio": 0.3333333333333333,
+        "median_latency_ms": 52.2292,
+        "max_latency_ms": 282.0979
+      },
+      "paused": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 42.53740000058315,
+        "max_latency_ms": 55.22930000006454,
+        "positive_class": {
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 1,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 113.7607,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_card_costs": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 113.7607,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_names": {
+        "samples": 3,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 3,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 113.7607,
+        "max_latency_ms": 523.1857
+      }
+    },
+    "single_skin_coverage_only": {
+      "cost": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 81.0188,
+        "max_latency_ms": 81.0188
+      },
+      "kills": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.9797,
+        "max_latency_ms": 153.9797
+      },
+      "total_kills": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.9797,
+        "max_latency_ms": 153.9797
+      },
+      "battle_speed": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 49.7011,
+        "max_latency_ms": 49.7011
+      },
+      "paused": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 42.53740000058315,
+        "max_latency_ms": 42.53740000058315,
+        "positive_class": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.7783,
+        "max_latency_ms": 110.7783
+      },
+      "deployment_card_costs": {
+        "samples": 1,
+        "correct": 1,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.7783,
+        "max_latency_ms": 110.7783
+      },
+      "deployment_names": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 1,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 110.7783,
+        "max_latency_ms": 110.7783
+      }
+    },
+    "formation": {
+      "cost": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "kills": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "total_kills": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "battle_speed": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "paused": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 14.938299998902949,
+        "max_latency_ms": 14.938299998902949,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 0,
+          "precision": null,
+          "recall": null
+        }
+      },
+      "deployment_count": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "deployment_card_costs": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      }
+    },
+    "nonbattle": {
+      "cost": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "kills": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "total_kills": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "battle_speed": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "paused": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 14.938299998902949,
+        "max_latency_ms": 14.938299998902949,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 0,
+          "precision": null,
+          "recall": null
+        }
+      },
+      "deployment_count": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      },
+      "deployment_card_costs": {
+        "samples": 1,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 1,
+        "precision": null,
+        "recall": null,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": null,
+        "max_latency_ms": null
+      }
+    },
+    "base_skin": {
+      "cost": {
+        "samples": 22,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 82.13725,
+        "max_latency_ms": 436.1987
+      },
+      "kills": {
+        "samples": 22,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.98435,
+        "max_latency_ms": 645.7149
+      },
+      "total_kills": {
+        "samples": 22,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.98435,
+        "max_latency_ms": 645.7149
+      },
+      "battle_speed": {
+        "samples": 22,
+        "correct": 17,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.7727272727272727,
+        "unknown_ratio": 0.22727272727272727,
+        "median_latency_ms": 49.706450000000004,
+        "max_latency_ms": 282.0979
+      },
+      "paused": {
+        "samples": 22,
+        "correct": 21,
+        "false_positive": 0,
+        "missed": 1,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.9545454545454546,
+        "unknown_ratio": 0.045454545454545456,
+        "median_latency_ms": 19.704850000380247,
+        "max_latency_ms": 64.36670000039157,
+        "positive_class": {
+          "true_positive": 9,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 12,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 22,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_card_costs": {
+        "samples": 22,
+        "correct": 22,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.9538,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_names": {
+        "samples": 9,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 9,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 112.0052,
+        "max_latency_ms": 523.1857
+      },
+      "candidate_ready": {
+        "samples": 4,
+        "correct": 4,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 63.352399999999996,
+        "max_latency_ms": 1069.3136,
+        "positive_class": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 3,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      }
+    },
+    "running": {
+      "cost": {
+        "samples": 13,
+        "correct": 13,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 81.9223,
+        "max_latency_ms": 436.1987
+      },
+      "kills": {
+        "samples": 13,
+        "correct": 13,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 154.609,
+        "max_latency_ms": 645.7149
+      },
+      "total_kills": {
+        "samples": 13,
+        "correct": 13,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 154.609,
+        "max_latency_ms": 645.7149
+      },
+      "battle_speed": {
+        "samples": 13,
+        "correct": 8,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.6153846153846154,
+        "unknown_ratio": 0.38461538461538464,
+        "median_latency_ms": 50.0142,
+        "max_latency_ms": 282.0979
+      },
+      "paused": {
+        "samples": 13,
+        "correct": 12,
+        "false_positive": 0,
+        "missed": 1,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 0.9230769230769231,
+        "unknown_ratio": 0.07692307692307693,
+        "median_latency_ms": 19.727299999431125,
+        "max_latency_ms": 64.36670000039157,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 12,
+          "precision": null,
+          "recall": null
+        }
+      },
+      "deployment_count": {
+        "samples": 13,
+        "correct": 13,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.6306,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_card_costs": {
+        "samples": 13,
+        "correct": 13,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 110.6306,
+        "max_latency_ms": 523.1857
+      },
+      "deployment_names": {
+        "samples": 5,
+        "correct": 0,
+        "false_positive": 0,
+        "missed": 5,
+        "correct_unknown": 0,
+        "precision": null,
+        "recall": 0.0,
+        "unknown_ratio": 1.0,
+        "median_latency_ms": 113.307,
+        "max_latency_ms": 523.1857
+      },
+      "candidate_ready": {
+        "samples": 2,
+        "correct": 2,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 562.69295,
+        "max_latency_ms": 1069.3136,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 2,
+          "precision": null,
+          "recall": null
+        }
+      }
+    },
+    "animation": {
+      "cost": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 84.9429,
+        "max_latency_ms": 399.0463
+      },
+      "kills": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.3761,
+        "max_latency_ms": 575.8386
+      },
+      "total_kills": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.3761,
+        "max_latency_ms": 575.8386
+      },
+      "battle_speed": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 49.5321,
+        "max_latency_ms": 240.2437
+      },
+      "paused": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 20.73289999862027,
+        "max_latency_ms": 64.36670000039157,
+        "positive_class": {
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 5,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 109.8386,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_card_costs": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 109.8386,
+        "max_latency_ms": 224.5225
+      },
+      "candidate_ready": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 56.0723,
+        "max_latency_ms": 1069.3136,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 3,
+          "precision": null,
+          "recall": null
+        }
+      }
+    },
+    "skill_effect_occlusion": {
+      "cost": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 84.9429,
+        "max_latency_ms": 399.0463
+      },
+      "kills": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.3761,
+        "max_latency_ms": 575.8386
+      },
+      "total_kills": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 153.3761,
+        "max_latency_ms": 575.8386
+      },
+      "battle_speed": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 49.5321,
+        "max_latency_ms": 240.2437
+      },
+      "paused": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 20.73289999862027,
+        "max_latency_ms": 64.36670000039157,
+        "positive_class": {
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 5,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "deployment_count": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 109.8386,
+        "max_latency_ms": 224.5225
+      },
+      "deployment_card_costs": {
+        "samples": 7,
+        "correct": 7,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 109.8386,
+        "max_latency_ms": 224.5225
+      },
+      "candidate_ready": {
+        "samples": 3,
+        "correct": 3,
+        "false_positive": 0,
+        "missed": 0,
+        "correct_unknown": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "unknown_ratio": 0.0,
+        "median_latency_ms": 56.0723,
+        "max_latency_ms": 1069.3136,
+        "positive_class": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_negative": 3,
+          "precision": null,
+          "recall": null
+        }
+      }
+    }
+  },
+  "automatic_ready_actions_enabled": false,
+  "results": [
+    {
+      "path": "artifacts/p3-startup-recheck/011.after.png",
+      "sha256": "f8e1d355d46e6fa9a396c889199fc085a86b8cdba23685cdb90f6996cc52af3c",
+      "tags": [
+        "ordinary_1-7",
+        "paused",
+        "dark_overlay",
+        "operator_retreated",
+        "single_skin_coverage_only"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 48,
+          "actual": 48,
+          "latency_ms": 81.0188
+        },
+        "kills": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 153.9797
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.9797
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 49.7011
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 42.53740000058315
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 110.7783
+        },
+        "deployment_card_costs": {
+          "expected": [
+            18
+          ],
+          "actual": [
+            18
+          ],
+          "latency_ms": 110.7783
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 110.7783
+        }
+      },
+      "native_wall_ms": 470.1619000006758
+    },
+    {
+      "path": "artifacts/start-pause-actions/006.before.png",
+      "sha256": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9",
+      "tags": [
+        "formation",
+        "nonbattle"
+      ],
+      "fields": {
+        "cost": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        },
+        "kills": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        },
+        "total_kills": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        },
+        "battle_speed": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        },
+        "paused": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": 14.938299998902949
+        },
+        "deployment_count": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        },
+        "deployment_card_costs": {
+          "expected": null,
+          "actual": null,
+          "latency_ms": null
+        }
+      },
+      "native_wall_ms": 172.45940000066184
+    },
+    {
+      "path": "artifacts/start-pause-actions/007.png",
+      "sha256": "13b98ebc95e93fd135a6e7ac9c1fc253d617b3d0637ce0144f80e7e04f1efa28",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 25,
+          "actual": 25,
+          "latency_ms": 80.7573
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 159.1981
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 159.1981
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": null,
+          "latency_ms": 50.0142
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 18.732100001216168
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 113.307
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 113.307
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 113.307
+        }
+      },
+      "native_wall_ms": 479.35689999940223
+    },
+    {
+      "path": "artifacts/start-pause-actions/009.after.png",
+      "sha256": "f2db2360fb8ba609fa0e317958d9f83f1d4f27c717fdf33af65c6c193af759ad",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 37,
+          "actual": 37,
+          "latency_ms": 83.597
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 151.4088
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 151.4088
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 48.9882
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 20.13019999867538
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 108.1501
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 108.1501
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 108.1501
+        }
+      },
+      "native_wall_ms": 465.70299999984854
+    },
+    {
+      "path": "artifacts/start-pause-actions/009.before.png",
+      "sha256": "592e9ec4bf35e391c212c42f739273a678a1c8f27f2977404f5a8d8b4f79dfd3",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 37,
+          "actual": 37,
+          "latency_ms": 81.9688
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 155.8656
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 155.8656
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": null,
+          "latency_ms": 50.4339
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 19.68240000132937
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 110.6306
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 110.6306
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 110.6306
+        }
+      },
+      "native_wall_ms": 476.3360000015382
+    },
+    {
+      "path": "artifacts/start-pause-actions/013.after.png",
+      "sha256": "7f648283c9c08fad1a94478d2f6c9472e8d4fb6be3ea40118d79ef9faaeaa968",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 38,
+          "actual": 38,
+          "latency_ms": 81.6118
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 150.7438
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 150.7438
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 46.3245
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 21.94480000071053
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 125.4126
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 125.4126
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 125.4126
+        }
+      },
+      "native_wall_ms": 481.41629999918223
+    },
+    {
+      "path": "artifacts/start-pause-actions/013.before.png",
+      "sha256": "ca1e64838d5e11a5e27094f271f27e9bbb78b974501eb1758496938dbe2a6e65",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 37,
+          "actual": 37,
+          "latency_ms": 80.9193
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 154.5926
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 154.5926
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 51.099
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 17.615599999771803
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 110.8997
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 110.8997
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 110.8997
+        }
+      },
+      "native_wall_ms": 469.24140000010084
+    },
+    {
+      "path": "artifacts/start-pause-actions/015.after.png",
+      "sha256": "58d5ac0f9d5b8b216e1dcea95de53fe8b69487c1c38044ebf49e96a72d38fb21",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 31,
+          "actual": 31,
+          "latency_ms": 84.9429
+        },
+        "kills": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 154.7817
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 154.7817
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 48.8589
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 19.727299999431125
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 109.4953
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 109.4953
+        }
+      },
+      "native_wall_ms": 479.2804000007891
+    },
+    {
+      "path": "artifacts/start-pause-actions/015.before.png",
+      "sha256": "b9ce2b314a2805fbfdc895e9c5fffcfa7c34f1492388160df625cd969472d002",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 39,
+          "actual": 39,
+          "latency_ms": 79.1347
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 155.8532
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 155.8532
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 50.3201
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 20.302599999922677
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 111.4762
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 111.4762
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 111.4762
+        }
+      },
+      "native_wall_ms": 474.7036999997363
+    },
+    {
+      "path": "artifacts/start-pause-actions/017.after.png",
+      "sha256": "b1d538f123dd22de915317c28194a9a2af0bbd54022bc5bc395d19a4b90820c2",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 33,
+          "actual": 33,
+          "latency_ms": 88.9916
+        },
+        "kills": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 155.719
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 155.719
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 48.0496
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 17.805499999667518
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 110.6184
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 110.6184
+        }
+      },
+      "native_wall_ms": 483.9564000012615
+    },
+    {
+      "path": "artifacts/start-pause-actions/017.before.png",
+      "sha256": "ec63d22b23f2a8495daa8ec6ab3c7128519c59a7140467140d40a19826a6eadd",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 33,
+          "actual": 33,
+          "latency_ms": 80.4665
+        },
+        "kills": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 154.609
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 154.609
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": null,
+          "latency_ms": 51.5065
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 19.56659999996191
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 114.536
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 114.536
+        }
+      },
+      "native_wall_ms": 475.70249999989755
+    },
+    {
+      "path": "artifacts/start-pause-actions/019.after.png",
+      "sha256": "5e0fe62b58bc36fec7ff637ce0451465284ef7199e9d1fb0b7002ff9e887192c",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 33,
+          "actual": 33,
+          "latency_ms": 80.2396
+        },
+        "kills": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 152.0834
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 152.0834
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 48.4825
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 19.025700001293444
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 108.2055
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 108.2055
+        }
+      },
+      "native_wall_ms": 465.18160000050557
+    },
+    {
+      "path": "artifacts/start-pause-actions/019.before.png",
+      "sha256": "e57cf619fc54ef8dce512e3ae56b5a8ed4107a54c27f442acc02404cee28d772",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 33,
+          "actual": 33,
+          "latency_ms": 81.1536
+        },
+        "kills": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 153.2444
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.2444
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 49.0391
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 17.96660000036354
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 111.3691
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 111.3691
+        }
+      },
+      "native_wall_ms": 472.1320000007836
+    },
+    {
+      "path": "artifacts/start-pause-actions/021.after.png",
+      "sha256": "f20a91434a68766f5e51ea2df18f12a16b45f819e37feb22d935f6fc51511ae8",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 46,
+          "actual": 46,
+          "latency_ms": 81.7854
+        },
+        "kills": {
+          "expected": 6,
+          "actual": 6,
+          "latency_ms": 153.0151
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.0151
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 47.8143
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 19.427299999733805
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 109.3694
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 109.3694
+        }
+      },
+      "native_wall_ms": 471.11409999888565
+    },
+    {
+      "path": "artifacts/start-pause-actions/021.before.png",
+      "sha256": "7a305d5e5e84570cab225800ca7178a41f38612589630db9c81fb1f209236ab0",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 35,
+          "actual": 35,
+          "latency_ms": 86.2776
+        },
+        "kills": {
+          "expected": 5,
+          "actual": 5,
+          "latency_ms": 153.1038
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.1038
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": null,
+          "latency_ms": 49.8808
+        },
+        "paused": {
+          "expected": false,
+          "actual": null,
+          "latency_ms": 17.676199999186792
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 108.9471
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 108.9471
+        }
+      },
+      "native_wall_ms": 477.2986000007222
+    },
+    {
+      "path": "artifacts/start-pause-actions/023.after.png",
+      "sha256": "df57f934d4d9ac2357ce63019112ca501fc7bf026dc41d9624927023622829f9",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "animation",
+        "skill_effect_occlusion",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 49,
+          "actual": 49,
+          "latency_ms": 80.136
+        },
+        "kills": {
+          "expected": 6,
+          "actual": 6,
+          "latency_ms": 150.3494
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 150.3494
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 49.5321
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 18.47759999873233
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 111.0079
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 111.0079
+        }
+      },
+      "native_wall_ms": 466.83370000027935
+    },
+    {
+      "path": "artifacts/start-pause-actions/023.before.png",
+      "sha256": "b25be95b258b30e00a69bfb6695b3ea66c977c5ced5dcc08d89b0c217bd0a6e6",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 49,
+          "actual": 49,
+          "latency_ms": 87.1268
+        },
+        "kills": {
+          "expected": 6,
+          "actual": 6,
+          "latency_ms": 153.3761
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.3761
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 47.9617
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 20.73289999862027
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 109.8386
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 109.8386
+        }
+      },
+      "native_wall_ms": 477.783599999384
+    },
+    {
+      "path": "artifacts/p4-real-actions/017.after.png",
+      "sha256": "ea6be998c340868dd85ea8e8a2838ed1d73bd211dcc7cf138e0e43bfef87fda1",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 20,
+          "actual": 20,
+          "latency_ms": 82.3057
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 153.312
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 153.312
+        },
+        "battle_speed": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 49.1484
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 18.599099999846658
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 112.0052
+        },
+        "deployment_card_costs": {
+          "expected": [
+            12
+          ],
+          "actual": [
+            12
+          ],
+          "latency_ms": 112.0052
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 112.0052
+        }
+      },
+      "native_wall_ms": 471.6093000006367
+    },
+    {
+      "path": "artifacts/p4-real-actions/025.after.png",
+      "sha256": "70fcbaf29f61db57355fd343425de719c72feb43070699279c5eb2125bdba583",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 14,
+          "actual": 14,
+          "latency_ms": 81.9223
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 147.0551
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 147.0551
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 50.3842
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 51.06530000011844
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 106.7934
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 106.7934
+        },
+        "candidate_ready": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 1069.3136
+        }
+      },
+      "native_wall_ms": 1541.2189999988186
+    },
+    {
+      "path": "artifacts/p4-real-actions/027.after.png",
+      "sha256": "ff64b06b113e86bd06860bb1292a387c41430fa0da94c90c5ce7a108979a56ba",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 20,
+          "actual": 20,
+          "latency_ms": 273.4608
+        },
+        "kills": {
+          "expected": 0,
+          "actual": 0,
+          "latency_ms": 149.6208
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 149.6208
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 48.1769
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 59.072800000649295
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 109.2959
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 109.2959
+        },
+        "candidate_ready": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 70.6325
+        }
+      },
+      "native_wall_ms": 838.3791999985988
+    },
+    {
+      "path": "artifacts/p4-real-actions/033.after.png",
+      "sha256": "d10c587e673486d486070a5ec08c764a8acb5a873b1b2153ad96592fa8e069ec",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 38,
+          "actual": 38,
+          "latency_ms": 382.1232
+        },
+        "kills": {
+          "expected": 2,
+          "actual": 2,
+          "latency_ms": 575.8386
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 575.8386
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 240.2437
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 64.36670000039157
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 185.0027
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 185.0027
+        },
+        "candidate_ready": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 56.0723
+        }
+      },
+      "native_wall_ms": 1671.6677000003983
+    },
+    {
+      "path": "artifacts/p4-real-actions/035.after.png",
+      "sha256": "c1fe826c34ef42e634f10a655c2fdb567f1c30a754e4d3931f027af6cb3f3699",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 47,
+          "actual": 47,
+          "latency_ms": 399.0463
+        },
+        "kills": {
+          "expected": 7,
+          "actual": 7,
+          "latency_ms": 563.4807
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 563.4807
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 224.2886
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 61.784899999111076
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 224.5225
+        },
+        "deployment_card_costs": {
+          "expected": [
+            19
+          ],
+          "actual": [
+            19
+          ],
+          "latency_ms": 224.5225
+        },
+        "candidate_ready": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 24.1816
+        }
+      },
+      "native_wall_ms": 1651.8505999993067
+    },
+    {
+      "path": "artifacts/p4-real-actions/039.after.png",
+      "sha256": "c8edc1f2f5dd9dc0a88d24e802e7dbca4be5bd8e685a0bc4df61169af9d5199b",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "operator_retreated"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 64,
+          "actual": 64,
+          "latency_ms": 436.1987
+        },
+        "kills": {
+          "expected": 7,
+          "actual": 7,
+          "latency_ms": 645.7149
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 645.7149
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": null,
+          "latency_ms": 282.0979
+        },
+        "paused": {
+          "expected": false,
+          "actual": false,
+          "latency_ms": 55.22930000006454
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 523.1857
+        },
+        "deployment_card_costs": {
+          "expected": [
+            18
+          ],
+          "actual": [
+            18
+          ],
+          "latency_ms": 523.1857
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 523.1857
+        }
+      },
+      "native_wall_ms": 2111.8210999993607
+    },
+    {
+      "path": "artifacts/p4-real-actions/041.after.png",
+      "sha256": "05910fc6fecf0f243e436c9ee5b2977dd485fa3a6d90bd7e7ee3ab3fc4b5fa64",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay",
+        "operator_retreated"
+      ],
+      "fields": {
+        "cost": {
+          "expected": 68,
+          "actual": 68,
+          "latency_ms": 86.4693
+        },
+        "kills": {
+          "expected": 7,
+          "actual": 7,
+          "latency_ms": 157.7706
+        },
+        "total_kills": {
+          "expected": 41,
+          "actual": 41,
+          "latency_ms": 157.7706
+        },
+        "battle_speed": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 52.2292
+        },
+        "paused": {
+          "expected": true,
+          "actual": true,
+          "latency_ms": 21.30859999851964
+        },
+        "deployment_count": {
+          "expected": 1,
+          "actual": 1,
+          "latency_ms": 113.7607
+        },
+        "deployment_card_costs": {
+          "expected": [
+            18
+          ],
+          "actual": [
+            18
+          ],
+          "latency_ms": 113.7607
+        },
+        "deployment_names": {
+          "expected": [
+            "凛御银灰"
+          ],
+          "actual": null,
+          "latency_ms": 113.7607
+        }
+      },
+      "native_wall_ms": 504.6824999990349
+    }
+  ],
+  "coverage": {
+    "maps": [
+      "1-7"
+    ],
+    "operators": [
+      "凛御银灰"
+    ],
+    "skins": [
+      "default"
+    ],
+    "alternate_skins": "missing; automatic Ready actions disabled",
+    "distribution": "private captures only; neither images nor weights bundled",
+    "ready_roi_context": "Ground-truth unit location is seeded in memory to evaluate classification; this is not deployment detection."
+  },
+  "interpretation": [
+    "Small correlated single-device sample; percentages do not estimate population reliability.",
+    "Names have no passive cache at reset, so empty names abstain.",
+    "Ready evaluated at manually seeded known locations, not detected deployments.",
+    "Alternate skins are missing; automatic Ready actions remain disabled.",
+    "Corrected two kill labels after original-resolution image review; corrections retained in label manifest."
+  ]
+}

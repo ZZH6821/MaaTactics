@@ -1,0 +1,24 @@
+{
+  "ordinary_ci": {
+    "passed": 63,
+    "native_deselected": 4
+  },
+  "native_opt_in": {
+    "passed": 4,
+    "device_connected": false,
+    "included_in_prior_combined_run": true
+  },
+  "prior_combined_tests": {
+    "passed": 66,
+    "new_revision_drift_test_verified_in_ordinary_ci": true
+  },
+  "wheel": {
+    "filename": "maatactics_mcp-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "5f74b20c0ec56f75eaa7aea7403b6ce6a559ae317ae30c146b107e2e5196b845",
+    "validated_schemas": 24,
+    "unpacked_import": "passed",
+    "includes_native_binaries_or_weights": false
+  },
+  "ruff_check": "passed",
+  "ruff_format": "passed"
+}

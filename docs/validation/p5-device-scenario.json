@@ -1,0 +1,1036 @@
+{
+  "schema_version": "1.0",
+  "stage": "main_01-07",
+  "mode": "exercise",
+  "transport": "MCP stdio",
+  "runtime": {
+    "backend": "maacore",
+    "version": "v6.22.0-maatactics-p5.0",
+    "library_sha256": "ce71c9d53e8957ae9e90ea6670a662db3c645eb47508256c6ff93cdfe695b316",
+    "provenance": "external_runtime_contract_verified_not_source_attested",
+    "battle_abi_version": 1,
+    "hybrid_abi_version": 1,
+    "battle_features": [
+      "persistent_context",
+      "passive_observer",
+      "named_actions",
+      "absolute_speed",
+      "hybrid_control_v1"
+    ]
+  },
+  "operations": {
+    "handoff": {
+      "operation_id": "op-845d02c1a5994e99a0a384b65d23a28e",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "epoch": 2,
+      "finished_at": "2026-11-17T19:46:25.456Z",
+      "result": {
+        "epoch": 3,
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 2,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 1,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": true,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "id": 1,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 1,
+          "run_generation": 1,
+          "state": "paused"
+        },
+        "game_paused": true
+      },
+      "screenshots": {
+        "handoff.after.png": "ad09a527b56188a661f248db3920b0f0b6fd952185615065684cfe755e8c30cd",
+        "handoff.before.png": "af56f15c610af089e354023e3e4d2f4fa7677bf357174f4608aacf9a96cefa3d"
+      }
+    },
+    "resume_battle": {
+      "operation_id": "op-34b9b562bba84da5b6cb9e7a4d270ab8",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:28.005Z",
+      "result": {
+        "epoch": 3,
+        "game_paused": false
+      },
+      "screenshots": {
+        "resume_battle.after.png": "ce75acbad1ab84b4cc511d59a1d877a9caaa031d52099d119e62e28d01d61db9",
+        "resume_battle.before.png": "6ee0226c237ab2d88cb3277f973ab8516cbc412238d30684b373a65047beaf12"
+      }
+    },
+    "deploy_operator": {
+      "operation_id": "op-247f527901ef4db8b1d6f7502ac09a2d",
+      "lifecycle": "completed",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:32.062Z",
+      "result": {
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 3,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [
+              {
+                "game_effect": "unknown",
+                "location": [
+                  4,
+                  3
+                ],
+                "name": "凛御银灰",
+                "role": 1,
+                "source": "engine_context"
+              }
+            ],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 0
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 1,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": true,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "action_result": {
+              "action_sequence": 3,
+              "context_revision": 2,
+              "engine_return": true,
+              "game_effect": "unknown",
+              "reason": "OK"
+            },
+            "id": 2,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 1,
+          "run_generation": 1,
+          "state": "paused"
+        },
+        "native_action_result": {
+          "action_sequence": 3,
+          "context_revision": 2,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "screenshots": {
+        "deploy_operator.after.png": "a1276b7234f1a2b8da2fb8ecde2b5f11f09d1d759c01758f8eedace5f777da5d",
+        "deploy_operator.before.png": "b2a4dce91b7e89c60dc5e633a33219d2a29a6712629cc40bbd15d1cb10c76173"
+      }
+    },
+    "use_skill": {
+      "operation_id": "op-4c278d8053d545c0a63e47cf026dd942",
+      "lifecycle": "completed",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:43.401Z",
+      "result": {
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 4,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [
+              {
+                "game_effect": "unknown",
+                "location": [
+                  4,
+                  3
+                ],
+                "name": "凛御银灰",
+                "role": 1,
+                "source": "engine_context"
+              }
+            ],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 21110985
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 1,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": true,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "action_result": {
+              "action_sequence": 4,
+              "context_revision": 2,
+              "engine_return": true,
+              "game_effect": "unknown",
+              "reason": "OK"
+            },
+            "id": 3,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 1,
+          "run_generation": 1,
+          "state": "paused"
+        },
+        "native_action_result": {
+          "action_sequence": 4,
+          "context_revision": 2,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "screenshots": {
+        "use_skill.after.png": "c51e233bc13b6c9ea3e8e18bf537114e937fc309598ec8b770de6c9143dc4950",
+        "use_skill.before.png": "102156330de26f7641a0650a8375f198fbd4f820e4356e5b475d5a10f98bfe5e"
+      }
+    },
+    "retreat_operator": {
+      "operation_id": "op-e8fe790bf9894fabaa729e3598dd594d",
+      "lifecycle": "completed",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:46.885Z",
+      "result": {
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 5,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 21110985
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 1,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": true,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "action_result": {
+              "action_sequence": 5,
+              "context_revision": 2,
+              "engine_return": true,
+              "game_effect": "unknown",
+              "reason": "OK"
+            },
+            "id": 4,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 1,
+          "run_generation": 1,
+          "state": "paused"
+        },
+        "native_action_result": {
+          "action_sequence": 5,
+          "context_revision": 2,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "screenshots": {
+        "retreat_operator.after.png": "2f3878512045c51a5d5647054e3548f1cf0ce87c74a8facf8881e78eab756ccc",
+        "retreat_operator.before.png": "1e3129c1d8fa3ddb69c73f6bee09158ab6c050b25c3e13172774eb91dd9fcf08"
+      }
+    },
+    "revision": {
+      "operation_id": "op-9a106fb856d9463ba71627c1ce1e9298",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:55.078Z",
+      "result": {
+        "epoch": 3,
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 5,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 21110985
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 2,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [
+              3
+            ],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": true,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "id": 5,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 2,
+          "run_generation": 1,
+          "state": "paused"
+        },
+        "revision_uri": "maatactics://sessions/s-880a78fb3ef94679b818ce3eecff13f0/runs/op-5d49c65d4dc64fcda17e35129fb935b0/revisions/2.json"
+      },
+      "screenshots": {}
+    },
+    "resume": {
+      "operation_id": "op-989c3b26e465461e8cd49fbc198cfefb",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "not_required",
+      "game_effect": "verified",
+      "epoch": 3,
+      "finished_at": "2026-11-17T19:46:57.568Z",
+      "result": {
+        "epoch": 4,
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 5,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 21110985
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 2,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [
+              3
+            ],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": false,
+            "total_kills": 41
+          },
+          "checkpoint_valid": true,
+          "completed_action_count": 2,
+          "last_command": {
+            "id": 6,
+            "ok": true
+          },
+          "next_action_index": 2,
+          "ok": true,
+          "plan_revision": 2,
+          "run_generation": 1,
+          "state": "running"
+        },
+        "game_paused": false
+      },
+      "screenshots": {
+        "resume.after.png": "60b2dc80c846a322131620932c29115a183d0efcc9eb5a92b19357272eaaeb75",
+        "resume.before.png": "0e36430a8d5b6ed76fb7152efc9da22015c55901b3d31e0ff237f6973c011779"
+      }
+    },
+    "copilot": {
+      "operation_id": "op-5d49c65d4dc64fcda17e35129fb935b0",
+      "lifecycle": "completed",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 2,
+      "finished_at": "2026-11-17T19:46:59.592Z",
+      "result": {
+        "hybrid": {
+          "checkpoint": {
+            "abi_version": 1,
+            "action_count": 6,
+            "action_sequence": 5,
+            "automatic_ready_actions_enabled": false,
+            "camera_count": 1,
+            "camera_shift": [
+              0.0,
+              0.0
+            ],
+            "checkpoint_id": "1:1",
+            "completed_action_count": 2,
+            "condition": {
+              "cost_baseline": 14,
+              "kind": "cost_changes"
+            },
+            "context_revision": 2,
+            "context_valid": true,
+            "cost": 15,
+            "deployed_operators": [],
+            "elapsed_time_ms": 1716,
+            "features": [
+              "persistent_context",
+              "passive_observer",
+              "named_actions",
+              "absolute_speed",
+              "hybrid_control_v1"
+            ],
+            "groups": [
+              {
+                "group": "主力",
+                "name": "凛御银灰",
+                "role": 1
+              },
+              {
+                "group": "",
+                "name": "",
+                "role": 0
+              }
+            ],
+            "kills": 0,
+            "last_skill_times": [
+              {
+                "name": "凛御银灰",
+                "steady_clock_ms": 21110985
+              }
+            ],
+            "next_action_index": 2,
+            "ok": true,
+            "plan_revision": 2,
+            "run_generation": 1,
+            "schema_version": "1.0",
+            "skill_usage": [
+              {
+                "name": "凛御银灰",
+                "remaining_times": 1,
+                "role": 1,
+                "usage": 0
+              }
+            ],
+            "skipped_indices": [
+              3
+            ],
+            "stage_name": "main_01-07",
+            "stopwatch_enabled": true,
+            "strategy_ticks": 3,
+            "timer_suspended": false,
+            "total_kills": 41
+          },
+          "checkpoint_valid": false,
+          "completed_action_count": 5,
+          "last_command": {
+            "id": 6,
+            "ok": true
+          },
+          "next_action_index": 6,
+          "ok": true,
+          "plan_revision": 2,
+          "run_generation": 1,
+          "state": "completed",
+          "strategy_ticks": 3
+        },
+        "native_action_result": {
+          "action_sequence": 8,
+          "context_revision": 2,
+          "controller": "copilot",
+          "engine_return": true,
+          "game_effect": "unknown",
+          "index": 5,
+          "plan_revision": 2,
+          "reason": "OK"
+        }
+      },
+      "screenshots": {
+        "copilot.after.png": "384c0a700b4e16735fef6cb6d5d553ff74bc10959c7849cf3567dbc0ca982542",
+        "copilot.before.png": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9"
+      }
+    },
+    "pause_battle": {
+      "operation_id": "op-172c57578d7c4f23be5c61baf3bb64e4",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "epoch": 5,
+      "finished_at": "2026-11-17T19:47:02.992Z",
+      "result": {
+        "epoch": 5,
+        "game_paused": true
+      },
+      "screenshots": {
+        "pause_battle.after.png": "98bc0cffa68e60458690056fa2cd3522f829a3a441d854e14bb7873971faa6b8",
+        "pause_battle.before.png": "c2006171219f528a8add95692539994fbac67b07d622b9567e2e3b8b92753f9b"
+      }
+    },
+    "disconnect": {
+      "operation_id": "op-f1b36524072647e4bb2c336b3c9f4c6b",
+      "lifecycle": "completed",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "epoch": 5,
+      "finished_at": "2026-11-17T19:47:03.445Z",
+      "result": {
+        "epoch": 6,
+        "game_paused": "unknown",
+        "new_inputs_stopped": true,
+        "status": "closed"
+      },
+      "screenshots": {}
+    }
+  },
+  "proof": {
+    "exercise_start_template": "BattleStartExercise",
+    "shared_action_sequence": [
+      {
+        "action_sequence": 1,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 0,
+        "plan_revision": 1,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 2,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 1,
+        "plan_revision": 1,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 3,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 4,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 5,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 6,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 2,
+        "plan_revision": 2,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 7,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 4,
+        "plan_revision": 2,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 8,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 5,
+        "plan_revision": 2,
+        "reason": "OK"
+      }
+    ],
+    "handoff_condition_preserved": {
+      "cost_baseline": 14,
+      "kind": "cost_changes"
+    },
+    "strategy_ticks_before_and_after_agent": 3,
+    "revision_skipped_indices": [
+      3
+    ],
+    "post_disconnect_readonly_capture": {
+      "sha256": "f736241c4ae9e722a522ea61d26c2234f2d075ef77da1e250fcb8510766c1438",
+      "observation": {
+        "state": "paused",
+        "confidence": null,
+        "source": "vision",
+        "method": "battle_hud_components_v1",
+        "reason": "play_triangle",
+        "components": [
+          {
+            "area": 412,
+            "width": 33,
+            "height": 27,
+            "x": 11,
+            "y": 12
+          }
+        ]
+      }
+    }
+  },
+  "visual_review": {
+    "deploy_operator.after.png": "凛御银灰 occupies [4,3] facing right",
+    "use_skill.after.png": "Skill activation effect and duration bar visible",
+    "retreat_operator.after.png": "Hero absent, redeployment cooldown 55.4 seconds",
+    "copilot.after.png": "2X visible after revised Copilot action",
+    "pause_battle.after.png": "PAUSE overlay and play triangle visible"
+  },
+  "final_recheck": {
+    "runtime_version": "v6.22.0-maatactics-p5.0",
+    "full_mcp_flow_passed": true,
+    "handoff_condition": {
+      "cost_baseline": 14,
+      "kind": "cost_changes"
+    },
+    "action_sequence": [
+      {
+        "action_sequence": 1,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 0,
+        "plan_revision": 1,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 2,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 1,
+        "plan_revision": 1,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 3,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 4,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 5,
+        "context_revision": 2,
+        "controller": "agent",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 6,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 2,
+        "plan_revision": 2,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 7,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 4,
+        "plan_revision": 2,
+        "reason": "OK"
+      },
+      {
+        "action_sequence": 8,
+        "context_revision": 2,
+        "controller": "copilot",
+        "engine_return": true,
+        "game_effect": "unknown",
+        "index": 5,
+        "plan_revision": 2,
+        "reason": "OK"
+      }
+    ],
+    "paused_after_disconnect": true,
+    "events_sha256": "08f63325dc641e9855cf2af3ad50a9c9c7224a774d03b655ea3848421e92b72e",
+    "screenshots": {
+      "copilot.after.png": "ac6650bcce1c536288327a9382ce1a8521e151af95491a9ed2a1cc95822d2bff",
+      "copilot.before.png": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9",
+      "deploy_operator.after.png": "50120ccc4451d6898d7484bfd585f9c30e010625486ea23159b098b265ea07e3",
+      "deploy_operator.before.png": "58cc030501190bdd11db87767d664c951f636f4347c4d7b7b1e2a871288a8a01",
+      "formation.png": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9",
+      "handoff.after.png": "da9caf1273251cfe830ad6fa50e7f1f9afc890242e8269bab08c076bca1c3a8a",
+      "handoff.before.png": "b4030a826655184b6aa37448e866ef65d38b2eb2b28f92fc4ae0880097bdf490",
+      "pause_battle.after.png": "661b2390e5f7f3376da67edc212e78627f72b1ad9a37a07b0df1a865a8f52760",
+      "pause_battle.before.png": "edb884babeac9a548a200afc04266f28dfb3abb57d0fb062e31ab55b8a28ab6b",
+      "post-disconnect.png": "05dc439d45f139b2404a10e157cdd858d75292b59224415b28883587c39b2f4c",
+      "resume.after.png": "c7d9045c9478a97848b91f663d72d8e9c3f897e4c3468b290eafe946965faad2",
+      "resume.before.png": "5c78d3a33b922d2b6e76a89eb4d06cdae7d41ff9b556c6b1bf96d765fb017882",
+      "resume_battle.after.png": "be33697779b966af5f419d96b71288db45fa49fb96614b5d03ea9d610fa0298c",
+      "resume_battle.before.png": "a4276bebc4d437bdeef3f8e476f4f4b562916f1e974a6c40ef612d2f2f46dfed",
+      "retreat_operator.after.png": "f105b9e153b58832eb02ac540f5694f1617c38d3607bcb94d7965dfb12467bb5",
+      "retreat_operator.before.png": "ea3e9cd51b41b7ea2d41d330f15e0e74eeac057612500bc6a73ba5e49b914e1f",
+      "use_skill.after.png": "b905cc66e0e2d20f1673041cb4cfa908ed9d23005ba43d3e2551a7bb65ab3a99",
+      "use_skill.before.png": "bb4f4dcb8fbfa76232f9b538a4c0dfaaf48322682739d83f1553fc8adef5f1d2"
+    }
+  }
+}

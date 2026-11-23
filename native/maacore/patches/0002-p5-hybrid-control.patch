@@ -1,0 +1,869 @@
+diff --git a/include/AsstCaller.h b/include/AsstCaller.h
+--- a/include/AsstCaller.h
++++ b/include/AsstCaller.h
+@@ -63,6 +63,8 @@
+     AsstHandle ASSTAPI AsstCreate();
+     // MaaTactics extension. JSON sizes exclude the trailing NUL; no input is issued by observation.
+     uint32_t ASSTAPI AsstBattleAbiVersion();
++    AsstSize ASSTAPI AsstHybridGetState(AsstHandle handle, void* buffer, AsstSize buffer_size);
++    AsstSize ASSTAPI AsstHybridControl(AsstHandle handle, const char* command, void* buffer, AsstSize buffer_size);
+     AsstBool ASSTAPI AsstBattleReset(AsstHandle handle, const char* stage_name);
+     AsstSize ASSTAPI AsstBattleGetContext(AsstHandle handle, void* buffer, AsstSize buffer_size);
+     AsstSize ASSTAPI
+diff --git a/src/MaaCore/TacticalCaller.cpp b/src/MaaCore/TacticalCaller.cpp
+--- a/src/MaaCore/TacticalCaller.cpp
++++ b/src/MaaCore/TacticalCaller.cpp
+@@ -67,3 +67,37 @@
+         return 0;
+     }
+ }
++
++AsstSize AsstHybridGetState(AsstHandle handle, void* buffer, AsstSize buffer_size)
++{
++    auto* assistant = dynamic_cast<asst::Assistant*>(handle);
++    if (!assistant) {
++        return 0;
++    }
++    try {
++        return copy_battle_json(assistant->tactical_battle()->hybrid_state(), buffer, buffer_size);
++    }
++    catch (const std::exception& error) {
++        LogError << "Hybrid query failed" << error.what();
++        return 0;
++    }
++}
++
++AsstSize AsstHybridControl(AsstHandle handle, const char* command, void* buffer, AsstSize buffer_size)
++{
++    auto* assistant = dynamic_cast<asst::Assistant*>(handle);
++    if (!assistant || !command || std::strlen(command) > 65'536) {
++        return 0;
++    }
++    try {
++        const auto parsed = json::parse(command);
++        if (!parsed) {
++            return 0;
++        }
++        return copy_battle_json(assistant->tactical_battle()->hybrid_control(*parsed), buffer, buffer_size);
++    }
++    catch (const std::exception& error) {
++        LogError << "Hybrid control failed" << error.what();
++        return 0;
++    }
++}
+diff --git a/src/MaaCore/Task/Experiment/TacticalBattleTask.h b/src/MaaCore/Task/Experiment/TacticalBattleTask.h
+--- a/src/MaaCore/Task/Experiment/TacticalBattleTask.h
++++ b/src/MaaCore/Task/Experiment/TacticalBattleTask.h
+@@ -1,7 +1,9 @@
+ #pragma once
+ #include "Task/Miscellaneous/BattleProcessTask.h"
+ #include <atomic>
++#include <condition_variable>
+ #include <mutex>
++#include <set>
+ 
+ namespace asst
+ {
+@@ -15,11 +17,18 @@
+     bool execute(const Actions& actions, uint64_t expected_revision, int task_id, int absolute_speed = 0);
+     json::value context_snapshot() const;
+     json::value observe(const unsigned char* png, size_t size);
++    bool prepare_hybrid(const json::value* rehearsal = nullptr);
++    json::value hybrid_state() const;
++    json::value hybrid_control(const json::value& command);
+ 
+ protected:
+-    bool _run() override { return false; }
++    bool _run() override;
+ 
+     void sleep_and_do_strategy(unsigned millisecond) override;
++    bool wait_condition(const battle::copilot::Action& action) override;
++    bool condition_point(const char* kind, int baseline) override;
++    bool condition_observation_invalidated() override;
++    bool do_strategic_action(const cv::Mat& reusable = cv::Mat()) override;
+ 
+ private:
+     json::value context_snapshot_locked() const;
+@@ -28,5 +37,33 @@
+     std::atomic_uint64_t m_revision = 0;
+     uint64_t m_action_sequence = 0;
+     bool m_context_valid = false;
++    bool run_hybrid();
++    bool hybrid_safe_point();
++    void publish_checkpoint_locked();
++    bool process_hybrid_command(const json::value& command);
++    void finish_hybrid(const std::string& state);
++    mutable std::mutex m_hybrid_mutex;
++    std::condition_variable m_hybrid_cv;
++    bool m_hybrid_enabled = false;
++    bool m_rehearsal = false;
++    bool m_agent_action = false;
++    bool m_replan_current = false;
++    bool m_refresh_condition_image = false;
++    bool m_pause_requested = false;
++    bool m_hybrid_timer_suspended = false;
++    std::chrono::steady_clock::time_point m_hybrid_pause_started;
++    uint64_t m_run_generation = 0;
++    uint64_t m_checkpoint_sequence = 0;
++    uint64_t m_plan_revision = 1;
++    uint64_t m_command_sequence = 0;
++    uint64_t m_pause_command_id = 0;
++    uint64_t m_strategy_ticks = 0;
++    size_t m_next_action = 0;
++    size_t m_completed_actions = 0;
++    std::set<size_t> m_skipped_actions;
++    json::value m_hybrid_view = json::object { { "ok", true }, { "state", "idle" } };
++    json::value m_hybrid_command;
++    json::value m_wait_state;
++    std::unique_lock<std::mutex>* m_hybrid_context_lock = nullptr;
+ };
+ }
+diff --git a/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp b/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp
+--- a/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp
++++ b/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp
+@@ -26,7 +26,7 @@
+ 
+ void asst::TacticalBattleTask::sleep_and_do_strategy(unsigned millisecond)
+ {
+-    if (millisecond != 0) {
++    if (millisecond != 0 && !m_rehearsal) {
+         BattleProcessTask::sleep_and_do_strategy(millisecond);
+     }
+ }
+@@ -40,6 +40,17 @@
+     if (!stage.empty() && (!Tile.find(stage) || !json::open(Tile.find(stage)->second))) {
+         LogError << "Unsupported tactical stage" << stage;
+         return false;
++    }
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        m_hybrid_enabled = false;
++        m_rehearsal = false;
++        m_agent_action = false;
++        m_replan_current = false;
++        m_refresh_condition_image = false;
++        m_hybrid_timer_suspended = false;
++        m_pause_requested = false;
++        m_hybrid_view = json::object { { "ok", true }, { "state", "idle" } };
+     }
+     invalidate_locked();
+     if (stage.empty()) {
+@@ -134,27 +145,32 @@
+     }
+     int elapsed = -1;
+     if (m_stopwatch_enabled) {
+-        elapsed = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(
+-                                       std::chrono::steady_clock::now() - m_stopwatch_start_time)
+-                                       .count());
+-    }
+-    return json::object {
+-        { "schema_version", "1.0" },
+-        { "features", json::array { "persistent_context", "passive_observer", "named_actions", "absolute_speed" } },
+-        { "ok", true },
+-        { "abi_version", 1 },
+-        { "context_revision", m_revision.load() },
+-        { "context_valid", m_context_valid },
+-        { "stage_name", m_stage_name },
+-        { "action_sequence", m_action_sequence },
+-        { "deployed_operators", std::move(deployed) },
+-        { "skill_usage", std::move(skill_usage) },
+-        { "camera_shift", json::array { m_camera_shift.first, m_camera_shift.second } },
+-        { "camera_count", m_camera_count },
+-        { "stopwatch_enabled", m_stopwatch_enabled },
+-        { "elapsed_time_ms", elapsed },
+-        { "automatic_ready_actions_enabled", false }
+-    };
++        elapsed = static_cast<int>(
++            std::chrono::duration_cast<std::chrono::milliseconds>(
++                (m_hybrid_timer_suspended ? m_hybrid_pause_started : std::chrono::steady_clock::now()) -
++                m_stopwatch_start_time)
++                .count());
++    }
++    return json::object { { "schema_version", "1.0" },
++                          { "features",
++                            json::array { "persistent_context",
++                                          "passive_observer",
++                                          "named_actions",
++                                          "absolute_speed",
++                                          "hybrid_control_v1" } },
++                          { "ok", true },
++                          { "abi_version", 1 },
++                          { "context_revision", m_revision.load() },
++                          { "context_valid", m_context_valid },
++                          { "stage_name", m_stage_name },
++                          { "action_sequence", m_action_sequence },
++                          { "deployed_operators", std::move(deployed) },
++                          { "skill_usage", std::move(skill_usage) },
++                          { "camera_shift", json::array { m_camera_shift.first, m_camera_shift.second } },
++                          { "camera_count", m_camera_count },
++                          { "stopwatch_enabled", m_stopwatch_enabled },
++                          { "elapsed_time_ms", elapsed },
++                          { "automatic_ready_actions_enabled", false } };
+ }
+ 
+ json::value asst::TacticalBattleTask::context_snapshot() const
+diff --git a/src/MaaCore/Task/Experiment/TacticalHybridTask.cpp b/src/MaaCore/Task/Experiment/TacticalHybridTask.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/MaaCore/Task/Experiment/TacticalHybridTask.cpp
+@@ -0,0 +1,487 @@
++#include "TacticalBattleTask.h"
++
++#include "Assistant.h"
++#include "Config/Miscellaneous/CopilotConfig.h"
++#include "Utils/Logger.hpp"
++#include <thread>
++#include <utility>
++
++bool asst::TacticalBattleTask::prepare_hybrid(const json::value* rehearsal)
++{
++    if (m_inst->running()) {
++        return false;
++    }
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        const auto state = m_hybrid_view.get("state", "idle");
++        if (state != "idle" && state != "completed" && state != "failed" && state != "cancelled") {
++            return false;
++        }
++    }
++    if (rehearsal && (m_inst->connected() || !bind_stage(rehearsal->get("stage_name", "")))) {
++        return false;
++    }
++    std::unique_lock context(m_context_mutex, std::try_to_lock);
++    if (!context.owns_lock()) {
++        return false;
++    }
++    if (rehearsal) {
++        const auto actions = CopilotConfig::parse_actions(*rehearsal);
++        const auto groups = CopilotConfig::parse_groups(*rehearsal);
++        if (!actions || !groups) {
++            return false;
++        }
++        for (const auto& action : *actions) {
++            using T = battle::copilot::ActionType;
++            if ((action.type != T::Output && action.type != T::SetUnitLocation && action.type != T::SkillUsage &&
++                 action.type != T::ResetStopwatch) ||
++                action.costs || action.cost_changes || action.kills || action.cooling > 0 || action.pre_delay ||
++                action.post_delay) {
++                return false;
++            }
++        }
++        m_combat_data.actions = *actions;
++        m_combat_data.groups = *groups;
++    }
++    std::lock_guard mailbox(m_hybrid_mutex);
++    m_hybrid_enabled = true;
++    m_rehearsal = rehearsal != nullptr;
++    m_hybrid_timer_suspended = false;
++    m_pause_requested = false;
++    m_agent_action = false;
++    m_replan_current = false;
++    m_refresh_condition_image = false;
++    m_hybrid_command = json::value();
++    m_plan_revision = 1;
++    m_checkpoint_sequence = 0;
++    m_next_action = 0;
++    m_completed_actions = 0;
++    m_strategy_ticks = 0;
++    m_skipped_actions.clear();
++    m_hybrid_view = json::object { { "ok", true },
++                                   { "state", "preparing" },
++                                   { "run_generation", ++m_run_generation },
++                                   { "plan_revision", m_plan_revision } };
++    return true;
++}
++
++json::value asst::TacticalBattleTask::hybrid_state() const
++{
++    std::lock_guard mailbox(m_hybrid_mutex);
++    return m_hybrid_view;
++}
++
++json::value asst::TacticalBattleTask::hybrid_control(const json::value& command)
++{
++    std::lock_guard mailbox(m_hybrid_mutex);
++    const auto fail = [](const char* reason) {
++        return json::object { { "ok", false }, { "error", reason } };
++    };
++    if (command.get("run_generation", uint64_t { 0 }) != m_run_generation) {
++        return fail("HYBRID_RUN_MISMATCH");
++    }
++    const auto kind = command.get("kind", "");
++    const auto state = m_hybrid_view.get("state", "idle");
++    if (kind == "pause") {
++        if (state == "paused") {
++            return json::object { { "ok", true }, { "done", true } };
++        }
++        if (state != "running" && state != "preparing" && state != "pause_requested") {
++            return fail("HYBRID_NOT_RUNNING");
++        }
++        if (!m_pause_requested) {
++            m_pause_requested = true;
++            m_pause_command_id = ++m_command_sequence;
++            m_hybrid_view["state"] = "pause_requested";
++        }
++        return json::object { { "ok", true }, { "command_id", m_pause_command_id } };
++    }
++    if (state != "paused" || !m_hybrid_command.is_null()) {
++        return fail("HYBRID_NOT_PAUSED");
++    }
++    const auto& checkpoint = m_hybrid_view.at("checkpoint");
++    if (command.get("checkpoint_id", "") != checkpoint.get("checkpoint_id", "") ||
++        command.get("plan_revision", uint64_t { 0 }) != m_plan_revision ||
++        command.get("action_sequence", uint64_t { 0 }) != m_action_sequence) {
++        return fail("CHECKPOINT_MISMATCH");
++    }
++    if (kind != "resume" && kind != "action" && kind != "revise") {
++        return fail("HYBRID_COMMAND_UNSUPPORTED");
++    }
++    m_hybrid_command = command;
++    const auto id = ++m_command_sequence;
++    m_hybrid_command["command_id"] = id;
++    m_hybrid_view["state"] = kind == "resume" ? "resuming" : "command_pending";
++    m_hybrid_cv.notify_all();
++    return json::object { { "ok", true }, { "command_id", id } };
++}
++
++void asst::TacticalBattleTask::publish_checkpoint_locked()
++{
++    auto checkpoint = context_snapshot_locked();
++    checkpoint["checkpoint_id"] = std::to_string(m_run_generation) + ":" + std::to_string(m_checkpoint_sequence);
++    checkpoint["run_generation"] = m_run_generation;
++    checkpoint["plan_revision"] = m_plan_revision;
++    checkpoint["next_action_index"] = m_next_action;
++    checkpoint["action_count"] = m_combat_data.actions.size();
++    checkpoint["completed_action_count"] = m_completed_actions;
++    checkpoint["condition"] = m_wait_state;
++    checkpoint["cost"] = m_cost;
++    checkpoint["kills"] = m_kills;
++    checkpoint["total_kills"] = m_total_kills;
++    checkpoint["strategy_ticks"] = m_strategy_ticks;
++    checkpoint["timer_suspended"] = m_hybrid_timer_suspended;
++    json::array groups, skipped, last_skill_times;
++    for (const auto& [group, oper] : m_oper_in_group) {
++        groups.emplace_back(
++            json::object { { "group", group.name }, { "name", oper.name }, { "role", static_cast<int>(oper.role) } });
++    }
++    for (auto index : m_skipped_actions) {
++        skipped.emplace_back(index);
++    }
++    for (const auto& [oper, time] : m_last_use_skill_time) {
++        last_skill_times.emplace_back(
++            json::object {
++                { "name", oper.name },
++                { "steady_clock_ms",
++                  std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() } });
++    }
++    checkpoint["groups"] = std::move(groups);
++    checkpoint["skipped_indices"] = std::move(skipped);
++    checkpoint["last_skill_times"] = std::move(last_skill_times);
++    std::lock_guard mailbox(m_hybrid_mutex);
++    m_hybrid_view["checkpoint"] = std::move(checkpoint);
++    m_hybrid_view["checkpoint_valid"] = true;
++    m_hybrid_view["plan_revision"] = m_plan_revision;
++    m_hybrid_view["next_action_index"] = m_next_action;
++    m_hybrid_view["completed_action_count"] = m_completed_actions;
++}
++
++bool asst::TacticalBattleTask::hybrid_safe_point()
++{
++    if (m_agent_action || !m_hybrid_enabled) {
++        return !need_exit();
++    }
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        if (!m_pause_requested || m_in_bullet_time) {
++            return !need_exit();
++        }
++        m_pause_requested = false;
++        ++m_checkpoint_sequence;
++        m_hybrid_pause_started = std::chrono::steady_clock::now();
++        m_hybrid_timer_suspended = true;
++    }
++    publish_checkpoint_locked();
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        m_hybrid_view["state"] = "paused";
++        m_hybrid_view["last_command"] = json::object { { "id", m_pause_command_id }, { "ok", true } };
++    }
++    m_hybrid_context_lock->unlock();
++    while (!need_exit()) {
++        json::value command;
++        {
++            std::unique_lock mailbox(m_hybrid_mutex);
++            m_hybrid_cv.wait_for(mailbox, std::chrono::milliseconds(25), [&]() { return !m_hybrid_command.is_null(); });
++            if (m_hybrid_command.is_null()) {
++                continue;
++            }
++            command = std::move(m_hybrid_command);
++            m_hybrid_command = json::value();
++        }
++        m_hybrid_context_lock->lock();
++        const bool resume = process_hybrid_command(command);
++        if (!m_context_valid || need_exit()) {
++            return false;
++        }
++        if (resume) {
++            m_refresh_condition_image = true;
++            return !m_replan_current;
++        }
++        m_hybrid_context_lock->unlock();
++    }
++    m_hybrid_context_lock->lock();
++    return false;
++}
++
++bool asst::TacticalBattleTask::process_hybrid_command(const json::value& command)
++{
++    const auto kind = command.get("kind", "");
++    json::value result = json::object { { "id", command.get("command_id", uint64_t { 0 }) }, { "ok", true } };
++    bool resume = false;
++    const auto reject = [&](const char* error) {
++        result["ok"] = false;
++        result["error"] = error;
++        return false;
++    };
++    const auto apply = [&]() -> bool {
++        if (kind == "resume") {
++            if (m_stopwatch_enabled) {
++                m_stopwatch_start_time += std::chrono::steady_clock::now() - m_hybrid_pause_started;
++            }
++            m_hybrid_timer_suspended = false;
++            return true;
++        }
++        else if (kind == "revise") {
++            const auto& edits = command.at("edits").as_array();
++            if (edits.empty() || edits.size() > 256) {
++                return reject("EDITS_INVALID");
++            }
++            std::set<size_t> touched;
++            auto actions = m_combat_data.actions;
++            auto skipped = m_skipped_actions;
++            for (const auto& edit : edits) {
++                const auto index = edit.get("index", -1);
++                if (index < 0 || static_cast<size_t>(index) < m_next_action ||
++                    static_cast<size_t>(index) >= actions.size() || !touched.insert(index).second) {
++                    return reject("EDIT_RANGE_INVALID");
++                }
++                if (edit.get("op", "") == "skip") {
++                    skipped.insert(index);
++                }
++                else if (edit.get("op", "") == "replace") {
++                    const auto parsed =
++                        CopilotConfig::parse_actions(json::object { { "actions", json::array { edit.at("action") } } });
++                    if (!parsed || parsed->size() != 1) {
++                        return reject("REPLACEMENT_INVALID");
++                    }
++                    using T = battle::copilot::ActionType;
++                    const auto& action = parsed->front();
++                    if (m_rehearsal && action.type != T::Output && action.type != T::SetUnitLocation &&
++                        action.type != T::SkillUsage && action.type != T::ResetStopwatch) {
++                        return reject("REHEARSAL_INPUT_FORBIDDEN");
++                    }
++                    actions[index] = action;
++                    skipped.erase(index);
++                }
++                else {
++                    return reject("EDIT_INVALID");
++                }
++            }
++            m_combat_data.actions = std::move(actions);
++            m_skipped_actions = std::move(skipped);
++            m_replan_current = m_replan_current || touched.contains(m_next_action);
++            ++m_plan_revision;
++        }
++        else if (kind == "action") {
++            const auto parsed =
++                CopilotConfig::parse_actions(json::object { { "actions", json::array { command.at("action") } } });
++            if (!parsed || parsed->size() != 1) {
++                return reject("ACTION_INVALID");
++            }
++            const auto& action = parsed->front();
++            using T = battle::copilot::ActionType;
++            const bool memory = action.type == T::Output || action.type == T::SetUnitLocation ||
++                                action.type == T::SkillUsage || action.type == T::ResetStopwatch;
++            if ((!memory && action.type != T::Deploy && action.type != T::Retreat && action.type != T::UseSkill &&
++                 action.type != T::SwitchSpeed) ||
++                (m_rehearsal && !memory) || action.kills || action.costs || action.cost_changes ||
++                action.elapsed_time || action.cooling > 0 || action.pre_delay || action.post_delay) {
++                return reject("AGENT_ACTION_UNSUPPORTED");
++            }
++            m_agent_action = true;
++            if (action.type == T::SwitchSpeed) {
++                const int speed = command.get("absolute_speed", 0);
++                if (speed < 1 || speed > 2) {
++                    m_agent_action = false;
++                    return reject("ABSOLUTE_SPEED_REQUIRED");
++                }
++                m_in_speedup = speed == 1;
++            }
++            const auto sequence = ++m_action_sequence;
++            const bool returned = do_action(action, m_next_action) && !need_exit();
++            m_agent_action = false;
++            if (returned && action.type == T::UseSkill) {
++                const auto named = get_name_from_group(action.role, action.name);
++                for (const auto& [oper, location] : m_battlefield_opers) {
++                    if ((action.location && *action.location == location) ||
++                        (!action.location && named.name == oper.name &&
++                         (named.role == battle::Role::Unknown || named.role == oper.role))) {
++                        m_last_use_skill_time[oper] = std::chrono::steady_clock::now();
++                        m_skill_error_count[oper] = 0;
++                        auto usage = m_skill_usage.find(oper);
++                        auto times = m_skill_times.find(oper);
++                        if (usage != m_skill_usage.end() && usage->second == battle::SkillUsage::Times &&
++                            times != m_skill_times.end() && times->second > 0 && --times->second == 0) {
++                            usage->second = battle::SkillUsage::TimesUsed;
++                        }
++                        break;
++                    }
++                }
++            }
++            if (action.type == T::ResetStopwatch) {
++                m_hybrid_pause_started = m_stopwatch_start_time;
++            }
++            result["action_result"] = json::object { { "action_sequence", sequence },
++                                                     { "context_revision", m_revision.load() },
++                                                     { "engine_return", returned },
++                                                     { "reason", returned ? "OK" : "ACTION_RETURNED_FALSE" },
++                                                     { "game_effect", "unknown" } };
++            auto info = basic_info_with_what("TacticalActionCompleted");
++            info["details"] = result["action_result"];
++            info["details"]["controller"] = "agent";
++            callback(AsstMsg::SubTaskExtraInfo, info);
++            if (!returned) {
++                result["ok"] = false;
++                result["error"] = "TACTICAL_ACTION_FAILED";
++                invalidate_locked();
++            }
++        }
++        return false;
++    };
++    try {
++        resume = apply();
++    }
++    catch (const std::exception& error) {
++        if (m_agent_action) {
++            invalidate_locked();
++        }
++
++        m_agent_action = false;
++        result["ok"] = false;
++        result["error"] = "HYBRID_COMMAND_EXCEPTION";
++        result["diagnostic"] = std::string(error.what()).substr(0, 512);
++    }
++    publish_checkpoint_locked();
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        m_hybrid_view["state"] = !m_context_valid ? "failed" : resume ? "running" : "paused";
++        m_hybrid_view["last_command"] = std::move(result);
++    }
++    return resume;
++}
++
++bool asst::TacticalBattleTask::condition_point(const char* kind, int baseline)
++{
++    if (m_agent_action) {
++        return !need_exit();
++    }
++    m_wait_state = json::object { { "kind", kind }, { "cost_baseline", baseline } };
++    return hybrid_safe_point();
++}
++
++bool asst::TacticalBattleTask::condition_observation_invalidated()
++{
++    return std::exchange(m_refresh_condition_image, false);
++}
++
++bool asst::TacticalBattleTask::do_strategic_action(const cv::Mat& reusable)
++{
++    if (m_agent_action) {
++        return false;
++    }
++    ++m_strategy_ticks;
++    return m_rehearsal ? false : BattleHelper::do_strategic_action(reusable);
++}
++
++bool asst::TacticalBattleTask::wait_condition(const battle::copilot::Action& action)
++{
++    if (!m_rehearsal) {
++        return BattleProcessTask::wait_condition(action);
++    }
++    while (!need_exit() && m_stopwatch_enabled && elapsed_time() < action.elapsed_time) {
++        if (!condition_point("elapsed_time", 0)) {
++            return false;
++        }
++        do_strategic_action();
++        std::this_thread::sleep_for(std::chrono::milliseconds(5));
++    }
++    return condition_point("condition_satisfied", 0);
++}
++
++void asst::TacticalBattleTask::finish_hybrid(const std::string& state)
++{
++    m_hybrid_timer_suspended = false;
++    std::lock_guard mailbox(m_hybrid_mutex);
++    m_hybrid_view["state"] = state;
++    m_hybrid_view["checkpoint_valid"] = false;
++    m_hybrid_view["next_action_index"] = m_next_action;
++    m_hybrid_view["completed_action_count"] = m_completed_actions;
++    m_hybrid_view["plan_revision"] = m_plan_revision;
++    m_hybrid_view["strategy_ticks"] = m_strategy_ticks;
++    m_hybrid_context_lock = nullptr;
++}
++
++bool asst::TacticalBattleTask::run_hybrid()
++{
++    std::unique_lock context(m_context_mutex);
++    m_hybrid_context_lock = &context;
++    const auto finish = [&](const char* state, bool returned) {
++        if (!returned) {
++            invalidate_locked();
++        }
++        finish_hybrid(state);
++        return returned;
++    };
++    BattleProcessTask::clear();
++    m_context_valid = calc_tiles_info(m_stage_name);
++    if (!m_context_valid || (!m_rehearsal && !update_deployment(true))) {
++        return finish("failed", false);
++    }
++    if (m_rehearsal) {
++        m_in_battle = true;
++    }
++    to_group();
++    {
++        std::lock_guard mailbox(m_hybrid_mutex);
++        m_hybrid_view["state"] = m_pause_requested ? "pause_requested" : "running";
++    }
++    while (m_next_action < m_combat_data.actions.size() && !need_exit() && m_in_battle) {
++        m_replan_current = false;
++        if (!condition_point("action_boundary", 0)) {
++            if (m_replan_current && !need_exit()) {
++                continue;
++            }
++            return finish(need_exit() ? "cancelled" : "failed", false);
++        }
++        if (m_skipped_actions.contains(m_next_action)) {
++            ++m_next_action;
++            continue;
++        }
++        // Keep the stack action stable while its future revision is edited.
++        const auto action = m_combat_data.actions.at(m_next_action);
++        const bool returned = do_action(action, m_next_action) && !need_exit();
++        if (m_replan_current && !need_exit()) {
++            continue;
++        }
++        auto info = basic_info_with_what("HybridActionCompleted");
++        info["details"] = json::object { { "index", m_next_action },
++                                         { "action_sequence", ++m_action_sequence },
++                                         { "engine_return", returned },
++                                         { "plan_revision", m_plan_revision },
++                                         { "reason", returned ? "OK" : "ACTION_RETURNED_FALSE" },
++                                         { "context_revision", m_revision.load() },
++                                         { "controller", "copilot" },
++                                         { "game_effect", "unknown" } };
++        callback(AsstMsg::SubTaskExtraInfo, info);
++        if (!returned) {
++            return finish(need_exit() ? "cancelled" : "failed", false);
++        }
++        ++m_completed_actions;
++        ++m_next_action;
++        {
++            std::lock_guard mailbox(m_hybrid_mutex);
++            m_hybrid_view["next_action_index"] = m_next_action;
++            m_hybrid_view["completed_action_count"] = m_completed_actions;
++        }
++    }
++    return finish(need_exit() ? "cancelled" : "completed", !need_exit());
++}
++
++bool asst::TacticalBattleTask::_run()
++{
++    if (!m_hybrid_enabled) {
++        return false;
++    }
++    try {
++        return run_hybrid();
++    }
++    catch (const std::exception& error) {
++        LogError << "Hybrid execution failed" << error.what();
++        std::lock_guard context(m_context_mutex);
++        invalidate_locked();
++        finish_hybrid("failed");
++        return false;
++    }
++}
+diff --git a/src/MaaCore/Task/Interface/CopilotTask.cpp b/src/MaaCore/Task/Interface/CopilotTask.cpp
+--- a/src/MaaCore/Task/Interface/CopilotTask.cpp
++++ b/src/MaaCore/Task/Interface/CopilotTask.cpp
+@@ -1,4 +1,6 @@
+ #include "CopilotTask.h"
++#include "Assistant.h"
++#include "Task/Experiment/TacticalBattleTask.h"
+ 
+ #include "Arknights-Tile-Pos/TileCalc2.hpp"
+ 
+@@ -66,6 +68,24 @@
+     if (m_has_subtasks_duplicate) {
+         Log.error(__FUNCTION__, "CopilotTask set_params failed, already set params");
+         return false;
++    }
++
++    if (params.get("hybrid_control", false)) {
++        if (!params.contains("filename") || params.contains("copilot_list") || params.get("loop_times", 1) != 1) {
++            return false;
++        }
++        auto tactical = m_inst->tactical_battle();
++        if (!tactical->prepare_hybrid()) {
++            return false;
++        }
++        for (auto& subtask : m_subtasks) {
++            if (subtask == m_battle_task_ptr) {
++                subtask = tactical;
++            }
++        }
++        m_battle_task_ptr = tactical;
++        m_battle_task_ptr->set_retry_times(0);
++        m_multi_copilot_plugin_ptr->set_battle_task_ptr(m_battle_task_ptr);
+     }
+ 
+     bool use_sanity_potion = params.get("use_sanity_potion", false);                 // 是否使用理智药
+diff --git a/src/MaaCore/Task/Interface/SingleStepTask.cpp b/src/MaaCore/Task/Interface/SingleStepTask.cpp
+--- a/src/MaaCore/Task/Interface/SingleStepTask.cpp
++++ b/src/MaaCore/Task/Interface/SingleStepTask.cpp
+@@ -30,6 +30,16 @@
+         else if (subtype == "action" && details_opt) {
+             return append_copilot_action(*details_opt);
+         }
++#ifdef ASST_DEBUG
++        else if (subtype == "hybrid_rehearsal" && details_opt && !m_inst->connected()) {
++            auto tactical = m_inst->tactical_battle();
++            if (!tactical->prepare_hybrid(&*details_opt)) {
++                return false;
++            }
++            m_subtasks.emplace_back(tactical);
++            return true;
++        }
++#endif
+     }
+     return false;
+ }
+@@ -53,6 +63,10 @@
+ bool asst::SingleStepTask::append_copilot_action(const json::value& details)
+ {
+     LogTraceFunction;
++    const auto state = m_inst->tactical_battle()->hybrid_state().get("state", "idle");
++    if (state != "idle" && state != "completed" && state != "failed" && state != "cancelled") {
++        return false;
++    }
+ 
+     auto task = std::make_shared<SingleStepBattleProcessTask>(m_callback, m_inst, TaskType);
+ 
+diff --git a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
+--- a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
++++ b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
+@@ -465,12 +465,27 @@
+         image = ctrler()->get_image();
+     };
+ 
++    auto sync_condition = [&](const char* kind, int baseline = 0) {
++        if (!condition_point(kind, baseline)) {
++            return false;
++        }
++        if (condition_observation_invalidated()) {
++            image.release();
++            image_prev.release();
++            update_image_if_empty();
++        }
++        return true;
++    };
++
+     if (action.cost_changes != 0) {
+         update_image_if_empty();
+         update_cost(image);
+         int pre_cost = m_cost;
+ 
+         while (!need_exit()) {
++            if (!sync_condition("cost_changes", pre_cost)) {
++                return false;
++            }
+             update_cost(image, image_prev);
+             if (action.cost_changes != 0) {
+                 if ((pre_cost + action.cost_changes < 0) ? (m_cost <= pre_cost + action.cost_changes)
+@@ -488,6 +503,9 @@
+     if (m_kills < action.kills) {
+         update_image_if_empty();
+         while (!need_exit() && m_kills < action.kills) {
++            if (!sync_condition("kills")) {
++                return false;
++            }
+             update_kills(image, image_prev);
+             if (m_kills >= action.kills) {
+                 break;
+@@ -503,6 +521,9 @@
+         update_image_if_empty();
+         update_cost(image); // 保证 m_cost 是最新的
+         while (!need_exit()) {
++            if (!sync_condition("costs")) {
++                return false;
++            }
+             update_cost(image, image_prev);
+             if (m_cost >= action.costs) {
+                 break;
+@@ -518,6 +539,9 @@
+     if (action.cooling >= 0) {
+         update_image_if_empty();
+         while (!need_exit()) {
++            if (!sync_condition("cooling")) {
++                return false;
++            }
+             if (!update_deployment(false, image)) {
+                 return false;
+             }
+@@ -535,6 +559,9 @@
+         if (m_stopwatch_enabled) {
+             update_image_if_empty();
+             while (!need_exit()) {
++                if (!sync_condition("elapsed_time")) {
++                    return false;
++                }
+                 if (elapsed_time() >= action.elapsed_time) {
+                     break;
+                 }
+@@ -554,6 +581,9 @@
+         const auto& action_oper = get_name_from_group(action.role, action.name);
+         update_image_if_empty();
+         while (!need_exit()) {
++            if (!sync_condition("deployable")) {
++                return false;
++            }
+             if (!update_deployment(false, image)) {
+                 return false;
+             }
+@@ -570,7 +600,7 @@
+         }
+     }
+ 
+-    return true;
++    return sync_condition("condition_satisfied");
+ }
+ 
+ bool asst::BattleProcessTask::enter_bullet_time(
+diff --git a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
+--- a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
++++ b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
+@@ -47,7 +47,12 @@
+     // 将作业步骤中的name转换为具体干员名
+     battle::OperNameTag get_name_from_group(battle::Role role, const std::string& oper_name_in_action);
+     void notify_action(const battle::copilot::Action& action);
+-    bool wait_condition(const battle::copilot::Action& action);
++    virtual bool wait_condition(const battle::copilot::Action& action);
++
++    virtual bool condition_point(const char*, int) { return !need_exit(); }
++
++    virtual bool condition_observation_invalidated() { return false; }
++
+     bool enter_bullet_time(battle::Role role, const std::string& name, const std::optional<Point>& location);
+     virtual void sleep_and_do_strategy(unsigned millisecond);
+ 

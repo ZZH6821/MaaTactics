@@ -1,0 +1,17 @@
+{
+  "cmake": "4.4.5",
+  "clang_format": "23.1.1",
+  "ninja": "1.13.2",
+  "msvc": "19.52.37029.0",
+  "windows_sdk": "10.0.26100.0",
+  "maadeps": {
+    "tag": "v2.15.1",
+    "asset": "MaaDeps-x64-windows.tar.xz",
+    "sha256": "f6b657c147e38e67078c9f86687882524742693b6f0adddbf96a93f32dfc947c",
+    "digest_verified": true
+  },
+  "configuration": "Debug",
+  "debug_information": "Embedded (/Z7)",
+  "zlib_debug_library": "vcpkg/installed/maa-x64-windows/debug/lib/zsd.lib",
+  "linker_crt_conflict": "resolved by selecting MDd ZLIB; no NODEFAULTLIB suppression"
+}

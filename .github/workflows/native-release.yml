@@ -1,0 +1,65 @@
+name: Battle runtime and source distribution
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'native/maacore/**'
+      - 'src/maatactics/backends/maacore/**'
+      - 'tools/*maacore*.py'
+      - 'tools/*battle*.py'
+      - 'tools/audit_release.py'
+      - 'pyproject.toml'
+      - '.github/workflows/native-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: MaaAssistantArknights/MaaAssistantArknights
+          ref: 67478591379d441e25a59156047c3f6163520fb7
+          path: build/maa-reference
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: build/native-downloads
+          key: maadeps-x64-windows-${{ hashFiles('native/maacore/toolchain.lock.json', 'tools/prepare_maacore.py') }}
+      - run: uv sync --locked
+      - run: uv run --locked python tools/build_battle_core.py --reference build/maa-reference --work-dir build/native --cache-dir build/native-downloads
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-abi-x64-windows
+          path: build/native/native-build.json
+          if-no-files-found: error
+
+  distributions:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv build --no-sources --out-dir dist
+      - run: |
+          $archives = Get-ChildItem dist -File -Include *.tar.gz,*.whl -Recurse
+          uv run --no-project python tools/audit_release.py $archives.FullName --output dist/provenance.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-distributions
+          path: dist/*
+          if-no-files-found: error

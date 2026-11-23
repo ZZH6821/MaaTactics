@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "passed": true,
+  "device_connected": false,
+  "device_input_requested": false,
+  "memory_only_tasks_started": true,
+  "checks": {
+    "instance_stage_isolation": true,
+    "state_across_independent_tasks": true,
+    "failure_and_invalidation": true
+  },
+  "runtime_version": "v6.22.0-maatactics-p4.1",
+  "retained_context_before_failure": {
+    "abi_version": 1,
+    "action_sequence": 4,
+    "automatic_ready_actions_enabled": false,
+    "camera_count": 0,
+    "camera_shift": [
+      0.0,
+      0.0
+    ],
+    "context_revision": 1,
+    "context_valid": true,
+    "deployed_operators": [
+      {
+        "game_effect": "unknown",
+        "location": [
+          4,
+          3
+        ],
+        "name": "芬",
+        "role": 0,
+        "source": "engine_context"
+      }
+    ],
+    "elapsed_time_ms": 1059,
+    "ok": true,
+    "schema_version": "1.0",
+    "skill_usage": [
+      {
+        "name": "芬",
+        "remaining_times": 3,
+        "role": 0,
+        "usage": 2
+      }
+    ],
+    "stage_name": "main_01-07",
+    "stopwatch_enabled": true
+  },
+  "failure_result": {
+    "terminal_message": 10000,
+    "action_result": {
+      "action_sequence": 5,
+      "batch_index": 0,
+      "context_revision": 1,
+      "engine_return": false,
+      "game_effect": "unknown",
+      "reason": "ACTION_RETURNED_FALSE"
+    }
+  }
+}

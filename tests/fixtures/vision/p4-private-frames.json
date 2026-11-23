@@ -1,0 +1,654 @@
+{
+  "schema_version": "1.0",
+  "license": "private device capture; images not distributed",
+  "frames": [
+    {
+      "path": "artifacts/p3-startup-recheck/011.after.png",
+      "sha256": "f8e1d355d46e6fa9a396c889199fc085a86b8cdba23685cdb90f6996cc52af3c",
+      "tags": [
+        "ordinary_1-7",
+        "paused",
+        "dark_overlay",
+        "operator_retreated",
+        "single_skin_coverage_only"
+      ],
+      "ground_truth": {
+        "cost": 48,
+        "kills": 1,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployed_operators": [],
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          18
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "ready_ground_truth": {
+        "location": [
+          4,
+          3
+        ],
+        "operator_present": false,
+        "ready": null
+      },
+      "label_source": "independent supervising Agent visual review, not recognition output",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/006.before.png",
+      "sha256": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9",
+      "tags": [
+        "formation",
+        "nonbattle"
+      ],
+      "ground_truth": {
+        "cost": null,
+        "kills": null,
+        "total_kills": null,
+        "paused": null,
+        "battle_speed": null,
+        "deployment_count": null,
+        "deployment_card_costs": null
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used"
+    },
+    {
+      "path": "artifacts/start-pause-actions/007.png",
+      "sha256": "13b98ebc95e93fd135a6e7ac9c1fc253d617b3d0637ce0144f80e7e04f1efa28",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 25,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/009.after.png",
+      "sha256": "f2db2360fb8ba609fa0e317958d9f83f1d4f27c717fdf33af65c6c193af759ad",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 37,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/009.before.png",
+      "sha256": "592e9ec4bf35e391c212c42f739273a678a1c8f27f2977404f5a8d8b4f79dfd3",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 37,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/013.after.png",
+      "sha256": "7f648283c9c08fad1a94478d2f6c9472e8d4fb6be3ea40118d79ef9faaeaa968",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 38,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/013.before.png",
+      "sha256": "ca1e64838d5e11a5e27094f271f27e9bbb78b974501eb1758496938dbe2a6e65",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 37,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/015.after.png",
+      "sha256": "58d5ac0f9d5b8b216e1dcea95de53fe8b69487c1c38044ebf49e96a72d38fb21",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 31,
+        "kills": 1,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/015.before.png",
+      "sha256": "b9ce2b314a2805fbfdc895e9c5fffcfa7c34f1492388160df625cd969472d002",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 39,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/017.after.png",
+      "sha256": "b1d538f123dd22de915317c28194a9a2af0bbd54022bc5bc395d19a4b90820c2",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 33,
+        "kills": 2,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/017.before.png",
+      "sha256": "ec63d22b23f2a8495daa8ec6ab3c7128519c59a7140467140d40a19826a6eadd",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 33,
+        "kills": 2,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/019.after.png",
+      "sha256": "5e0fe62b58bc36fec7ff637ce0451465284ef7199e9d1fb0b7002ff9e887192c",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 33,
+        "kills": 2,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "label_correction": {
+        "field": "kills",
+        "before": 3,
+        "after": 2,
+        "reason": "Full-resolution visual re-review shows 2/41 or 5/41; initial small contact-sheet label was misread. Corrected against original image, not by adopting recognizer output."
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/019.before.png",
+      "sha256": "e57cf619fc54ef8dce512e3ae56b5a8ed4107a54c27f442acc02404cee28d772",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 33,
+        "kills": 2,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/021.after.png",
+      "sha256": "f20a91434a68766f5e51ea2df18f12a16b45f819e37feb22d935f6fc51511ae8",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 46,
+        "kills": 6,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/021.before.png",
+      "sha256": "7a305d5e5e84570cab225800ca7178a41f38612589630db9c81fb1f209236ab0",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running"
+      ],
+      "ground_truth": {
+        "cost": 35,
+        "kills": 5,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "label_correction": {
+        "field": "kills",
+        "before": 3,
+        "after": 5,
+        "reason": "Full-resolution visual re-review shows 2/41 or 5/41; initial small contact-sheet label was misread. Corrected against original image, not by adopting recognizer output."
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/023.after.png",
+      "sha256": "df57f934d4d9ac2357ce63019112ca501fc7bf026dc41d9624927023622829f9",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "animation",
+        "skill_effect_occlusion",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 49,
+        "kills": 6,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/start-pause-actions/023.before.png",
+      "sha256": "b25be95b258b30e00a69bfb6695b3ea66c977c5ced5dcc08d89b0c217bd0a6e6",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 49,
+        "kills": 6,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "independent Agent review of original capture/contact sheet; no recognizer output used",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/017.after.png",
+      "sha256": "ea6be998c340868dd85ea8e8a2838ed1d73bd211dcc7cf138e0e43bfef87fda1",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 20,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 2,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          12
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/025.after.png",
+      "sha256": "70fcbaf29f61db57355fd343425de719c72feb43070699279c5eb2125bdba583",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 14,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "ready_ground_truth": {
+        "location": [
+          4,
+          3
+        ],
+        "operator_present": true,
+        "ready": false
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/027.after.png",
+      "sha256": "ff64b06b113e86bd06860bb1292a387c41430fa0da94c90c5ce7a108979a56ba",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay"
+      ],
+      "ground_truth": {
+        "cost": 20,
+        "kills": 0,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "ready_ground_truth": {
+        "location": [
+          4,
+          3
+        ],
+        "operator_present": true,
+        "ready": true
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/033.after.png",
+      "sha256": "d10c587e673486d486070a5ec08c764a8acb5a873b1b2153ad96592fa8e069ec",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 38,
+        "kills": 2,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "ready_ground_truth": {
+        "location": [
+          4,
+          3
+        ],
+        "operator_present": true,
+        "ready": false
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/035.after.png",
+      "sha256": "c1fe826c34ef42e634f10a655c2fdb567f1c30a754e4d3931f027af6cb3f3699",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay",
+        "animation",
+        "skill_effect_occlusion"
+      ],
+      "ground_truth": {
+        "cost": 47,
+        "kills": 7,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          19
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "ready_ground_truth": {
+        "location": [
+          4,
+          3
+        ],
+        "operator_present": true,
+        "ready": false
+      },
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/039.after.png",
+      "sha256": "c8edc1f2f5dd9dc0a88d24e802e7dbca4be5bd8e685a0bc4df61169af9d5199b",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "running",
+        "operator_retreated"
+      ],
+      "ground_truth": {
+        "cost": 64,
+        "kills": 7,
+        "total_kills": 41,
+        "paused": false,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          18
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    },
+    {
+      "path": "artifacts/p4-real-actions/041.after.png",
+      "sha256": "05910fc6fecf0f243e436c9ee5b2977dd485fa3a6d90bd7e7ee3ab3fc4b5fa64",
+      "tags": [
+        "ordinary_1-7",
+        "base_skin",
+        "paused",
+        "dark_overlay",
+        "operator_retreated"
+      ],
+      "ground_truth": {
+        "cost": 68,
+        "kills": 7,
+        "total_kills": 41,
+        "paused": true,
+        "battle_speed": 1,
+        "deployment_count": 1,
+        "deployment_card_costs": [
+          18
+        ],
+        "deployment_names": [
+          "凛御银灰"
+        ]
+      },
+      "label_source": "Independent Agent visual review of full original screenshot, before inference benchmark; ready refers to the unit at [4,3], not the adjacent summon.",
+      "card_label_source": "Independent original screenshot/contact-sheet review: exactly one bottom card, printed cost; name evaluated only for the known hero portrait. Summon name intentionally unlabelled."
+    }
+  ],
+  "coverage": {
+    "maps": [
+      "1-7"
+    ],
+    "operators": [
+      "凛御银灰"
+    ],
+    "skins": [
+      "default"
+    ],
+    "alternate_skins": "missing; automatic Ready actions disabled",
+    "distribution": "private captures only; neither images nor weights bundled",
+    "ready_roi_context": "Ground-truth unit location is seeded in memory to evaluate classification; this is not deployment detection."
+  }
+}

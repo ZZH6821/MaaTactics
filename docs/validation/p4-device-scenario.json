@@ -1,0 +1,537 @@
+{
+  "schema_version": "1.0",
+  "scenario": "P4 real standard MCP stdio, 1-7 exercise, named deploy/skill/retreat and idempotent absolute speed",
+  "runtime_version": "v6.22.0-maatactics-p4.2",
+  "library_sha256": "fdd499b19fd7126ca9a841da41c7331cc7faecce7a79ee5db83fa8d8027fd202",
+  "stage_id": "main_01-07",
+  "operator": "凛御银灰",
+  "location": [
+    4,
+    3
+  ],
+  "operations": [
+    {
+      "kind": "connect_device",
+      "operation_id": "op-e78f4e302979494c8327586870baa6a5",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:32:48.677Z",
+      "finished_at": "2026-11-17T11:33:08.987Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "kind": "set_stage",
+      "operation_id": "op-e77dfd7384234ec5808132f6a714ca75",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:33:09.168Z",
+      "finished_at": "2026-11-17T11:33:09.223Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "kind": "set_battle_speed",
+      "operation_id": "op-1979517029d14ad8ac0af02845a94a83",
+      "lifecycle": "failed",
+      "accepted_at": "2026-11-17T11:33:10.085Z",
+      "finished_at": "2026-11-17T11:33:11.036Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": {
+        "code": "BATTLE_STATE_UNKNOWN",
+        "message": "Battle speed could not be recognized; no toggle issued",
+        "retryable": false,
+        "effect_may_have_occurred": false,
+        "recovery": "Inspect operation and session; reobserve before issuing a new action."
+      },
+      "result": {},
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/006.before.png",
+          "sha256": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9"
+        }
+      }
+    },
+    {
+      "kind": "set_stage",
+      "operation_id": "op-cd39e7515b4e468b8b2b023b27383b04",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:34:56.042Z",
+      "finished_at": "2026-11-17T11:34:56.083Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "kind": "start_battle",
+      "operation_id": "op-9031996983154e379f453aef5a3f4c8c",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:34:57.070Z",
+      "finished_at": "2026-11-17T11:35:20.472Z",
+      "native_task_outcome": "completed",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": true,
+        "start_issued": true,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/015.before.png",
+          "sha256": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/015.after.png",
+          "sha256": "5c84a0b3c7c2f0599e76b480bd9db4db8f59417f6496ad5208b8065f428e0815"
+        }
+      }
+    },
+    {
+      "kind": "set_battle_speed",
+      "operation_id": "op-92db5bb58fff4cf8ab02f434b0473b78",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:35:21.736Z",
+      "finished_at": "2026-11-17T11:35:24.494Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "native_action_result": {
+          "action_sequence": 1,
+          "batch_index": 0,
+          "context_revision": 3,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        },
+        "battle_speed": 2,
+        "input_issued": true,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/017.before.png",
+          "sha256": "2bb0edc9e44764381f6f51b066cf7e7b996996ca8547a98c496840e404da241c"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/017.after.png",
+          "sha256": "ea6be998c340868dd85ea8e8a2838ed1d73bd211dcc7cf138e0e43bfef87fda1"
+        }
+      }
+    },
+    {
+      "kind": "set_battle_speed",
+      "operation_id": "op-a6423ac05ddc4b3e9cef31feccd3dd23",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:35:25.852Z",
+      "finished_at": "2026-11-17T11:35:27.844Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "not_required",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "battle_speed": 2,
+        "input_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/019.before.png",
+          "sha256": "9603e70c5d9f12b43ed487a70b6d54398d5164d80235d5542571fe4ed374492b"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/019.after.png",
+          "sha256": "7776557d2e2203901200ae48995b117f5f2a24bfb5fbf07b8978799e671151d3"
+        }
+      }
+    },
+    {
+      "kind": "set_battle_speed",
+      "operation_id": "op-8a7330562b4c4181b132f74e66a2fd8e",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:35:29.060Z",
+      "finished_at": "2026-11-17T11:35:31.616Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "native_action_result": {
+          "action_sequence": 2,
+          "batch_index": 0,
+          "context_revision": 3,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        },
+        "battle_speed": 1,
+        "input_issued": true,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/021.before.png",
+          "sha256": "a71465c06f302c929f448b215afa19d96520a428cc72789ea17b976c8bb9498e"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/021.after.png",
+          "sha256": "e59e1f43442a0c921741db022433a12c55474e2b0d4ac9278f8c284bc33f4b73"
+        }
+      }
+    },
+    {
+      "kind": "resume_battle",
+      "operation_id": "op-e00b907d1fb448e88da7a1bb3b3e67db",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:36:45.124Z",
+      "finished_at": "2026-11-17T11:36:47.068Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": false,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/023.before.png",
+          "sha256": "aac1ac1310af86f52ffbc7089b746394409b9e3d26612b7612af160f307a9e6e"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/023.after.png",
+          "sha256": "28973a5f998b7e9ee0bcd5489975a30a854eaa08104d3623eaa81478d4333176"
+        }
+      }
+    },
+    {
+      "kind": "deploy_operator",
+      "operation_id": "op-cc5a977198e744c186c2eed0724e69e6",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:36:48.236Z",
+      "finished_at": "2026-11-17T11:36:56.177Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {
+        "native_action_result": {
+          "action_sequence": 3,
+          "batch_index": 0,
+          "context_revision": 3,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/025.before.png",
+          "sha256": "6d9e178218477c47d38a0df8f79b201732c0a1eb2b25f16b367ce2ad7d8ecc34"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/025.after.png",
+          "sha256": "70fcbaf29f61db57355fd343425de719c72feb43070699279c5eb2125bdba583"
+        }
+      }
+    },
+    {
+      "kind": "pause_battle",
+      "operation_id": "op-ea5b7317c9bc464ebcca894649a1d6f2",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:36:58.279Z",
+      "finished_at": "2026-11-17T11:37:02.756Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": true,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/027.before.png",
+          "sha256": "9c50f442a31ac67f3615f03a06154d27cae7d219a68f37ddec4163315772194d"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/027.after.png",
+          "sha256": "ff64b06b113e86bd06860bb1292a387c41430fa0da94c90c5ce7a108979a56ba"
+        }
+      }
+    },
+    {
+      "kind": "resume_battle",
+      "operation_id": "op-cc2ee8cbd1754295a647ee1bddd4f24b",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:38:18.899Z",
+      "finished_at": "2026-11-17T11:38:23.624Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": false,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/031.before.png",
+          "sha256": "ba3f30fee8293e41f7d5cc4d16f5cb9ad4553f18514fc87a258015338c325ebe"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/031.after.png",
+          "sha256": "da718928a7220340a8bceee337385aa92e85c63517d151dff1f6d970e3139a3f"
+        }
+      }
+    },
+    {
+      "kind": "use_skill",
+      "operation_id": "op-fa0f9615f95742d6a910a648d7ad1631",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:38:26.174Z",
+      "finished_at": "2026-11-17T11:38:32.815Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {
+        "native_action_result": {
+          "action_sequence": 4,
+          "batch_index": 0,
+          "context_revision": 3,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/033.before.png",
+          "sha256": "969a7460ee10862ec0f38ff79c3df1918bd0ecb49d17fb9afffa84a662ded872"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/033.after.png",
+          "sha256": "d10c587e673486d486070a5ec08c764a8acb5a873b1b2153ad96592fa8e069ec"
+        }
+      }
+    },
+    {
+      "kind": "pause_battle",
+      "operation_id": "op-3e66ec3741374b7aa91c96af118eddd8",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:38:35.187Z",
+      "finished_at": "2026-11-17T11:38:39.403Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": true,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/035.before.png",
+          "sha256": "0fe5883244fe2813ed6f59e518cc91bc9cf8e21a071d19648716fea8b27aa50d"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/035.after.png",
+          "sha256": "c1fe826c34ef42e634f10a655c2fdb567f1c30a754e4d3931f027af6cb3f3699"
+        }
+      }
+    },
+    {
+      "kind": "resume_battle",
+      "operation_id": "op-462b3ccec334474e9aacb597094454b4",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:39:47.436Z",
+      "finished_at": "2026-11-17T11:39:52.265Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": false,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/037.before.png",
+          "sha256": "45483c54a2ae1b361e7c1858345f0e31aad914f58d6f69d2af2e7cf1df6842bd"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/037.after.png",
+          "sha256": "175067cba01cfe03bb592833519d2f855b2ea123409ad61c8daece56da1cb14d"
+        }
+      }
+    },
+    {
+      "kind": "retreat_operator",
+      "operation_id": "op-a4c6d697105a439d992d35c5e326ab1d",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:39:54.726Z",
+      "finished_at": "2026-11-17T11:39:59.653Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {
+        "native_action_result": {
+          "action_sequence": 5,
+          "batch_index": 0,
+          "context_revision": 3,
+          "engine_return": true,
+          "game_effect": "unknown",
+          "reason": "OK"
+        }
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/039.before.png",
+          "sha256": "b347236b641ef37826257349fdbd283902963099592231eb71422498a20e2846"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/039.after.png",
+          "sha256": "c8edc1f2f5dd9dc0a88d24e802e7dbca4be5bd8e685a0bc4df61169af9d5199b"
+        }
+      }
+    },
+    {
+      "kind": "pause_battle",
+      "operation_id": "op-86adf4af3bea44c7b274497e5481206f",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-17T11:40:00.939Z",
+      "finished_at": "2026-11-17T11:40:02.915Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_issued": true,
+        "game_paused": true,
+        "start_issued": false,
+        "verification_source": "vision"
+      },
+      "evidence": {
+        "before": {
+          "path": "artifacts/p4-real-actions/041.before.png",
+          "sha256": "95f2b33ab3f6d6e0d8ddda9f7f9e952afb61c1206df2ec7364ecab11f743b4dc"
+        },
+        "after": {
+          "path": "artifacts/p4-real-actions/041.after.png",
+          "sha256": "05910fc6fecf0f243e436c9ee5b2977dd485fa3a6d90bd7e7ee3ab3fc4b5fa64"
+        }
+      }
+    }
+  ],
+  "independent_visual_verification": {
+    "025.after.png": "Hero deployed at [4,3], facing right.",
+    "033.after.png": "Blue skill effects around the hero after named Skill.",
+    "039.after.png": "Hero absent and redeployment cooldown card visible after named Retreat."
+  },
+  "negative_precondition": "Initial formation-screen speed request failed BATTLE_STATE_UNKNOWN with no toggle; repeated wait_last receipts deduplicated.",
+  "cleanup": {
+    "schema_version": "1.0",
+    "request_status": "accepted",
+    "session_id": "s-12f3ba9ef9d844c89d4c5f0c0f87cf9d",
+    "epoch": 1,
+    "kind": "disconnect_device",
+    "timeout_ms": 5000,
+    "operation_id": "op-941fe46a46114ba2a8b2acc5e6ea8e72",
+    "lifecycle": "completed",
+    "accepted_at": "2026-11-17T11:51:37.544Z",
+    "finished_at": "2026-11-17T11:51:37.733Z",
+    "native_task_outcome": "unknown",
+    "input_execution": "unknown",
+    "game_effect": "unknown",
+    "before_snapshot_id": null,
+    "after_snapshot_id": null,
+    "result": {
+      "epoch": 2,
+      "status": "closed",
+      "game_paused": "unknown",
+      "new_inputs_stopped": true
+    },
+    "error": null,
+    "warnings": [],
+    "deadline_at": "2026-11-17T11:51:42.544Z"
+  },
+  "post_cleanup_read_only_check": {
+    "read_only_adb": true,
+    "pause_observation": {
+      "state": "paused",
+      "confidence": null,
+      "source": "vision",
+      "method": "battle_hud_components_v1",
+      "reason": "play_triangle",
+      "components": [
+        {
+          "area": 412,
+          "width": 33,
+          "height": 27,
+          "x": 11,
+          "y": 12
+        }
+      ]
+    },
+    "bytes": 1893915
+  },
+  "limitations": [
+    "Tactical game_effect remains unknown in service responses; screenshot review is external.",
+    "Only one exercise scenario; P2 ten-round release stability gate remains open.",
+    "Newest startup context reset and epoch change have Mock regression; prior real start proof preceded that reset change.",
+    "The mistaken disconnect request was rejected; explicit cleanup recheck succeeded separately."
+  ],
+  "fixed_console_cleanup": {
+    "schema_version": "1.0",
+    "request_status": "accepted",
+    "session_id": "s-631142e6aba14262ba3574e233bbceda",
+    "epoch": 1,
+    "kind": "disconnect_device",
+    "timeout_ms": 5000,
+    "operation_id": "op-3d36ab66c29f4d589d2e57e8824b56b2",
+    "lifecycle": "completed",
+    "accepted_at": "2026-11-17T12:01:16.442Z",
+    "finished_at": "2026-11-17T12:01:16.615Z",
+    "native_task_outcome": "unknown",
+    "input_execution": "unknown",
+    "game_effect": "unknown",
+    "before_snapshot_id": null,
+    "after_snapshot_id": null,
+    "result": {
+      "epoch": 2,
+      "status": "closed",
+      "game_paused": "unknown",
+      "new_inputs_stopped": true
+    },
+    "error": null,
+    "warnings": [],
+    "deadline_at": "2026-11-17T12:01:21.442Z"
+  }
+}

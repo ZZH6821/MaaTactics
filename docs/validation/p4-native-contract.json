@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "passed": true,
+  "device_connected": false,
+  "device_input_requested": false,
+  "memory_only_tasks_started": true,
+  "checks": {
+    "instance_stage_isolation": true,
+    "state_across_independent_tasks": true,
+    "passive_observer_preserves_context": true,
+    "failure_and_invalidation": true,
+    "concurrency_cancel_and_stale_queue": true
+  },
+  "runtime_version": "v6.22.0-maatactics-p4.2",
+  "fixed_frame_observation": {
+    "battle_hud": true,
+    "battle_speed": 1,
+    "calibrated": false,
+    "confidence": null,
+    "cost": 48,
+    "deployment": [
+      {
+        "available": false,
+        "candidate_name": "",
+        "confidence": null,
+        "cooling": true,
+        "cost": 18,
+        "index": 0,
+        "rect": [
+          1186,
+          598,
+          75,
+          120
+        ],
+        "role": 1
+      }
+    ],
+    "input_issued": false,
+    "kills": 1,
+    "latency_ms": {
+      "battle_hud": 1.9749,
+      "battle_speed": 1667.1524,
+      "cost": 2093.1267,
+      "deployment": 82.6611,
+      "kills": 97.331,
+      "skill_states": 330.3875
+    },
+    "skill_states": [
+      {
+        "candidate_ready": false,
+        "confidence": null,
+        "location": [
+          4,
+          3
+        ],
+        "name": "芬",
+        "preprocessing": "upstream_BattlefieldClassifier",
+        "probabilities": [
+          0.086592,
+          0.90699,
+          0.006417
+        ],
+        "score": 0.90699,
+        "status": "experimental"
+      }
+    ],
+    "speed_score": 0.997294,
+    "speed_text": "1X",
+    "total_kills": 41
+  },
+  "frame_context_is_seeded_test_data": true,
+  "retained_context_before_failure": {
+    "abi_version": 1,
+    "action_sequence": 4,
+    "automatic_ready_actions_enabled": false,
+    "camera_count": 0,
+    "camera_shift": [
+      0.0,
+      0.0
+    ],
+    "context_revision": 1,
+    "context_valid": true,
+    "deployed_operators": [
+      {
+        "game_effect": "unknown",
+        "location": [
+          4,
+          3
+        ],
+        "name": "芬",
+        "role": 0,
+        "source": "engine_context"
+      }
+    ],
+    "elapsed_time_ms": 1061,
+    "features": [
+      "persistent_context",
+      "passive_observer",
+      "named_actions",
+      "absolute_speed"
+    ],
+    "ok": true,
+    "schema_version": "1.0",
+    "skill_usage": [
+      {
+        "name": "芬",
+        "remaining_times": 3,
+        "role": 0,
+        "usage": 2
+      }
+    ],
+    "stage_name": "main_01-07",
+    "stopwatch_enabled": true
+  },
+  "failure_result": {
+    "terminal_message": 10000,
+    "action_result": {
+      "action_sequence": 5,
+      "batch_index": 0,
+      "context_revision": 1,
+      "engine_return": false,
+      "game_effect": "unknown",
+      "reason": "ACTION_RETURNED_FALSE"
+    }
+  },
+  "concurrency": {
+    "busy_snapshot_refused": true,
+    "independent_query_ms": 0.0,
+    "cancelled": {
+      "terminal_message": 10004,
+      "action_result": {
+        "action_sequence": 7,
+        "batch_index": 1,
+        "context_revision": 3,
+        "engine_return": false,
+        "game_effect": "unknown",
+        "reason": "CANCELLED"
+      }
+    },
+    "stale_queued_action": {
+      "terminal_message": 10000,
+      "action_result": {
+        "action_sequence": 8,
+        "context_revision": 6,
+        "engine_return": false,
+        "game_effect": "unknown",
+        "reason": "CONTEXT_INVALID"
+      }
+    }
+  }
+}

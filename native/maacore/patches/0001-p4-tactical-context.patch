@@ -1,0 +1,676 @@
+diff --git a/include/AsstCaller.h b/include/AsstCaller.h
+--- a/include/AsstCaller.h
++++ b/include/AsstCaller.h
+@@ -61,22 +61,24 @@
+     AsstBool ASSTAPI AsstSetStaticOption(AsstStaticOptionKey key, const char* value);
+ 
+     AsstHandle ASSTAPI AsstCreate();
++    // MaaTactics extension. JSON sizes exclude the trailing NUL; no input is issued by observation.
++    uint32_t ASSTAPI AsstBattleAbiVersion();
++    AsstBool ASSTAPI AsstBattleReset(AsstHandle handle, const char* stage_name);
++    AsstSize ASSTAPI AsstBattleGetContext(AsstHandle handle, void* buffer, AsstSize buffer_size);
++    AsstSize ASSTAPI
++        AsstBattleObserve(AsstHandle handle, const void* png, AsstSize png_size, void* buffer, AsstSize buffer_size);
+     AsstHandle ASSTAPI AsstCreateEx(AsstApiCallback callback, void* custom_arg);
+     void ASSTAPI AsstDestroy(AsstHandle handle);
+ 
+     // 设置实例级参数。
+     // InstanceOptionKey::ClientType 仅在所选连接配置的 connect 阶段命令依赖 [PackageName] 时需要预先设置；
+     // 当前内置配置中仅 Androws / WSA 的 displayId 查询依赖该值。
+-    AsstBool ASSTAPI
+-        AsstSetInstanceOption(AsstHandle handle, AsstInstanceOptionKey key, const char* value);
++    AsstBool ASSTAPI AsstSetInstanceOption(AsstHandle handle, AsstInstanceOptionKey key, const char* value);
+ 
+     // 同步连接，功能已完全被异步连接取代
+     // FIXME: 5.0 版本将废弃此接口
+-    /* deprecated */ AsstBool ASSTAPI AsstConnect(
+-        AsstHandle handle,
+-        const char* adb_path,
+-        const char* address,
+-        const char* config);
++    /* deprecated */ AsstBool ASSTAPI
++        AsstConnect(AsstHandle handle, const char* adb_path, const char* address, const char* config);
+ 
+     AsstTaskId ASSTAPI AsstAppendTask(AsstHandle handle, const char* type, const char* params);
+     AsstBool ASSTAPI AsstSetTaskParams(AsstHandle handle, AsstTaskId id, const char* params);
+diff --git a/src/MaaCore/Assistant.h b/src/MaaCore/Assistant.h
+--- a/src/MaaCore/Assistant.h
++++ b/src/MaaCore/Assistant.h
+@@ -70,6 +70,7 @@
+ class Controller;
+ class InterfaceTask;
+ class Status;
++class TacticalBattleTask;
+ 
+ class Assistant : public AsstExtAPI
+ {
+@@ -126,6 +127,8 @@
+ 
+     bool need_exit() const { return m_thread_idle && m_running; }
+ 
++    std::shared_ptr<TacticalBattleTask> tactical_battle();
++
+ private:
+     void append_callback(AsstMsg msg, const json::value& detail);
+     static void append_callback_for_inst(AsstMsg msg, const json::value& detail, Assistant* inst);
+@@ -236,5 +239,7 @@
+     std::thread m_msg_thread;
+     std::thread m_call_thread;
+     std::thread m_working_thread;
++    std::shared_ptr<TacticalBattleTask> m_tactical_battle;
++    std::mutex m_tactical_mutex;
+ };
+ } // namespace asst
+diff --git a/src/MaaCore/Assistant.cpp b/src/MaaCore/Assistant.cpp
+--- a/src/MaaCore/Assistant.cpp
++++ b/src/MaaCore/Assistant.cpp
+@@ -1,4 +1,5 @@
+ #include "Assistant.h"
++#include "Task/Experiment/TacticalBattleTask.h"
+ 
+ #include "MaaUtils/NoWarningCV.hpp"
+ #include <meojson/json.hpp>
+@@ -1042,6 +1043,15 @@
+     return m_ctrler && m_ctrler->inited();
+ }
+ 
++std::shared_ptr<asst::TacticalBattleTask> asst::Assistant::tactical_battle()
++{
++    std::lock_guard lock(m_tactical_mutex);
++    if (!m_tactical_battle) {
++        m_tactical_battle = std::make_shared<TacticalBattleTask>(append_callback_for_inst, this);
++    }
++    return m_tactical_battle;
++}
++
+ bool asst::Assistant::back_to_home() const
+ {
+     return m_ctrler->back_to_home();
+diff --git a/src/MaaCore/TacticalCaller.cpp b/src/MaaCore/TacticalCaller.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/MaaCore/TacticalCaller.cpp
+@@ -0,0 +1,69 @@
++#include "AsstCaller.h"
++
++#include <cstring>
++
++#include "Assistant.h"
++#include "Task/Experiment/TacticalBattleTask.h"
++#include "Utils/Logger.hpp"
++
++static AsstSize copy_battle_json(const json::value& value, void* buffer, AsstSize buffer_size)
++{
++    const auto text = value.to_string();
++    if (buffer && buffer_size >= text.size()) {
++        std::memcpy(buffer, text.data(), text.size());
++    }
++    return text.size();
++}
++
++uint32_t AsstBattleAbiVersion()
++{
++    return 1;
++}
++
++AsstBool AsstBattleReset(AsstHandle handle, const char* stage_name)
++{
++    auto* assistant = dynamic_cast<asst::Assistant*>(handle);
++    if (!assistant || !stage_name || assistant->running() || !assistant->get_tasks_list().empty()) {
++        return 0;
++    }
++    try {
++        return assistant->tactical_battle()->bind_stage(stage_name) ? 1 : 0;
++    }
++    catch (const std::exception& error) {
++        LogError << "Tactical context reset failed" << error.what();
++        return 0;
++    }
++}
++
++AsstSize AsstBattleGetContext(AsstHandle handle, void* buffer, AsstSize buffer_size)
++{
++    auto* assistant = dynamic_cast<asst::Assistant*>(handle);
++    if (!assistant) {
++        return 0;
++    }
++    try {
++        return copy_battle_json(assistant->tactical_battle()->context_snapshot(), buffer, buffer_size);
++    }
++    catch (const std::exception& error) {
++        LogError << "Tactical context query failed" << error.what();
++        return 0;
++    }
++}
++
++AsstSize AsstBattleObserve(AsstHandle handle, const void* png, AsstSize png_size, void* buffer, AsstSize buffer_size)
++{
++    auto* assistant = dynamic_cast<asst::Assistant*>(handle);
++    if (!assistant) {
++        return 0;
++    }
++    try {
++        return copy_battle_json(
++            assistant->tactical_battle()->observe(static_cast<const unsigned char*>(png), png_size),
++            buffer,
++            buffer_size);
++    }
++    catch (const std::exception& error) {
++        LogError << "Tactical observation failed" << error.what();
++        return 0;
++    }
++}
+diff --git a/src/MaaCore/Task/Experiment/TacticalBattleTask.h b/src/MaaCore/Task/Experiment/TacticalBattleTask.h
+new file mode 100644
+--- /dev/null
++++ b/src/MaaCore/Task/Experiment/TacticalBattleTask.h
+@@ -0,0 +1,32 @@
++#pragma once
++#include "Task/Miscellaneous/BattleProcessTask.h"
++#include <atomic>
++#include <mutex>
++
++namespace asst
++{
++class TacticalBattleTask final : public BattleProcessTask
++{
++public:
++    using Actions = std::vector<battle::copilot::Action>;
++    TacticalBattleTask(const AsstCallback& callback, Assistant* inst);
++    bool bind_stage(const std::string& stage);
++    uint64_t revision() const;
++    bool execute(const Actions& actions, uint64_t expected_revision, int task_id, int absolute_speed = 0);
++    json::value context_snapshot() const;
++    json::value observe(const unsigned char* png, size_t size);
++
++protected:
++    bool _run() override { return false; }
++
++    void sleep_and_do_strategy(unsigned millisecond) override;
++
++private:
++    json::value context_snapshot_locked() const;
++    void invalidate_locked();
++    mutable std::mutex m_context_mutex;
++    std::atomic_uint64_t m_revision = 0;
++    uint64_t m_action_sequence = 0;
++    bool m_context_valid = false;
++};
++}
+diff --git a/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp b/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/MaaCore/Task/Experiment/TacticalBattleTask.cpp
+@@ -0,0 +1,281 @@
++#include "TacticalBattleTask.h"
++
++#include "MaaUtils/NoWarningCV.hpp"
++#include "Utils/Logger.hpp"
++#include "Vision/Battle/BattlefieldClassifier.h"
++#include "Vision/Battle/BattlefieldMatcher.h"
++#include "Vision/RegionOCRer.h"
++
++asst::TacticalBattleTask::TacticalBattleTask(const AsstCallback& callback, Assistant* inst) :
++    BattleProcessTask(callback, inst, "SingleStep")
++{
++}
++
++void asst::TacticalBattleTask::invalidate_locked()
++{
++    BattleProcessTask::clear();
++    m_stage_name.clear();
++    m_in_bullet_time = false;
++    m_cost = 0;
++    m_in_speedup = false;
++    m_has_multi_stages = false;
++    m_map_data = {};
++    m_context_valid = false;
++    ++m_revision;
++}
++
++void asst::TacticalBattleTask::sleep_and_do_strategy(unsigned millisecond)
++{
++    if (millisecond != 0) {
++        BattleProcessTask::sleep_and_do_strategy(millisecond);
++    }
++}
++
++bool asst::TacticalBattleTask::bind_stage(const std::string& stage)
++{
++    std::unique_lock lock(m_context_mutex, std::try_to_lock);
++    if (!lock.owns_lock()) {
++        return false;
++    }
++    if (!stage.empty() && (!Tile.find(stage) || !json::open(Tile.find(stage)->second))) {
++        LogError << "Unsupported tactical stage" << stage;
++        return false;
++    }
++    invalidate_locked();
++    if (stage.empty()) {
++        return true;
++    }
++    m_stage_name = stage;
++    m_context_valid = calc_tiles_info(stage);
++    return m_context_valid;
++}
++
++uint64_t asst::TacticalBattleTask::revision() const
++{
++    return m_revision.load();
++}
++
++bool asst::TacticalBattleTask::execute(
++    const Actions& actions,
++    uint64_t expected_revision,
++    int task_id,
++    int absolute_speed)
++{
++    std::lock_guard lock(m_context_mutex);
++    set_task_id(task_id);
++    if (!m_context_valid || expected_revision != m_revision) {
++        auto info = basic_info_with_what("TacticalActionCompleted");
++        info["details"] = json::object { { "context_revision", m_revision.load() },
++                                         { "action_sequence", ++m_action_sequence },
++                                         { "engine_return", false },
++                                         { "reason", "CONTEXT_INVALID" },
++                                         { "game_effect", "unknown" } };
++        callback(AsstMsg::SubTaskExtraInfo, info);
++        return false;
++    }
++    for (size_t index = 0; index < actions.size(); ++index) {
++        const auto sequence = ++m_action_sequence;
++        bool returned = false;
++        std::string reason = "ACTION_RETURNED_FALSE";
++        try {
++            if (!need_exit()) {
++                if (absolute_speed != 0) {
++                    m_in_speedup = absolute_speed == 1;
++                }
++                returned = do_action(actions[index], index);
++            }
++            if (need_exit()) {
++                returned = false;
++                reason = "CANCELLED";
++            }
++            else if (returned) {
++                reason = "OK";
++            }
++        }
++        catch (const std::exception& error) {
++            LogError << "Tactical action failed" << error.what();
++            reason = "ACTION_EXCEPTION";
++        }
++        auto info = basic_info_with_what("TacticalActionCompleted");
++        info["details"] = json::object { { "context_revision", m_revision.load() },
++                                         { "action_sequence", sequence },
++                                         { "batch_index", index },
++                                         { "engine_return", returned },
++                                         { "reason", reason },
++                                         { "game_effect", "unknown" } };
++        callback(AsstMsg::SubTaskExtraInfo, info);
++        if (!returned) {
++            invalidate_locked();
++            return false;
++        }
++    }
++    return true;
++}
++
++json::value asst::TacticalBattleTask::context_snapshot_locked() const
++{
++    json::array deployed;
++    for (const auto& [oper, location] : m_battlefield_opers) {
++        deployed.emplace_back(
++            json::object { { "name", oper.name },
++                           { "role", static_cast<int>(oper.role) },
++                           { "location", json::array { location.x, location.y } },
++                           { "source", "engine_context" },
++                           { "game_effect", "unknown" } });
++    }
++    json::array skill_usage;
++    for (const auto& [oper, usage] : m_skill_usage) {
++        auto times = m_skill_times.find(oper);
++        skill_usage.emplace_back(
++            json::object { { "name", oper.name },
++                           { "role", static_cast<int>(oper.role) },
++                           { "usage", static_cast<int>(usage) },
++                           { "remaining_times", times == m_skill_times.end() ? -1 : times->second } });
++    }
++    int elapsed = -1;
++    if (m_stopwatch_enabled) {
++        elapsed = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(
++                                       std::chrono::steady_clock::now() - m_stopwatch_start_time)
++                                       .count());
++    }
++    return json::object {
++        { "schema_version", "1.0" },
++        { "features", json::array { "persistent_context", "passive_observer", "named_actions", "absolute_speed" } },
++        { "ok", true },
++        { "abi_version", 1 },
++        { "context_revision", m_revision.load() },
++        { "context_valid", m_context_valid },
++        { "stage_name", m_stage_name },
++        { "action_sequence", m_action_sequence },
++        { "deployed_operators", std::move(deployed) },
++        { "skill_usage", std::move(skill_usage) },
++        { "camera_shift", json::array { m_camera_shift.first, m_camera_shift.second } },
++        { "camera_count", m_camera_count },
++        { "stopwatch_enabled", m_stopwatch_enabled },
++        { "elapsed_time_ms", elapsed },
++        { "automatic_ready_actions_enabled", false }
++    };
++}
++
++json::value asst::TacticalBattleTask::context_snapshot() const
++{
++    std::unique_lock lock(m_context_mutex, std::try_to_lock);
++    if (!lock.owns_lock()) {
++        return json::object { { "ok", false }, { "error", "BUSY" } };
++    }
++    return context_snapshot_locked();
++}
++
++json::value asst::TacticalBattleTask::observe(const unsigned char* png, size_t size)
++{
++    std::unique_lock lock(m_context_mutex, std::try_to_lock);
++    if (!lock.owns_lock()) {
++        return json::object { { "ok", false }, { "error", "BUSY" } };
++    }
++    if (!png || size == 0 || size > 8 * 1024 * 1024) {
++        return json::object { { "ok", false }, { "error", "INVALID_IMAGE" } };
++    }
++    cv::Mat image = cv::imdecode(std::vector<unsigned char>(png, png + size), cv::IMREAD_COLOR);
++    if (image.empty() || image.cols != WindowWidthDefault || image.rows != WindowHeightDefault) {
++        return json::object { { "ok", false }, { "error", "UNSUPPORTED_IMAGE_GEOMETRY" } };
++    }
++    auto output = context_snapshot_locked();
++    auto previous = std::chrono::steady_clock::now();
++    const auto elapsed = [&previous]() {
++        const auto now = std::chrono::steady_clock::now();
++        const auto duration = std::chrono::duration<double, std::milli>(now - previous).count();
++        previous = now;
++        return duration;
++    };
++    output["vision"] = json::object { { "cost", nullptr },         { "kills", nullptr },
++                                      { "total_kills", nullptr },  { "deployment", nullptr },
++                                      { "skill_states", nullptr }, { "confidence", nullptr },
++                                      { "calibrated", false },     { "input_issued", false },
++                                      { "battle_speed", nullptr }, { "latency_ms", json::object {} } };
++    BattlefieldMatcher flag(image);
++    const bool in_battle = flag.analyze().has_value();
++    output["vision"]["latency_ms"]["battle_hud"] = elapsed();
++    if (!in_battle) {
++        output["vision"]["battle_hud"] = false;
++        return output;
++    }
++    output["vision"]["battle_hud"] = true;
++    BattlefieldMatcher cost(image);
++    cost.set_object_of_interest({ .flag = false, .costs = true });
++    if (const auto result = cost.analyze()) {
++        output["vision"]["cost"] = result->costs.value;
++    }
++    BattlefieldMatcher kills(image);
++    output["vision"]["latency_ms"]["cost"] = elapsed();
++    kills.set_object_of_interest({ .flag = false, .kills = true });
++    if (const auto result = kills.analyze()) {
++        output["vision"]["kills"] = result->kills.value.first;
++        output["vision"]["total_kills"] = result->kills.value.second;
++    }
++    BattlefieldMatcher deployment(image);
++    output["vision"]["latency_ms"]["kills"] = elapsed();
++    RegionOCRer speed(image, Rect { 1060, 16, 80, 44 });
++    speed.set_bin_threshold(190);
++    speed.set_bin_expansion(1);
++    if (const auto result = speed.analyze()) {
++        output["vision"]["speed_text"] = result->text;
++        output["vision"]["speed_score"] = result->score;
++        if (result->score >= 0.98) {
++            if (result->text == "1X" || result->text == "1x" || result->text == "1×") {
++                output["vision"]["battle_speed"] = 1;
++            }
++            else if (result->text == "2X" || result->text == "2x" || result->text == "2×") {
++                output["vision"]["battle_speed"] = 2;
++            }
++        }
++    }
++    output["vision"]["latency_ms"]["battle_speed"] = elapsed();
++    deployment.set_object_of_interest({ .flag = false, .deployment = true, .oper_cost = true });
++    if (auto result = deployment.analyze()) {
++        identify_deployment_passive(result->deployment);
++        json::array operators;
++        for (const auto& oper : result->deployment) {
++            operators.emplace_back(
++                json::object { { "index", oper.index },
++                               { "candidate_name", oper.name },
++                               { "role", static_cast<int>(oper.role) },
++                               { "cost", oper.cost },
++                               { "available", oper.available },
++                               { "cooling", oper.cooling },
++                               { "rect", json::array { oper.rect.x, oper.rect.y, oper.rect.width, oper.rect.height } },
++                               { "confidence", nullptr } });
++        }
++        output["vision"]["deployment"] = std::move(operators);
++    }
++    if (m_context_valid) {
++        output["vision"]["latency_ms"]["deployment"] = elapsed();
++        json::array skills;
++        for (const auto& [oper, location] : m_battlefield_opers) {
++            const auto tile = m_normal_tile_info.find(location);
++            if (tile == m_normal_tile_info.end()) {
++                continue;
++            }
++            BattlefieldClassifier classifier(image);
++            classifier.set_base_point(tile->second.pos);
++            classifier.set_object_of_interest({ .skill_ready = true });
++            if (const auto result = classifier.analyze()) {
++                json::array probabilities;
++                for (const auto value : result->skill_ready.prob) {
++                    probabilities.emplace_back(value);
++                }
++                skills.emplace_back(
++                    json::object { { "name", oper.name },
++                                   { "location", json::array { location.x, location.y } },
++                                   { "candidate_ready", result->skill_ready.ready },
++                                   { "score", result->skill_ready.score },
++                                   { "probabilities", std::move(probabilities) },
++                                   { "confidence", nullptr },
++                                   { "status", "experimental" },
++                                   { "preprocessing", "upstream_BattlefieldClassifier" } });
++            }
++        }
++        output["vision"]["skill_states"] = std::move(skills);
++    }
++    output["vision"]["latency_ms"]["skill_states"] = elapsed();
++    return output;
++}
+diff --git a/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.h b/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.h
+--- a/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.h
++++ b/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.h
+@@ -1,31 +1,28 @@
+ #pragma once
+-#include "Task/Miscellaneous/BattleProcessTask.h"
++#include "TacticalBattleTask.h"
++#include "Task/AbstractTask.h"
+ 
+ namespace asst
+ {
+-class SingleStepBattleProcessTask : public BattleProcessTask
++class SingleStepBattleProcessTask : public AbstractTask
+ {
+ public:
+-    using Actions = std::vector<asst::battle::copilot::Action>;
++    using Actions = TacticalBattleTask::Actions;
+ 
+ public:
+-    using BattleProcessTask::BattleProcessTask;
++    SingleStepBattleProcessTask(const AsstCallback& callback, Assistant* inst, std::string_view chain);
+     virtual ~SingleStepBattleProcessTask() override = default;
+ 
+-    using BattleProcessTask::clear;
+-
+-    static bool set_stage_name_cache(const std::string& stage_name);
+     void set_actions(Actions actions);
++    bool set_absolute_speed(int speed);
+ 
+ protected:
+     virtual bool _run() override;
+ 
+-    virtual bool need_to_wait_until_end() const noexcept override { return false; }
+-
+ private:
++    std::shared_ptr<TacticalBattleTask> m_context;
++    uint64_t m_expected_revision;
+     Actions m_actions;
+-
+-    // for debug
+-    inline static std::string m_stage_name_cache;
++    int m_absolute_speed = 0;
+ };
+ }
+diff --git a/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.cpp b/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.cpp
+--- a/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.cpp
++++ b/src/MaaCore/Task/Experiment/SingleStepBattleProcessTask.cpp
+@@ -1,19 +1,16 @@
+ #include "SingleStepBattleProcessTask.h"
+ 
+-#include "Controller/Controller.h"
+-#include "Task/ProcessTask.h"
+-#include "Utils/Logger.hpp"
++#include "Assistant.h"
+ 
+-bool asst::SingleStepBattleProcessTask::set_stage_name_cache(const std::string& stage_name)
++asst::SingleStepBattleProcessTask::SingleStepBattleProcessTask(
++    const AsstCallback& callback,
++    Assistant* inst,
++    std::string_view chain) :
++    AbstractTask(callback, inst, chain),
++    m_context(inst->tactical_battle()),
++    m_expected_revision(m_context->revision())
+ {
+-    LogTraceFunction;
+-
+-    if (!Tile.find(stage_name)) {
+-        Log.error("get stage info failed", stage_name);
+-        return false;
+-    }
+-    m_stage_name_cache = stage_name;
+-    return true;
++    set_retry_times(0);
+ }
+ 
+ void asst::SingleStepBattleProcessTask::set_actions(Actions actions)
+@@ -23,18 +20,15 @@
+ 
+ bool asst::SingleStepBattleProcessTask::_run()
+ {
+-    LogTraceFunction;
++    return m_context->execute(m_actions, m_expected_revision, get_task_id(), m_absolute_speed);
++}
+ 
+-    if (!calc_tiles_info(m_stage_name_cache)) {
+-        Log.error("get stage info failed", m_stage_name_cache);
++bool asst::SingleStepBattleProcessTask::set_absolute_speed(int speed)
++{
++    if (speed != 0 && (speed < 1 || speed > 2 || m_actions.size() != 1 ||
++                       m_actions.front().type != battle::copilot::ActionType::SwitchSpeed)) {
+         return false;
+     }
+-
+-    size_t action_size = m_actions.size();
+-    for (size_t i = 0; i < action_size && !need_exit(); ++i) {
+-        const auto& action = m_actions.at(i);
+-        do_action(action, i);
+-    }
+-
++    m_absolute_speed = speed;
+     return true;
+ }
+diff --git a/src/MaaCore/Task/Interface/SingleStepTask.cpp b/src/MaaCore/Task/Interface/SingleStepTask.cpp
+--- a/src/MaaCore/Task/Interface/SingleStepTask.cpp
++++ b/src/MaaCore/Task/Interface/SingleStepTask.cpp
+@@ -1,4 +1,5 @@
+ #include "SingleStepTask.h"
++#include "Assistant.h"
+ 
+ #include "Config/Miscellaneous/CopilotConfig.h"
+ #include "Task/Experiment/SingleStepBattleProcessTask.h"
+@@ -35,7 +36,7 @@
+ 
+ bool asst::SingleStepTask::set_copilot_stage(const json::value& details)
+ {
+-    return SingleStepBattleProcessTask::set_stage_name_cache(details.get("stage_name", ""));
++    return !m_inst->running() && m_inst->tactical_battle()->bind_stage(details.get("stage_name", ""));
+ }
+ 
+ bool asst::SingleStepTask::append_copllot_start()
+@@ -62,6 +63,9 @@
+             return false;
+         }
+         task->set_actions(std::move(*actions_opt));
++        if (!task->set_absolute_speed(details.get("absolute_speed", 0))) {
++            return false;
++        }
+     }
+     catch (const json::exception& e) {
+         Log.error(__FUNCTION__, e.what());
+diff --git a/src/MaaCore/Task/BattleHelper.h b/src/MaaCore/Task/BattleHelper.h
+--- a/src/MaaCore/Task/BattleHelper.h
++++ b/src/MaaCore/Task/BattleHelper.h
+@@ -49,6 +49,7 @@
+     bool abandon();
+ 
+     bool update_deployment(bool init = false, const cv::Mat& reusable = cv::Mat(), bool need_oper_cost = false);
++    void identify_deployment_passive(std::vector<battle::DeploymentOper>& opers) const;
+     // 更新部署区的干员，仅当存在未识别干员且不处于冷却中return false
+     bool update_deployment_(
+         std::vector<battle::DeploymentOper>& cur_opers,
+diff --git a/src/MaaCore/Task/BattleHelper.cpp b/src/MaaCore/Task/BattleHelper.cpp
+--- a/src/MaaCore/Task/BattleHelper.cpp
++++ b/src/MaaCore/Task/BattleHelper.cpp
+@@ -257,6 +257,23 @@
+     return true;
+ }
+ 
++void asst::BattleHelper::identify_deployment_passive(std::vector<battle::DeploymentOper>& opers) const
++{
++    for (auto& oper : opers) {
++        std::vector<std::pair<std::string, cv::Mat>> avatars;
++        for (const auto& cached : m_cur_deployment_opers) {
++            if (cached.role == oper.role && !cached.name.empty() && !cached.avatar.empty()) {
++                avatars.emplace_back(cached.name, cached.avatar);
++            }
++        }
++        if (!avatars.empty()) {
++            if (const auto match = analyze_oper_with_cache(oper, avatars)) {
++                oper.name = match->templ_info.name;
++            }
++        }
++    }
++}
++
+ bool asst::BattleHelper::update_deployment(bool init, const cv::Mat& reusable, bool need_oper_cost)
+ {
+     LogTraceFunction;
+diff --git a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
+--- a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
++++ b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.cpp
+@@ -380,6 +380,7 @@
+     case ActionType::ResetStopwatch:
+         m_stopwatch_start_time = std::chrono::steady_clock::now();
+         m_stopwatch_enabled = true;
++        ret = true;
+         break;
+ 
+     case ActionType::SkillDaemon:
+diff --git a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
+--- a/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
++++ b/src/MaaCore/Task/Miscellaneous/BattleProcessTask.h
+@@ -49,7 +49,7 @@
+     void notify_action(const battle::copilot::Action& action);
+     bool wait_condition(const battle::copilot::Action& action);
+     bool enter_bullet_time(battle::Role role, const std::string& name, const std::optional<Point>& location);
+-    void sleep_and_do_strategy(unsigned millisecond);
++    virtual void sleep_and_do_strategy(unsigned millisecond);
+ 
+     battle::copilot::CombatData m_combat_data;
+     std::unordered_map</*group*/ battle::OperNameTag, /*oper*/ battle::OperNameTag> m_oper_in_group;

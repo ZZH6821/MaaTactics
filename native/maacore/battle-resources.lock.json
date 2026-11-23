@@ -1,0 +1,950 @@
+{
+  "profile": "battle-v1",
+  "schema_version": 1,
+  "resource_locale": "CN",
+  "source_last_updated": "2026-11-22 11:43:00.000",
+  "stage_ids": [
+    "main_01-07",
+    "main_01-07#f#"
+  ],
+  "files": {
+    "Arknights-Tile-Pos/main_01-07#f#-obt-main-level_main_01-07.json": {
+      "sha256": "8fd2d9101c133e9b7db57bec27267eec2cb6f96baf91b09edbfc1ebb51a08540",
+      "bytes": 16299
+    },
+    "Arknights-Tile-Pos/main_01-07-obt-main-level_main_01-07.json": {
+      "sha256": "e94177fdf78a33c88893980d15012291bced1aad4dd1586b6d09011f0e1e19d2",
+      "bytes": 16296
+    },
+    "PaddleCharOCR/rec/inference.onnx": {
+      "sha256": "27547490f5232685c0e67d485168ff482a502b9d8f1b6fde4d6c0185e1f21106",
+      "bytes": 12117105
+    },
+    "PaddleCharOCR/rec/keys.txt": {
+      "sha256": "f0ffcd01ae9b99aeac13e0ba76b6129d5ac85f87316f544a1b6da39e1d29b414",
+      "bytes": 282
+    },
+    "PaddleCharOCR/rec/version.txt": {
+      "sha256": "93df7e3f2d771aab970633b5f67de93dd9dc30d8a2bb35649d540a095f4c0ce5",
+      "bytes": 675
+    },
+    "PaddleOCR/det/inference.onnx": {
+      "sha256": "decf4b48bc8c456ef33545f5aef53e9329ab2d137b7a1f2c81a38fc30ec2f317",
+      "bytes": 9962541
+    },
+    "PaddleOCR/det/version.txt": {
+      "sha256": "acaab88fe41eae698bc3417c802a22b311bdc8c1d9ed8c7bc04c99f00f0f3ddb",
+      "bytes": 26
+    },
+    "PaddleOCR/rec/inference.onnx": {
+      "sha256": "f9439bc49866e39c5403dd73f6807cf1d19800a0c25ef014b4786d39c6bc34e2",
+      "bytes": 21224756
+    },
+    "PaddleOCR/rec/keys.txt": {
+      "sha256": "769e7fa79bb297b5f18d8dbd149e364a45bc61f2b3f574e5ea836f0b261c23a6",
+      "bytes": 93655
+    },
+    "PaddleOCR/rec/version.txt": {
+      "sha256": "9726a09de8f3d0605441ff0db181e6e96483ff5bf92bfd83aea525cf9a523360",
+      "bytes": 433
+    },
+    "battle_data.json": {
+      "sha256": "d60676bae2ab01d3046024d5e554842dc6d605f412bf9a191567c889a02aafc3",
+      "bytes": 699690
+    },
+    "config.json": {
+      "sha256": "45c4260eb582d6e998b7a7e74f8e7ee2226c59188d92a4cdde775c4df8209a24",
+      "bytes": 10248
+    },
+    "minitouch/arm64-v8a/minitouch": {
+      "sha256": "a92b6ee71c7f795745e199153b91a5a8115becfc9fe107b1dc043f9ace6ee5bd",
+      "bytes": 34736
+    },
+    "minitouch/armeabi-v7a/minitouch": {
+      "sha256": "34ddf634524fec1c5c94a9ef5edbbdaed057bec2cebf6b1d392fe7895411c84e",
+      "bytes": 34320
+    },
+    "minitouch/armeabi/minitouch": {
+      "sha256": "d26b8be354a2bafed3b1f0a0baa2393f78f3474ed1ac9c8fca13cb6c20680a3d",
+      "bytes": 34316
+    },
+    "minitouch/maatouch/minitouch": {
+      "sha256": "4ea8590cd0349ce900f39ab16ef3751dad2356286b465b4293f80f9858c995d0",
+      "bytes": 13775
+    },
+    "minitouch/x86/minitouch": {
+      "sha256": "a97aa601a4b11147ca543563e827c2e69c60136ee55c8dfa4ecd420b025ca508",
+      "bytes": 34260
+    },
+    "minitouch/x86_64/minitouch": {
+      "sha256": "31aa8eb22f78f3ee4ce47ac7315847009f0e8eefa0f694c6a96d9bcced219013",
+      "bytes": 39016
+    },
+    "ocr_config.json": {
+      "sha256": "50a10c1c78871501895554bb50a198fbc5964651f230c170cbbc381c76cc7470",
+      "bytes": 34
+    },
+    "onnx/skill_ready_cls.onnx": {
+      "sha256": "ebe43c5ae81732e35752c4264b0cff18d85706ee2fdf92e09865cf48777dfd4e",
+      "bytes": 9962074
+    },
+    "template/Battle/BattleFlag/AbandonAction.png": {
+      "sha256": "052a60fec1eb98ff3ab12814e40426ff682377b89c9ee844d3cff210c662559e",
+      "bytes": 72752
+    },
+    "template/Battle/BattleFlag/BattleCostFlag.png": {
+      "sha256": "06e70ba6082bb45f98c2ad372214f3e078a7a61a94d5b7d18ec1d1a991b432a6",
+      "bytes": 1570
+    },
+    "template/Battle/BattleFlag/BattleHpFlag.png": {
+      "sha256": "e0ddd481824f63fd2c489db8206254f38b2f19dd5f7ae4e18cb1ec75c063f01e",
+      "bytes": 1626
+    },
+    "template/Battle/BattleFlag/BattleHpFlag2.png": {
+      "sha256": "0999a50670c2fcc9f5b88ad0bde66d90beae9a9618cac1b3e5e73f870edd9a99",
+      "bytes": 1325
+    },
+    "template/Battle/BattleFlag/BattleKillsFlag.png": {
+      "sha256": "7b5db70e0fd69ea0f09db643d6e3c31999fe521a6439fe3ab47aa85a014f3b59",
+      "bytes": 2518
+    },
+    "template/Battle/BattleFlag/BattleOfficiallyBegin.png": {
+      "sha256": "42b14e54b9b7b3bb469fe187bfcee3db56973c1cd5f10235d8a7dc1004eebd96",
+      "bytes": 1422
+    },
+    "template/Battle/BattleFlag/BattleOperRetreat.png": {
+      "sha256": "a3b6b129d223a87e18eee18fecbb1ec8effdb0a192e13a9a7248f1a749937614",
+      "bytes": 652
+    },
+    "template/Battle/BattleFlag/BattleOpersFlag.png": {
+      "sha256": "5b9c7bd5bd33870f9565be37573dd6745a207c3073ac01fec923157f4bf5b8a9",
+      "bytes": 243
+    },
+    "template/Battle/BattleFlag/BattleSkillReady.png": {
+      "sha256": "6dcb381619811d91419ffda02fa4764908e3d61107abe2ecd0c8e92b631a6746",
+      "bytes": 1323
+    },
+    "template/Battle/BattleFlag/BattleSkillReadyOnClick-TopView.png": {
+      "sha256": "f538a224cb8d02360d88687a7b09f95d65b47973aa31ab55c74c509a0fb1a696",
+      "bytes": 3320
+    },
+    "template/Battle/BattleFlag/BattleSkillReadyOnClick-TopView2.png": {
+      "sha256": "9de4d366eab581c30dfde35346a94197727a6397e7c8f99da07a828f70b89607",
+      "bytes": 692
+    },
+    "template/Battle/BattleFlag/BattleSkillStopOnClick-TopView.png": {
+      "sha256": "96380df6e33919e1f6846b02ca3b7077ce103ac69ce45d75442dd398fa769cc4",
+      "bytes": 869
+    },
+    "template/Battle/BattleFlag/BattleSpeedUpCheck.png": {
+      "sha256": "0ccad53de76e4b8e09e4b41a38cbdb18e4f556e7417e61449a721ef3fb134f7e",
+      "bytes": 3645
+    },
+    "template/Battle/BattleFlag/EndOfAction.png": {
+      "sha256": "3a4e90ae88d0ff83304c793bd05695335888d67d0b3224066a22b465c5f53f0b",
+      "bytes": 1512
+    },
+    "template/Battle/BattleFlag/EndOfActionAnnihilation.png": {
+      "sha256": "682e68a9f6fc3ecd3265fe8afd55ed51feaa0d2ffbe73ff72ac5991cf8e1d4d1",
+      "bytes": 5273
+    },
+    "template/Battle/BattleFlag/PageLoading-Black.png": {
+      "sha256": "9089620a34808003d8f6841dea32ad0fcd438393d7b10edd21fb29bd8004a449",
+      "bytes": 99
+    },
+    "template/Battle/BattleFlag/PrtsErrorConfirm.png": {
+      "sha256": "57ce7a88d0a231a8b77ea24c7f69e4cce65038095dda68d6782afddbcd37566e",
+      "bytes": 268624
+    },
+    "template/Battle/Formation/BattleFormationInvalid.png": {
+      "sha256": "f538d860169f5b6287398bb52e0b2ad7bcb0f328d0622853f296b13b4e3aeca0",
+      "bytes": 3675
+    },
+    "template/Battle/Formation/BattleFormationOCRNameFlag.png": {
+      "sha256": "41bf726e6a977ab9e0d9284fd9848aa61d342439c0bbce24b7b7a041896faa09",
+      "bytes": 158
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-Elite1.png": {
+      "sha256": "1b9b3a86921d2f6bc5f31137319f74f0ff39e61fb8c6af0effecae2e4abbb29a",
+      "bytes": 988
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-Elite2.png": {
+      "sha256": "a142e58d10cdd92e3b0ed03518b64f0658a6f62530a8143ae0339b5b3706bce5",
+      "bytes": 1231
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag0.png": {
+      "sha256": "ceaf2187bf891e13747a1d9b601934c288946d46295c9593fbaf6371a3539776",
+      "bytes": 1046
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag1.png": {
+      "sha256": "cea5d10e6dbb54d71ada5d3d69e7a5662b546e06756b34f0dd11ce4fafc58591",
+      "bytes": 1246
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag2.png": {
+      "sha256": "7165cc733f0308a6630695bf32222c866c857357bbc96e6dab61fa93bc43efc6",
+      "bytes": 1377
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag3.png": {
+      "sha256": "590be141be65c37364d9d2c616314de8753b9c8b2db190ba00ae6fd54af0c587",
+      "bytes": 1151
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag4.png": {
+      "sha256": "e5d6a3b5e8338ab5e6ee2d789c067a0128d0cdb1eb5a5a648cafab03fc9e1a46",
+      "bytes": 947
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag5.png": {
+      "sha256": "6021d628122b16ceb4d40c2536aa0887af329cddc3b826309f4746676fccc857",
+      "bytes": 1140
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag6.png": {
+      "sha256": "48bb3cdb890ac4b7b25e3eac163ca416b70baafd2a3a26606f11ac2da784fe74",
+      "bytes": 1290
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation-OperNameFlag7.png": {
+      "sha256": "b92ba651183fadcdae5466734f0fa11d516c27de7b5d0b5dcaf1df1d867bcabd",
+      "bytes": 931
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormation.png": {
+      "sha256": "2b4a07b1c0a84e1f5e988ae4ca902ae62ea0c8b73fec2ec8f479b0cc0b9488e7",
+      "bytes": 1137
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationClear.png": {
+      "sha256": "f36e12edb20cf1eb4e9d6e212c89f1a2724cfd174c228756e249c1258a1a90c9",
+      "bytes": 2147
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationCollapseRole.png": {
+      "sha256": "be95c4537707f4fb43c728c5797c7c9fc649c6962f98a892da2983ce252229ed",
+      "bytes": 1932
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationConfirm.png": {
+      "sha256": "8f63ebb67cb6a269dfd9975f975bd9e247b3d26b65907215ccf254c4b9bb9f89",
+      "bytes": 2683
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationExpandRole.png": {
+      "sha256": "efb16a3a72106b1be2b2599bc4db63a2ba89f9b90dd9fd9b04693f4817981ccf",
+      "bytes": 2147
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationFilter-Click2.png": {
+      "sha256": "32581fd4a9c971b7ceb3cfd02376b3a905ab4edf5d69b49cbc3292916a44eb5c",
+      "bytes": 539
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationFilter-PinActivated.png": {
+      "sha256": "992d99c3a7d8848cf266020f7cf33822e28b064339be8d0f12929141d481bec3",
+      "bytes": 1342
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationFilter-PinUnactivated.png": {
+      "sha256": "9a0882d1fd5b5de50caa7f06c4c5ebf8e431a29c91dda1dcdfb5d5260aa3bebb",
+      "bytes": 819
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationFilter-Trust.png": {
+      "sha256": "ca417f4b296d94df45f6d54debc2ed47859ecec3c975cd0d7177cbcfa8809f4b",
+      "bytes": 333
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationFilter.png": {
+      "sha256": "f058312b7aa40d9ef8206782f1845b4aad6c506f80e284dacc6a6f4d807a5e2a",
+      "bytes": 680
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-0.png": {
+      "sha256": "19d6142ee2328120406b8a445721858de119a776c896b2502cf587a24d83bd28",
+      "bytes": 741
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-1.png": {
+      "sha256": "b21c39d77f9dbba15d9af39311b3835052d8176dcf616c7defaf27e2ee16c481",
+      "bytes": 218
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-2-A.png": {
+      "sha256": "00214a6fa0a318ff7e538bed05e257fc50c129f0f60419c62cc9a4263691e25a",
+      "bytes": 273
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-2-B.png": {
+      "sha256": "4c8a333a9842834f4554d5b745a02946014f3fe9fc97dd161de7441ba87f0464",
+      "bytes": 270
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-3.png": {
+      "sha256": "45488b9624681dada7cedbec77cbb41bd29eb2a6c5f21736ee6fec2f20c05a5d",
+      "bytes": 287
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-4.png": {
+      "sha256": "4cca86922ce3a8a4e6ec97bc605aeb57c7281ff7b539dcdf41c72929e426f8e5",
+      "bytes": 257
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationModule-5.png": {
+      "sha256": "9ad52b706fe2bf63caa213ddb706ea83fd19bc2b0bb2b4bd146ffc6b195281b7",
+      "bytes": 224
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-All.png": {
+      "sha256": "338176a1272d9aa03ff5341a5f228b6484e954c6156b2663090d36a36e9fe3b8",
+      "bytes": 872
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Caster.png": {
+      "sha256": "626ae5102b6ed6e523ffe73b2d93ae4fcbe829e887d6bff79036faab743a21c5",
+      "bytes": 889
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Medic.png": {
+      "sha256": "e63bc21b2adc3a78585b3c13f36b9a871843aeabe41805248a595259a241f453",
+      "bytes": 1466
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Pioneer.png": {
+      "sha256": "54d91a060537dbbebd9d6f1f6145987d2ddc940efc90ea267fb2f424bfb7d2c5",
+      "bytes": 1309
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Sniper.png": {
+      "sha256": "a880e6dd71ac6d21a5a417286f2e7be98d47de893712255fbe6e347f6c225355",
+      "bytes": 1180
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Special.png": {
+      "sha256": "7fea9855b30e5412ac0f01496a935d9fe6a72a69dea2bf2a3595119276a6bc61",
+      "bytes": 988
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Support.png": {
+      "sha256": "535990096638fce922a7d41c1f5ac71472b2b1ae2539230d6010bde19dbd2702",
+      "bytes": 1107
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Tank.png": {
+      "sha256": "91d20ab2c328128cde79fd0d50fd111288b918b09b3437a6a885bce5038b80bb",
+      "bytes": 1297
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRole-Warrior.png": {
+      "sha256": "51e5a61ecfbed98039a8122eabdff898603288d4edb189a3700a60c6e8509f2e",
+      "bytes": 1124
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationRoleFiltering.png": {
+      "sha256": "ac6b822b711dff2973082f5ed29c24255f16baec2b6d60b6fe7ab51336a11953",
+      "bytes": 802
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationSkillLevel-07.png": {
+      "sha256": "4d563797f4d29fa7ef2c93cf4147a2a993c18f16157c6fc19a62546507eeafb2",
+      "bytes": 235
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationSkillLevel-08.png": {
+      "sha256": "0e04d37d659b7e461f842df72860517e16027f1aee216188a030528782a85887",
+      "bytes": 275
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationSkillLevel-09.png": {
+      "sha256": "9f9115aad3fb66c2ac266985056faf4b8301e347b872fedd7627636f3965ee9a",
+      "bytes": 311
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationSkillLevel-10.png": {
+      "sha256": "be7d6789a9dcbb97344dd489d6432531348e704b38a8100538a42eb83a32a498",
+      "bytes": 310
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationSkillLevel-Base.png": {
+      "sha256": "d9b2071144bbe06d3ba95ab1dc25c7110e11418192a2a95c57dd0dddb0beddeb",
+      "bytes": 604
+    },
+    "template/Battle/Formation/BattleQuickFormation/BattleQuickFormationTrustIcon.png": {
+      "sha256": "d7d626421f950d74b1b4986c2df287e68d8c0842fff4710e29d977f2c84e85b0",
+      "bytes": 1839
+    },
+    "template/Battle/Formation/BattleSupportUnitFormation.png": {
+      "sha256": "8af786b4b5137e08f003b24e848b1da2b37ab4eef4851a9478fdcf929880fa8a",
+      "bytes": 10113
+    },
+    "template/Battle/Formation/BattleSupportUnitFormationSelect.png": {
+      "sha256": "5be578f2c4f701c64957286885bc840c96641e7397bcc07aadc5301e410f30a8",
+      "bytes": 9563
+    },
+    "template/Battle/Formation/Formation-AddSupportUnit-EnterSupportList.png": {
+      "sha256": "4ca0f6692b2bb1938518ccf22e10c0eecef194dc944bdbb1f81219cc07b3ffe7",
+      "bytes": 2566
+    },
+    "template/Battle/Formation/SkipForbiddenOperConfirm.png": {
+      "sha256": "6c3fd816146fcc7836d5499aa3566f364e50ebf6cf1138723b1b557e4e032ddd",
+      "bytes": 35772
+    },
+    "template/Battle/Formation/SupportList/SupportList-Refresh.png": {
+      "sha256": "48eb56355a5d4ad921caab5f6d8f90f4788c5f1192a8c4eef5f3f06d88e0c24d",
+      "bytes": 854
+    },
+    "template/Battle/Formation/SupportList/SupportList-RefreshCooldown.png": {
+      "sha256": "9a66491e7d9148c9b39e5be5c7fd31919981aa9ac6ab7ef4c0e4cb4b54a388d7",
+      "bytes": 550
+    },
+    "template/Battle/Formation/SupportList/SupportListAnalyzer-ModuleDisabled.png": {
+      "sha256": "54a9eb101ea3b45b3bd0b296296d6bad21a769010444021c5b40aeda672ea444",
+      "bytes": 564
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Elite-1.png": {
+      "sha256": "6fc9442540bb185df0dee47558a1d43fc667ff9d61b41c5287066eafa1195583",
+      "bytes": 4165
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Elite-2.png": {
+      "sha256": "fac60c69180f9f355d743131b75839557720caa64c58f50c90a109523df8a677",
+      "bytes": 4388
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Flag-Friend.png": {
+      "sha256": "5841410ef5bd6edc64c78846543e945d7666ed893931dd3e26b753570c5ee2cb",
+      "bytes": 13095
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Flag-Stranger.png": {
+      "sha256": "835436a7b9f7108ff2e6ec8b9c4708c3614780436f4953b6f317f179b2160844",
+      "bytes": 14216
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-1.png": {
+      "sha256": "78a9bd8efe8d5fb942c825b0c6d331170ddf8a1424a741a889d3e56efff8fde6",
+      "bytes": 191
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-2.png": {
+      "sha256": "0b3dc5384545e7f4f2109f5f8d7a30ccebbb034a0145aabd5bb630751679bfcf",
+      "bytes": 304
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-3.png": {
+      "sha256": "2762237c0d04dcd6b278a1798d06b734bccb534bdc0eb29c935d52f1345c1665",
+      "bytes": 393
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-4.png": {
+      "sha256": "aecf8b6b7ec882a68badb59a6de25eafad50cf662cde9b6b01f301716d205ce9",
+      "bytes": 505
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-5.png": {
+      "sha256": "0e5d796c38a1e8dc1cecb7a0b9d770f58bdbcdc21d5617805b5f74887ee21755",
+      "bytes": 637
+    },
+    "template/Battle/Formation/SupportListAnalyzer/SupportListAnalyzer-Potential-6.png": {
+      "sha256": "1bfe385a054cf042f5faa4e1b0c660ca08f1a9e2e6f14100b38aa548a4992b1d",
+      "bytes": 531
+    },
+    "template/Battle/LevelUp/CheckLevelUp.png": {
+      "sha256": "5f0c34a9d7a2ad6d18d7a074a6dd0f2ba05f374976fe0b8d447098fc943a8532",
+      "bytes": 12486
+    },
+    "template/Battle/OperRole/BattleOperRoleCaster.png": {
+      "sha256": "9978f39a2cd3632b3f361777847c4c5780828b1254b2e70da100ca0dfa0b9db1",
+      "bytes": 1201
+    },
+    "template/Battle/OperRole/BattleOperRoleDrone.png": {
+      "sha256": "35e4f4b40cef56674d7cc425342d9296ae21d9fcf2d33ff498cba9c0efaa8d1f",
+      "bytes": 1407
+    },
+    "template/Battle/OperRole/BattleOperRoleMedic.png": {
+      "sha256": "91cd2c7fd741a83802021760943e66041c22947b7071ed4e72fe00c46f34c71b",
+      "bytes": 1328
+    },
+    "template/Battle/OperRole/BattleOperRolePioneer.png": {
+      "sha256": "e97b4422fc0a55ecada12ddab8200fe91a99b598b2e21d82ffc8e41dd3e4f11c",
+      "bytes": 1293
+    },
+    "template/Battle/OperRole/BattleOperRoleSniper.png": {
+      "sha256": "504ef6d4210eb32b3d3d5db511bfb573cc067f5d8a2e40ead2140e23b166e7c4",
+      "bytes": 1175
+    },
+    "template/Battle/OperRole/BattleOperRoleSpecial.png": {
+      "sha256": "2f3081d92fec02239e441e2924c1e6973fabee1e94ca3b3a4dba5e85b3813894",
+      "bytes": 1465
+    },
+    "template/Battle/OperRole/BattleOperRoleSupport.png": {
+      "sha256": "a9db99d2370c36eaea83a9d76bfc83c65532efccd71ef1bfd0ddb14dd3a950c6",
+      "bytes": 1090
+    },
+    "template/Battle/OperRole/BattleOperRoleTank.png": {
+      "sha256": "7d01f62f9999cb92d07114efff5cd75fcae61ab730c2a23e5f53fb656fdf11db",
+      "bytes": 1253
+    },
+    "template/Battle/OperRole/BattleOperRoleWarrior.png": {
+      "sha256": "0cdfda70762c8b7089407ea8a2284f8ce5eccad25cd390830a8fb8080bf3ca47",
+      "bytes": 945
+    },
+    "template/Battle/Plot/BattleAvatarDialog.png": {
+      "sha256": "ac20bdea27ab2f6ed71504638b45feb3bbaedb807c88e5ff49a0b2bd992a63af",
+      "bytes": 1388
+    },
+    "template/Battle/Plot/EndOfPlot.png": {
+      "sha256": "622e7693c6ba8592b5c1f248d04939e97bbdd2c6df73b2bb0b4b82c8b8d81465",
+      "bytes": 10986
+    },
+    "template/Battle/Plot/SkipThePreBattlePlot.png": {
+      "sha256": "024dbc94240e57ea6ffe70f547eeefa4154f267dcdd223a539392abd369bdb9b",
+      "bytes": 2091
+    },
+    "template/Battle/Plot/SkipThePreBattlePlotConfirm.png": {
+      "sha256": "c376d8edb6d671d3485cbc387811bfdcb71a52278424b84b69cfe6321af60d98",
+      "bytes": 851
+    },
+    "template/Battle/PrtsRecord/AnnihilationPrtsRecordConfirm.png": {
+      "sha256": "7b3ff8b68992c29703c3bf5bba7159130db8adeb46ff38695ddab7b1837e4f5f",
+      "bytes": 2956
+    },
+    "template/Battle/Sanity/Medicine/MedicineConfirm.png": {
+      "sha256": "dad8c7b0fa0e285da4d73b622e40e3525b36746c1d8769b96af0e80f5a03d356",
+      "bytes": 5280
+    },
+    "template/Battle/Sanity/Medicine/MedicineReduceIcon.png": {
+      "sha256": "87763835ec7419302c2d1b0e6a76ede894006c5a19c25cb32577b6a0db857401",
+      "bytes": 204
+    },
+    "template/Battle/Sanity/Medicine/UseMedicine.png": {
+      "sha256": "05ab709abc355134a2e06adac480ae30c13f013714fd13bafc8db6ffaaf9bd58",
+      "bytes": 967
+    },
+    "template/Battle/Sanity/Stone/NoStone.png": {
+      "sha256": "896bf24ef7d3a38b1edc3b88ce5b0ccca2e517639236e4bd71fe1eedf528b53e",
+      "bytes": 27051
+    },
+    "template/Battle/Sanity/Stone/UseStone.png": {
+      "sha256": "ccd4fbfeea9abe71d866a60eff80532828332f3c231c37dc39a52c85b7329168",
+      "bytes": 134212
+    },
+    "template/Battle/StageDrops/StageDrops-Stars-3.png": {
+      "sha256": "a9996bed120be789b2a4a96bb3b3bc10e3c0a794aada7983afc477ffb4b427d0",
+      "bytes": 16526
+    },
+    "template/Battle/StageDrops/StageDrops-Stars-Adverse.png": {
+      "sha256": "d2384dc4dc3180330416f5d808022c491fc3a3962957a263298da84fba18f654",
+      "bytes": 6945
+    },
+    "template/Battle/StartButton/BattleStartAdverse.png": {
+      "sha256": "fefde0ce874c9e4862a8473183fb6c9820cca162a6bf7f3f9c3e673c2ca50eb1",
+      "bytes": 43778
+    },
+    "template/Battle/StartButton/BattleStartExercise.png": {
+      "sha256": "ccb35ea4efcbfa25879d0730e0c6e31b1939e8a76b94dba8d5e5e861765895a4",
+      "bytes": 42975
+    },
+    "template/Battle/StartButton/BattleStartNormal.png": {
+      "sha256": "e21321afa4cf3a440db5ff9274b956f05634972b2920dbcf26510390aa64d7bb",
+      "bytes": 28799
+    },
+    "template/Battle/StartButton/BattleStartPlot.png": {
+      "sha256": "0ef250bfabc55744e0a2a83f559e767778de583c89e5dd091c60d483f92d4568",
+      "bytes": 9629
+    },
+    "template/Battle/StartButton/BattleStartRaid.png": {
+      "sha256": "08bf0b85ba0acf1e52ae47173c1f737719c0591b914d70ab2233253d2476a0d2",
+      "bytes": 39596
+    },
+    "template/Battle/StartButton/BattleStartSimulation.png": {
+      "sha256": "042fbfcb012304461fc405de849f92d58676832b6f91603ef4f65a8defc37a59",
+      "bytes": 1060
+    },
+    "template/Battle/StartButton/BattleStartTrials.png": {
+      "sha256": "5ac88d4c99f6724a08d1edfa82f3f7f33be8b818a9dba71c7f8335d9ecdbec6f",
+      "bytes": 32439
+    },
+    "template/Battle/StartButton/BattleStartTrialsRaid.png": {
+      "sha256": "ab5629566db28ed383eb0257f919714cf6b1974d2b0d0f1e748a4d27ffec62bc",
+      "bytes": 38052
+    },
+    "template/Battle/StartButton/StartButton2.png": {
+      "sha256": "842ba35e29f4a93c343b62f489b320772cf740b8d85c0c793d66dcd067d0ac29",
+      "bytes": 28473
+    },
+    "template/Battle/StartButton/StartButton2Adverse.png": {
+      "sha256": "fefde0ce874c9e4862a8473183fb6c9820cca162a6bf7f3f9c3e673c2ca50eb1",
+      "bytes": 43778
+    },
+    "template/LoadingIcon.png": {
+      "sha256": "4c98fca7282d943e3d955cf6cf974e6ec1b42ff0f2a9b20b31bf471e105e426e",
+      "bytes": 72920
+    },
+    "template/OfflineConfirm.png": {
+      "sha256": "84e0e9473ea8c08ed97022f31fa62f6b0b16a4dac9861d75e0651c98ea16eeb4",
+      "bytes": 26945
+    },
+    "template/PopupConfirm.png": {
+      "sha256": "b5a549f10d5641b89729696ab7b5ef516e2cf031d33e9c9d6e5baa34df01b16b",
+      "bytes": 49378
+    },
+    "template/ReturnButton/Return-White.png": {
+      "sha256": "dd35400fea62bdd232836ea625723223bf8646ec2e0183cdef4ca5865e9e65df",
+      "bytes": 374
+    },
+    "template/ReturnButton/Return.png": {
+      "sha256": "97046a424ed209bda8311c7faac8000bf2b4a5fc48ef8578e434db6b21b76d46",
+      "bytes": 445
+    },
+    "template/ReturnButton/StageSNReturnFlag.png": {
+      "sha256": "251c731fa4a44aa75ab9e9216f011938f584f049c70364329ba47aa2cc9ab1bd",
+      "bytes": 4229
+    },
+    "template/Roguelike/NormalBattleAbandon.png": {
+      "sha256": "8bb4f2c84b80919f586937205563412754ba606b295f36334c8ecff3ff70a239",
+      "bytes": 13524
+    },
+    "template/Roguelike/base/RoguelikeBattleAbandon.png": {
+      "sha256": "0b59a7f1f3ef2b83b8802f5eeab1f2bdd76cc7421302e822bc429d811202f8ef",
+      "bytes": 6764
+    },
+    "template/Roguelike/base/RoguelikeBattleAbandonConfirm.png": {
+      "sha256": "6b58923644e490b96a11895ecbd0e52ced4420eb4ab88d658acbc5b4e0605296",
+      "bytes": 12263
+    },
+    "template/Roguelike/base/RoguelikeBattleExitBegin.png": {
+      "sha256": "1bd51ad0b569a4039dac8fb67af1ed353cadaec3629d2588d2bba72b781cf51c",
+      "bytes": 1434
+    },
+    "template/StageNavigation/Annihilation/AnnihilationConfirm.png": {
+      "sha256": "daafc68157c3b140f3a54b961a323549a54dbe516e5d67c3006b4c0bce464569",
+      "bytes": 17728
+    },
+    "template/StageNavigation/Annihilation/AnnihilationReturnFlag.png": {
+      "sha256": "0f6a8cabb3738c9aaeefdb4a79b46761f9c9eafd8439ecf208c1b02d1980fdc7",
+      "bytes": 25925
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@CancelThemeChange.png": {
+      "sha256": "655d031a3df980ea6552a8866996f2e70afbe292ed8b61546fc31e0d09defd5e",
+      "bytes": 879
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@ChangeTheme.png": {
+      "sha256": "874346e8502a00c4fd14cfbbee66de4107f84ec0592de9c85d67943e11f28820",
+      "bytes": 285
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@ConfirmThemeChange.png": {
+      "sha256": "3f93dfbda19cfdb1139cbfd2103fb6fe9aff3c311af5647435ab1aea658ec899",
+      "bytes": 841
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@SelectLightTheme.png": {
+      "sha256": "318e252649b18320d6e386d930f9bb79da3bd4500583114497bc99c50af8d75b",
+      "bytes": 15481
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@ToggleSettingsMenu-v2.png": {
+      "sha256": "536feffb73d6e024d00cc07c643e6faeed28ec24939b3967f797937a38632a4a",
+      "bytes": 344
+    },
+    "template/UiTheme/SwitchTheme/SwitchTheme@ToggleSettingsMenu.png": {
+      "sha256": "ea2816b96ff11be8c0b08bb266a94402ac58bc18559a8a7258303605de2521cf",
+      "bytes": 412
+    },
+    "template/WakeUp/BiliBiliNoMorePromptsNextTimeClose.png": {
+      "sha256": "ee9408e0714b6efc2bb216a44a8e64346f75c50c238d3a463cf5112ebbed773e",
+      "bytes": 455
+    },
+    "template/WakeUp/CloseAnno/CloseAnno.png": {
+      "sha256": "51f420589bbed5bdc7d2fbd0009306ba5fc0aac157280bebbbbb70eb9d2693f9",
+      "bytes": 869
+    },
+    "template/WakeUp/CloseAnno/CloseAnnoSpecialAccess.png": {
+      "sha256": "105af00a1fc15ec7016f8e2c7f6aa54f5e02be3df79fea90848a2f28b42c25bc",
+      "bytes": 2486
+    },
+    "template/WakeUp/CloseAnno/CloseAnnoTexas.png": {
+      "sha256": "3346dc4b09f87e3a93c03adde4c8d4890995fc99174997a47bab4117d7d820bf",
+      "bytes": 525
+    },
+    "template/WakeUp/GameStart.png": {
+      "sha256": "251b4a4f08c0a29bbe8778b4654503a8b7d3f9058e8387afbad92760228d681b",
+      "bytes": 1355
+    },
+    "template/WakeUp/LeidianGoogleFrameworkConfirm.png": {
+      "sha256": "19da6a5e5fe6014ac5610bedb8a41a26b0329edc8b94df39bedab2ce4fec9770",
+      "bytes": 2238
+    },
+    "template/WakeUp/NotDownloadVoice.png": {
+      "sha256": "32fb9472eee59af1388f31c3e1e88f0403e4e14c247a1434ba31319e6266d901",
+      "bytes": 12795
+    },
+    "template/WakeUp/StartLoginBServer.png": {
+      "sha256": "f7f010df946cf3f8c48c6366005a1321d828dbfbafd5d6a92ea7a050326fc522",
+      "bytes": 1117
+    },
+    "template/WakeUp/StartToWakeUp.png": {
+      "sha256": "b311e2871756741c41e79c2e15f0c8c45eb3b240cf084b65a68b33f70eae2db9",
+      "bytes": 1717
+    },
+    "template/WakeUp/StartUpConnectingFlag.png": {
+      "sha256": "859988865675ff2ed3aaad2d239fc91b61f3ef7214033edadbe61f4f2c649aa6",
+      "bytes": 5479
+    },
+    "template/empty.png": {
+      "sha256": "2e4c95c6b1aebcd6e64f3d6f9cf3b46a7b0f7e7664006b5f4720c33840e6423c",
+      "bytes": 67
+    }
+  },
+  "tasks": {
+    "tasks/Copilot/formation.json": [
+      "BattleQuickFormationConfirm",
+      "BattleQuickFormationModule-0",
+      "BattleQuickFormationModule-1",
+      "BattleQuickFormationModule-2",
+      "BattleQuickFormationModule-3",
+      "BattleQuickFormationModule-4",
+      "BattleQuickFormationModule-5",
+      "BattleQuickFormationModule-Item",
+      "BattleQuickFormationModulePage",
+      "BattleQuickFormationSkill-SwipeToTheDown",
+      "BattleQuickFormationSkill-SwipeToTheUp",
+      "BattleQuickFormationSkill1",
+      "BattleQuickFormationSkill2",
+      "BattleQuickFormationSkill3",
+      "BattleQuickFormationSkillLevel-Base",
+      "BattleQuickFormationSkillLevel-Check",
+      "BattleQuickFormationSkillLevel-OCR",
+      "BattleQuickFormationSkillLevel-Swipe",
+      "BattleQuickFormationSkillPage",
+      "Formation-AddSupportUnit-EnterSupportList",
+      "Formation-AddSupportUnit-InSupportList",
+      "Formation-AddSupportUnit-LeaveSupportList",
+      "Formation-AddSupportUnit-ReturnButton",
+      "Formation-EnterQuickFormation",
+      "SupportListAnalyzer-Elite",
+      "SupportListAnalyzer-Flag",
+      "SupportListAnalyzer-Friendship",
+      "SupportListAnalyzer-LevelOcr",
+      "SupportListAnalyzer-ModuleDisabled",
+      "SupportListAnalyzer-NameOcr",
+      "SupportListAnalyzer-Potential",
+      "SupportListAnalyzer-SupportUnit"
+    ],
+    "tasks/Roguelike/base.json": [
+      "RoguelikeBattleAbandon",
+      "RoguelikeBattleAbandonConfirm",
+      "RoguelikeBattleExitBegin"
+    ],
+    "tasks/UiTheme/SwitchTheme.json": [
+      "SwitchTheme@AlreadySet",
+      "SwitchTheme@CancelThemeChange",
+      "SwitchTheme@ChangeTheme",
+      "SwitchTheme@ConfirmThemeChange",
+      "SwitchTheme@ReturnTheme",
+      "SwitchTheme@SelectLightTheme",
+      "SwitchTheme@SwipeToLightTheme",
+      "SwitchTheme@ToggleSettingsMenu"
+    ],
+    "tasks/UiTheme/SwitchThemeByName.json": [
+      "SwitchThemeByNameAlreadySet",
+      "SwitchThemeByNameReturnAfterChange"
+    ],
+    "tasks/hotfix/ocr_replace.json": [
+      "BattleStageNameHotfix",
+      "CharsNameOcrReplaceHotfix",
+      "NumberOcrReplaceHotfix"
+    ],
+    "tasks/tasks.json": [
+      "AbandonAction",
+      "AnnihilationConfirm",
+      "AnnihilationPrtsRecordConfirm",
+      "BattleAvatarCoolingData",
+      "BattleAvatarData",
+      "BattleAvatarDataForFormation",
+      "BattleAvatarDataForVideo",
+      "BattleAvatarDialog",
+      "BattleAvatarReMatch",
+      "BattleCancelSelection",
+      "BattleCostData",
+      "BattleCostFlag",
+      "BattleDeployDirectionRectMove",
+      "BattleDroneAvatarData",
+      "BattleFormationInvalid",
+      "BattleFormationOCRNameFlag",
+      "BattleFormationOperAvatarMove",
+      "BattleFormationOperListSlowlySwipeToTheRight",
+      "BattleFormationOperListSwipeToTheLeft",
+      "BattleFormationOperNames",
+      "BattleFormationOperNamesOldVersion",
+      "BattleHasStarted",
+      "BattleHpFlag",
+      "BattleHpFlag2",
+      "BattleKills",
+      "BattleKillsFlag",
+      "BattleOfficiallyBegin",
+      "BattleOperAvailable",
+      "BattleOperAvatar",
+      "BattleOperBoxRectMove",
+      "BattleOperClickRange",
+      "BattleOperCooling",
+      "BattleOperCost",
+      "BattleOperDetailPageFlag",
+      "BattleOperDetailPageOldFlag",
+      "BattleOperName",
+      "BattleOperRetreat",
+      "BattleOperRetreatJustClick",
+      "BattleOperRole",
+      "BattleOperRoleCaster",
+      "BattleOperRoleDrone",
+      "BattleOperRoleMedic",
+      "BattleOperRolePioneer",
+      "BattleOperRoleRange",
+      "BattleOperRoleSniper",
+      "BattleOperRoleSpecial",
+      "BattleOperRoleSupport",
+      "BattleOperRoleTank",
+      "BattleOperRoleWarrior",
+      "BattleOpersFlag",
+      "BattlePause",
+      "BattlePauseCancel",
+      "BattlePauseCancelCheck",
+      "BattleQuickFormation",
+      "BattleQuickFormation-Elite",
+      "BattleQuickFormation-Level",
+      "BattleQuickFormation-OperNameFlag0",
+      "BattleQuickFormation-OperNameFlag1",
+      "BattleQuickFormation-OperNameFlag2",
+      "BattleQuickFormation-OperNameFlag3",
+      "BattleQuickFormation-OperNameFlag4",
+      "BattleQuickFormation-OperNameFlag5",
+      "BattleQuickFormation-OperNameFlag6",
+      "BattleQuickFormation-OperNameFlag7",
+      "BattleQuickFormation-OperNameFlagBase",
+      "BattleQuickFormationCheck",
+      "BattleQuickFormationClear",
+      "BattleQuickFormationCollapseRole",
+      "BattleQuickFormationExpandRole",
+      "BattleQuickFormationExpandRoleFiltering",
+      "BattleQuickFormationFilter",
+      "BattleQuickFormationFilter-Click2",
+      "BattleQuickFormationFilter-Cost",
+      "BattleQuickFormationFilter-PinActivated",
+      "BattleQuickFormationFilter-PinUnactivated",
+      "BattleQuickFormationFilter-Trust",
+      "BattleQuickFormationFilterClose",
+      "BattleQuickFormationOCR",
+      "BattleQuickFormationRole",
+      "BattleQuickFormationRole-All",
+      "BattleQuickFormationRole-All-OCR",
+      "BattleQuickFormationRole-Caster",
+      "BattleQuickFormationRole-Medic",
+      "BattleQuickFormationRole-Pioneer",
+      "BattleQuickFormationRole-Sniper",
+      "BattleQuickFormationRole-Special",
+      "BattleQuickFormationRole-Support",
+      "BattleQuickFormationRole-Tank",
+      "BattleQuickFormationRole-Warrior",
+      "BattleQuickFormationRoleExpanded",
+      "BattleQuickFormationRoleFiltering",
+      "BattleQuickFormationTrustIcon",
+      "BattleSelectFormation1",
+      "BattleSelectFormation2",
+      "BattleSelectFormation3",
+      "BattleSelectFormation4",
+      "BattleSkillReady",
+      "BattleSkillReadyOnClick-TopView",
+      "BattleSpeedButton",
+      "BattleSpeedUp",
+      "BattleSpeedUpCheck",
+      "BattleStageName",
+      "BattleStart",
+      "BattleStartAdverse",
+      "BattleStartAll",
+      "BattleStartExercise",
+      "BattleStartNormal",
+      "BattleStartOCR",
+      "BattleStartPlot",
+      "BattleStartPre",
+      "BattleStartPre@BattleQuickFormation",
+      "BattleStartPre@UseMedicine",
+      "BattleStartPreFlag",
+      "BattleStartRaid",
+      "BattleStartSimulation",
+      "BattleStartSimulationForTwo",
+      "BattleStartTrials",
+      "BattleStartTrialsRaid",
+      "BattleSupportUnitFormation",
+      "BattleSupportUnitFormationSelect",
+      "BattleSwipeOper",
+      "BattleUseOper",
+      "BattleUseSkillJustClick",
+      "BiliBiliNoMorePromptsNextTime",
+      "BiliBiliNoMorePromptsNextTimeClose",
+      "CharsNameOcrReplace",
+      "CheckLevelUp",
+      "ClickCorner",
+      "ClickCornerAfterFailure",
+      "ClickCornerAfterPRTS",
+      "ClickCornerUntilReturnButton",
+      "ClickCornerUntilStartButton",
+      "CloseAnno",
+      "CloseAnnoBase",
+      "CloseAnnoSpecialAccess",
+      "CloseAnnoTexas",
+      "CloseAnnos",
+      "CloseStonePage",
+      "CloseStonePageExceeded",
+      "Copilot@BattleStartPreFlag",
+      "Copilot@BattleStartPreFlag-Return",
+      "Copilot@ClickCornerUntilStartButton",
+      "Copilot@EndOfAction",
+      "Copilot@EndOfAction-Sandbox",
+      "Copilot@FightMissionFailed",
+      "Copilot@StageDrops-Stars-3",
+      "Copilot@StageDrops-Stars-Adverse",
+      "Copilot@WaitUntilEndOfAction",
+      "DrGrandetUseOriginiums",
+      "EndOfAction",
+      "EndOfActionAnnihilation",
+      "EndOfActionThenStop",
+      "EndOfPlot",
+      "FightMissionFailed",
+      "FightMissionFailedAndStop",
+      "FromAnnihilation",
+      "FromStageSN",
+      "GameStart",
+      "GameStartCheckResourceOCR",
+      "GameStartUpdateOCR",
+      "LeidianGoogleFrameworkConfirm",
+      "LoadingIcon",
+      "LoadingText",
+      "LoadingTextPostDelay",
+      "MainThemes",
+      "MedicineConfirm",
+      "MedicineConfirm@LoadingText",
+      "MedicineConfirmed",
+      "MedicineExpiringTime",
+      "MedicineInventory",
+      "MedicineNotConfirmed",
+      "MedicineReduceIcon",
+      "NextAfterLoadingText",
+      "NoStone",
+      "NormalBattleAbandon",
+      "NotDownloadVoice",
+      "NumberOcrReplace",
+      "OfflineConfirm",
+      "OfflineConfirmAfterBattle",
+      "OfflineConfirmImpl",
+      "PRTS",
+      "PRTS1",
+      "PRTS2",
+      "PRTS3",
+      "ParadoxReturn",
+      "ParadoxReturnFlag",
+      "PreStartCheck",
+      "PrtsErrorConfirm",
+      "PrtsStillLoading",
+      "RecruitSupportConfirm",
+      "Return",
+      "ReturnButton",
+      "ReturnButtons",
+      "ReturnConfirm",
+      "SR-TarotClose",
+      "SR-TarotClose-AfterStart",
+      "SkipBattlePlot",
+      "SkipBattlePlotConfirm",
+      "SkipForbiddenOperConfirm",
+      "SkipThePreBattlePlot",
+      "SkipThePreBattlePlotConfirm",
+      "SlowlySwipeToTheRight",
+      "StageDrops-Stars-3",
+      "StageDrops-Stars-Adverse",
+      "StageSNReturnFlag",
+      "StartButton1",
+      "StartButton1TryAgain",
+      "StartButton2",
+      "StartButton2TryAgain",
+      "StartButton2WaitTime",
+      "StartLoginBServer",
+      "StartToWakeUp",
+      "StartToWakeUpOCR",
+      "StartUpConnectingFlag",
+      "StartUpThemes",
+      "StoneConfirm",
+      "StoneConfirmWait",
+      "Stop",
+      "SwipeToTheLeft",
+      "TodaysSupplies",
+      "UseMedicine",
+      "UseStone",
+      "UsingMedicine-SanityMax",
+      "UsingMedicine-Target",
+      "UsingMedicineCount",
+      "WaitAfterPRTS"
+    ]
+  },
+  "generated": {
+    "Arknights-Tile-Pos/overview.json": {
+      "sha256": "cecefba83eff4f5c44dcd6e210b2f878cdaf35c85a7466d55ec402625d0a7be1",
+      "bytes": 526
+    },
+    "tasks/battle.json": {
+      "sha256": "e201afb767e7851c384ecb1c3946824eef6e29d203ae6dbfb89e3f9983e7393f",
+      "bytes": 70301
+    }
+  }
+}

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "maatactics-mcp"
+version = "0.1.0.dev0"
+description = "An agent-ready tactical combat engine for Arknights, powered by MAA and exposed through MCP."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+dependencies = ["mcp==2.3.0", "jsonschema>=4.23,<5", "pillow>=12.3,<13"]
+
+[project.scripts]
+maatactics-mcp = "maatactics.adapters.mcp.server:main"
+maatactics-probe = "maatactics.backends.maacore.probe:main"
+
+[project.urls]
+Repository = "https://github.com/ZZH6821/MaaTactics"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<10", "pytest-asyncio>=1.0,<2", "ruff>=0.14,<1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/maatactics"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src", "/tests", "/tools", "/examples", "/native/maacore", "/configs/example.toml",
+    "/docs", "/README.md", "/LICENSE",
+    "/THIRD_PARTY_NOTICES.md", "/pyproject.toml", "/uv.lock", "/upstream.lock.json",
+]
+exclude = ["/docs/validation", "**/__pycache__", "**/*.pyc", "**/*.local.toml"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"docs/validation/p6-checks.json" = "docs/validation/p6-checks.json"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = ["native: opt-in MaaCore contract tests without a device", "device: opt-in tests that may operate a game device"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

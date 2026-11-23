@@ -1,0 +1,14 @@
+# Copy to a *.local.toml file. Paths and device addresses stay local.
+data_root = 'runtime'
+
+[devices.mumu]
+runtime_root = 'C:\path\to\MAA'
+adb_path = 'C:\path\to\adb.exe'
+address = '127.0.0.1:16384'
+config = 'General'
+touch_mode = 'maatouch'
+# Run maatactics-probe and copy the exact library_sha256 from its report.
+expected_sha256 = 'REPLACE_WITH_PROBE_LIBRARY_SHA256'
+# For the battle-v1 library, use the values printed by prepare_battle_resources.py.
+# resource_root = 'PATH_TO_BATTLE_PROFILE'
+# expected_resource_sha256 = 'REPLACE_WITH_PROFILE_MANIFEST_SHA256'

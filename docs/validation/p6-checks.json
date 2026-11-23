@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "date": "2026-11-23",
+  "scope": "Windows x64",
+  "source": {
+    "upstream_commit": "67478591379d441e25a59156047c3f6163520fb7",
+    "patch_files_match_reference_export": 21,
+    "patches": {
+      "0001-p4-tactical-context.patch": "118671ad4704895c9bcaa8a4ea74e88445c7e4106add3cfbc18d89a96aa7bd21",
+      "0002-p5-hybrid-control.patch": "19d396a87714b17c3b40e5e727c4699062ad996dd590fbe958c18f760222995a",
+      "0003-p6-battle-profile.patch": "b1274542f34b36097bd5d96fc6c32a33aff80043048bef44fdd177edfdd2d342"
+    }
+  },
+  "windows_build": {
+    "msvc": "19.52.37029.0",
+    "cmake": "4.4.5",
+    "version": "v6.22.0-maatactics-p6.0",
+    "release": {
+      "name": "MaaCore.dll",
+      "bytes": 2705920,
+      "sha256": "80153edbcc9a6ccdee98a9c8c041c3c2aacbd8d592f2426eae22119b6ace0db2"
+    },
+    "release_tested_sha256": "691ea4dc2bf466008eae8a3829c17180fe0ceb027ad4b76a48899badd45f9aa4",
+    "profile": "battle-v1",
+    "local_runtime": {
+      "bytes": 83814072,
+      "files": 9
+    }
+  },
+  "resources": {
+    "original": {
+      "bytes": 273258143,
+      "files": 9614
+    },
+    "compact": {
+      "bytes": 55743802,
+      "files": 163
+    },
+    "manifest_sha256": "55b79fca66581f32b7226643a8a144d1198087592d7d6cb769b7baa4424f3b1e",
+    "task_nodes": 274,
+    "templates": 140
+  },
+  "startup_and_migration": {
+    "clean_cold_boot": true,
+    "missing_model_rejected": true,
+    "missing_template_no_partial_output": true,
+    "changed_or_unlisted_files_rejected": true,
+    "old_runtime_profile_pair_rejected": true,
+    "compatibility_migration_requires_new_pin": true
+  },
+  "regression": {
+    "ordinary": 65,
+    "native_no_device": 5,
+    "warnings_as_errors": true,
+    "fixed_frames": 24,
+    "all_expected_and_observed_values_match_p4": true
+  },
+  "exercise": {
+    "stage": "main_01-07",
+    "manual_visual_checks": [
+      "Operator appears at intended grid location after deploy",
+      "Skill effect appears after activation",
+      "Operator disappears and redeployment timer appears after retreat",
+      "HUD shows 2X and paused after disconnect"
+    ],
+    "copilot_indices": [
+      0,
+      1,
+      2,
+      4,
+      5
+    ],
+    "agent_action_sequences": [
+      3,
+      4,
+      5
+    ],
+    "resume_verified": "verified",
+    "pause_verified": "verified",
+    "disconnect": "completed",
+    "evidence_sha256": {
+      "deploy_operator.after.png": "7ee21b1f29d4ff266fe0007cf559bb4d132957617d365743ff03978f2d426360",
+      "use_skill.after.png": "f59a302aefe0154f12e3ad507d92fdc6cce6e10820e464d99afa7f554acc0e51",
+      "retreat_operator.after.png": "cc1ced84ed8c9bacd1f03aa675712c9b4ffaa8d29de8a792031af86fa5edf4e4",
+      "post-disconnect.png": "37eceb9242d64dbb0f1668df4d8bc6562e6c07a0bc27f19a19849f0bf6a12afd"
+    }
+  },
+  "distribution": {
+    "wheel_from_sdist": true,
+    "isolated_wheel_install": true,
+    "discovered_stdio_tools": 24,
+    "file_level_source_license_audit": true
+  }
+}

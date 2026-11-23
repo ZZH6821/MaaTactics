@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "scenario": "P4 DLL through standard MCP stdio, read-only current home screen",
+  "runtime_fingerprint": {
+    "backend": "maacore",
+    "version": "v6.22.0-maatactics-p4.1",
+    "library_sha256": "79b75c42dcd1c7fc406731214c19b5adc7c3dc56a16071019917ad5cf99e7573",
+    "provenance": "external_runtime_contract_verified_not_source_attested",
+    "battle_abi_version": 1
+  },
+  "connection_lifecycle": "completed",
+  "capture_started_at": "2026-11-17T10:33:01.547Z",
+  "capture_completed_at": "2026-11-17T10:33:01.893Z",
+  "analysis_completed_at": "2026-11-17T10:33:02.023Z",
+  "native_observation_error": null,
+  "outside_battle_fields": {
+    "cost": {
+      "value": null,
+      "status": "unknown",
+      "source": "vision",
+      "confidence": null,
+      "observed_at": "2026-11-17T10:33:01.893Z",
+      "evidence_snapshot_id": "frame-4f4f7a4982f946d49c8b6b068b87d8da"
+    },
+    "kills": {
+      "value": null,
+      "status": "unknown",
+      "source": "vision",
+      "confidence": null,
+      "observed_at": "2026-11-17T10:33:01.893Z",
+      "evidence_snapshot_id": "frame-4f4f7a4982f946d49c8b6b068b87d8da"
+    },
+    "total_kills": {
+      "value": null,
+      "status": "unknown",
+      "source": "vision",
+      "confidence": null,
+      "observed_at": "2026-11-17T10:33:01.893Z",
+      "evidence_snapshot_id": "frame-4f4f7a4982f946d49c8b6b068b87d8da"
+    },
+    "deployed_operators": {
+      "value": null,
+      "status": "unknown",
+      "source": "engine_context",
+      "confidence": null,
+      "observed_at": "2026-11-17T10:33:01.893Z",
+      "evidence_snapshot_id": "frame-4f4f7a4982f946d49c8b6b068b87d8da"
+    }
+  },
+  "context_valid": false,
+  "visible_python_processes_after_tests": 0,
+  "tests": {
+    "full_suite_passed": 43,
+    "opt_in_native_tests": 2
+  },
+  "p4_phase_complete": false
+}

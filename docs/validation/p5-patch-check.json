@@ -1,0 +1,9 @@
+{
+  "patched_files_byte_identical": 15,
+  "patch_reverse_check": true,
+  "clang_format": "23.1.1; passed",
+  "patches": {
+    "0001-p4-tactical-context.patch": "118671ad4704895c9bcaa8a4ea74e88445c7e4106add3cfbc18d89a96aa7bd21",
+    "0002-p5-hybrid-control.patch": "19d396a87714b17c3b40e5e727c4699062ad996dd590fbe958c18f760222995a"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "forward_apply_and_byte_exact_match": 13,
+  "reverse_apply_check": true,
+  "git_apply_configuration": "core.autocrlf=false",
+  "classifier_source_unchanged": true,
+  "classifier_sha256": "4615bca9bd43df88f20f3ecd759158731b285c8add69bd972c102d6f5990ffc2"
+}

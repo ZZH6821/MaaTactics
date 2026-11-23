@@ -1,0 +1,608 @@
+{
+  "schema_version": "1.0",
+  "audit_date": "2026-11-17",
+  "runtime_version": "v6.22.0",
+  "runtime_source_commit_attested": false,
+  "transport": "standard MCP stdio client",
+  "stage_id": "main_01-07",
+  "mode": "exercise",
+  "resolution": [
+    1280,
+    720
+  ],
+  "operations": [
+    {
+      "operation_id": "op-7c9e4744c77044889c82eea34fa1c2d0",
+      "kind": "connect_device",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:32:01.690Z",
+      "finished_at": "2026-11-16T21:32:04.768Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "operation_id": "op-825f144f683b428dbefcd5b485790276",
+      "kind": "set_stage",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:32:04.788Z",
+      "finished_at": "2026-11-16T21:32:04.801Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "operation_id": "op-e9f7e8fddafc403ebfe5426929ba71f1",
+      "kind": "start_battle",
+      "lifecycle": "failed",
+      "accepted_at": "2026-11-16T21:32:05.418Z",
+      "finished_at": "2026-11-16T21:32:12.070Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": {
+        "code": "BATTLE_STATE_UNKNOWN",
+        "message": "Battle pause state cannot be verified; no pause toggle was issued",
+        "retryable": false,
+        "effect_may_have_occurred": true,
+        "recovery": "Inspect operation and session; reobserve before issuing a new action."
+      },
+      "result": {},
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/006.before.png",
+          "sha256": "ab275a556f80cd781dc526182557e78b632d63f0638ae2e182f9de91491b4da9"
+        }
+      }
+    },
+    {
+      "operation_id": "op-3b737bcf83a54cf4aac5aaaf269f74d1",
+      "kind": "pause_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:32:43.674Z",
+      "finished_at": "2026-11-16T21:32:45.358Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": true,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "paused",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "play_triangle",
+          "components": [
+            {
+              "area": 414,
+              "width": 33,
+              "height": 27,
+              "x": 11,
+              "y": 12
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/009.before.png",
+          "sha256": "592e9ec4bf35e391c212c42f739273a678a1c8f27f2977404f5a8d8b4f79dfd3"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/009.after.png",
+          "sha256": "f2db2360fb8ba609fa0e317958d9f83f1d4f27c717fdf33af65c6c193af759ad"
+        }
+      }
+    },
+    {
+      "operation_id": "op-c36618fee1494f7c951e75ccece4f4d2",
+      "kind": "set_stage",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:33:11.952Z",
+      "finished_at": "2026-11-16T21:33:11.986Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {}
+    },
+    {
+      "operation_id": "op-170fa8d9474843838c926874c2e9febc",
+      "kind": "resume_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:33:12.673Z",
+      "finished_at": "2026-11-16T21:33:14.424Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": false,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "running",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "two_pause_bars",
+          "components": [
+            {
+              "area": 314,
+              "width": 17,
+              "height": 29,
+              "x": 9,
+              "y": 11
+            },
+            {
+              "area": 313,
+              "width": 17,
+              "height": 29,
+              "x": 30,
+              "y": 11
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/013.before.png",
+          "sha256": "ca1e64838d5e11a5e27094f271f27e9bbb78b974501eb1758496938dbe2a6e65"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/013.after.png",
+          "sha256": "7f648283c9c08fad1a94478d2f6c9472e8d4fb6be3ea40118d79ef9faaeaa968"
+        }
+      }
+    },
+    {
+      "operation_id": "op-d7b9d5a87fcf42c5a698988f05027550",
+      "kind": "deploy_operator",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:33:15.294Z",
+      "finished_at": "2026-11-16T21:33:22.073Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/015.before.png",
+          "sha256": "b9ce2b314a2805fbfdc895e9c5fffcfa7c34f1492388160df625cd969472d002"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/015.after.png",
+          "sha256": "58d5ac0f9d5b8b216e1dcea95de53fe8b69487c1c38044ebf49e96a72d38fb21"
+        }
+      }
+    },
+    {
+      "operation_id": "op-9a11e759f6214f4c8e739def2d65f714",
+      "kind": "pause_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:33:22.975Z",
+      "finished_at": "2026-11-16T21:33:24.589Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": true,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "paused",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "play_triangle",
+          "components": [
+            {
+              "area": 414,
+              "width": 33,
+              "height": 27,
+              "x": 11,
+              "y": 12
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/017.before.png",
+          "sha256": "ec63d22b23f2a8495daa8ec6ab3c7128519c59a7140467140d40a19826a6eadd"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/017.after.png",
+          "sha256": "b1d538f123dd22de915317c28194a9a2af0bbd54022bc5bc395d19a4b90820c2"
+        }
+      }
+    },
+    {
+      "operation_id": "op-a5f0c99cb7104fa595231d7509a16de7",
+      "kind": "resume_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:35:24.860Z",
+      "finished_at": "2026-11-16T21:35:26.564Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": false,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "running",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "two_pause_bars",
+          "components": [
+            {
+              "area": 314,
+              "width": 17,
+              "height": 29,
+              "x": 9,
+              "y": 11
+            },
+            {
+              "area": 313,
+              "width": 17,
+              "height": 29,
+              "x": 30,
+              "y": 11
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/019.before.png",
+          "sha256": "e57cf619fc54ef8dce512e3ae56b5a8ed4107a54c27f442acc02404cee28d772"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/019.after.png",
+          "sha256": "5e0fe62b58bc36fec7ff637ce0451465284ef7199e9d1fb0b7002ff9e887192c"
+        }
+      }
+    },
+    {
+      "operation_id": "op-99c93363f7ec4d9a866162fe252c2465",
+      "kind": "use_skill",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:35:27.450Z",
+      "finished_at": "2026-11-16T21:35:30.642Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/021.before.png",
+          "sha256": "7a305d5e5e84570cab225800ca7178a41f38612589630db9c81fb1f209236ab0"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/021.after.png",
+          "sha256": "f20a91434a68766f5e51ea2df18f12a16b45f819e37feb22d935f6fc51511ae8"
+        }
+      }
+    },
+    {
+      "operation_id": "op-fdd29d6de97d47e2a2c03ae7478c6738",
+      "kind": "pause_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:35:31.522Z",
+      "finished_at": "2026-11-16T21:35:33.210Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": true,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "paused",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "play_triangle",
+          "components": [
+            {
+              "area": 414,
+              "width": 33,
+              "height": 27,
+              "x": 11,
+              "y": 12
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/023.before.png",
+          "sha256": "b25be95b258b30e00a69bfb6695b3ea66c977c5ced5dcc08d89b0c217bd0a6e6"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/023.after.png",
+          "sha256": "df57f934d4d9ac2357ce63019112ca501fc7bf026dc41d9624927023622829f9"
+        }
+      }
+    },
+    {
+      "operation_id": "op-b9768a65c2c3481995b1bdf22592c9d0",
+      "kind": "resume_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:36:12.873Z",
+      "finished_at": "2026-11-16T21:36:14.569Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": false,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "running",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "two_pause_bars",
+          "components": [
+            {
+              "area": 314,
+              "width": 17,
+              "height": 29,
+              "x": 9,
+              "y": 11
+            },
+            {
+              "area": 313,
+              "width": 17,
+              "height": 29,
+              "x": 30,
+              "y": 11
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/025.before.png",
+          "sha256": "7e92aca167b4ddd697b21f63bc0b6a0b33444b6bd63ab1ea08cd06bf75732fae"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/025.after.png",
+          "sha256": "56f876fe5fea4a773ad7be69542accab0b6143eea15121cef2b61b838ad50615"
+        }
+      }
+    },
+    {
+      "operation_id": "op-09a8d1e7868d439c80cb3a10dcae7f6c",
+      "kind": "retreat_operator",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:36:15.464Z",
+      "finished_at": "2026-11-16T21:36:18.580Z",
+      "native_task_outcome": "completed",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {},
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/027.before.png",
+          "sha256": "ed3ca33554b5855ad63461bd93e0be4d43c37aecefb04703e77fd3c08c4561af"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/027.after.png",
+          "sha256": "5209e1c3a31994bbe0263d45d9784197f4c34539e608deff748f11ad7d8897fc"
+        }
+      }
+    },
+    {
+      "operation_id": "op-46ed0677f3b145a58d53efe552268df6",
+      "kind": "pause_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:36:19.426Z",
+      "finished_at": "2026-11-16T21:36:21.097Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "confirmed",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "confirmed",
+        "controller_acknowledged": true,
+        "game_effect": "verified",
+        "game_paused": true,
+        "input_issued": true,
+        "pause_click_issued": true,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "paused",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "play_triangle",
+          "components": [
+            {
+              "area": 414,
+              "width": 33,
+              "height": 27,
+              "x": 11,
+              "y": 12
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/029.before.png",
+          "sha256": "f4c616957e5043ab498e19c72e8ea12a917f9b71dd7c760ffec39a40fb92407b"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/029.after.png",
+          "sha256": "9a683e3e55c8a05bd43fb24d34fcd2f886aa293f1f56e66008616e4543862c9f"
+        }
+      }
+    },
+    {
+      "operation_id": "op-3217be028be14e0b8510fa80bb217cc3",
+      "kind": "pause_battle",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:37:35.532Z",
+      "finished_at": "2026-11-16T21:37:37.108Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "not_required",
+      "game_effect": "verified",
+      "error": null,
+      "result": {
+        "input_execution": "not_required",
+        "game_effect": "verified",
+        "game_paused": true,
+        "input_issued": false,
+        "pause_click_issued": false,
+        "start_issued": false,
+        "verification_source": "vision",
+        "pause_observation": {
+          "state": "paused",
+          "confidence": null,
+          "source": "vision",
+          "method": "battle_hud_components_v1",
+          "reason": "play_triangle",
+          "components": [
+            {
+              "area": 414,
+              "width": 33,
+              "height": 27,
+              "x": 11,
+              "y": 12
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "before": {
+          "local_artifact": "artifacts/start-pause-actions/031.before.png",
+          "sha256": "b02d800d0f4762c420ea1e5347f2dc78c1bdff6a42eaf4dd997589fee125bc89"
+        },
+        "after": {
+          "local_artifact": "artifacts/start-pause-actions/031.after.png",
+          "sha256": "f5a59c4664fc6f99a07ca5d1b8be913b68c963600a44955693898b27bad1064d"
+        }
+      }
+    },
+    {
+      "operation_id": "op-2019ce5702894c2e84110c7f48ecfbbb",
+      "kind": "stop_operations",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:37:37.375Z",
+      "finished_at": "2026-11-16T21:37:37.376Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {
+        "epoch": 5,
+        "status": "needs_reobserve",
+        "game_paused": "unknown",
+        "new_inputs_stopped": true
+      },
+      "evidence": {}
+    },
+    {
+      "operation_id": "op-34b9d6cf934a42eda93d1cffc4f26227",
+      "kind": "disconnect_device",
+      "lifecycle": "completed",
+      "accepted_at": "2026-11-16T21:37:37.379Z",
+      "finished_at": "2026-11-16T21:37:37.549Z",
+      "native_task_outcome": "unknown",
+      "input_execution": "unknown",
+      "game_effect": "unknown",
+      "error": null,
+      "result": {
+        "epoch": 6,
+        "status": "closed",
+        "game_paused": "unknown",
+        "new_inputs_stopped": true
+      },
+      "evidence": {}
+    }
+  ],
+  "external_visual_review": [
+    {
+      "kind": "deploy_operator",
+      "status": "confirmed",
+      "reason": "Operator appeared at the requested tile and remaining placement count dropped to seven.",
+      "artifact": "artifacts/start-pause-actions/015.after.png"
+    },
+    {
+      "kind": "use_skill",
+      "status": "confirmed",
+      "reason": "The ready marker disappeared and the skill effect covered multiple tiles.",
+      "artifact": "artifacts/start-pause-actions/021.after.png"
+    },
+    {
+      "kind": "retreat_operator",
+      "status": "confirmed",
+      "reason": "Operator disappeared, placement count returned to eight, and the card showed redeployment cooldown.",
+      "artifact": "artifacts/start-pause-actions/027.after.png"
+    }
+  ],
+  "limits": [
+    "One tactical scenario only; ten independent scenario rounds remain unverified.",
+    "Ordinary tactical game_effect remains unknown in the service; external visual review is separate.",
+    "Initial exercise start hit a transient loading frame; the polling fix has unit coverage but awaits another real startup.",
+    "Image artifacts remain local and are not redistributed as project assets."
+  ],
+  "release_stability_gate_passed": false,
+  "post_cleanup_observation": {
+    "state": "paused",
+    "method": "fresh ADB read-only screenshot after the MCP process exited",
+    "artifact": "artifacts/start-pause-actions/post-cleanup.png"
+  }
+}

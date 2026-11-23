@@ -1,0 +1,18 @@
+{
+  "maa_commit": "67478591379d441e25a59156047c3f6163520fb7",
+  "maautils_commit": "f093a19d07db89f2a03bf0ec50c2061a49758783",
+  "maadeps_tag": "v2.15.1",
+  "abi_version": 1,
+  "patch": "0003-p6-battle-profile.patch",
+  "patch_sha256": "b1274542f34b36097bd5d96fc6c32a33aff80043048bef44fdd177edfdd2d342",
+  "clang_format": "23.1.1",
+  "build_configuration": "Release",
+  "verification": "Windows x64 Release clean build, ABI and device regression passed",
+  "verification_report": "docs/validation/p6-checks.json",
+  "hybrid_abi_version": 1,
+  "core_profile": "battle-v1",
+  "required_patches": {
+    "0001-p4-tactical-context.patch": "118671ad4704895c9bcaa8a4ea74e88445c7e4106add3cfbc18d89a96aa7bd21",
+    "0002-p5-hybrid-control.patch": "19d396a87714b17c3b40e5e727c4699062ad996dd590fbe958c18f760222995a"
+  }
+}

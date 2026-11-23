@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-17",
+  "ordinary_tests": {
+    "passed": 50,
+    "native_tests_not_enabled_by_default": 3
+  },
+  "opt_in_native_tests": {
+    "passed": 3,
+    "warnings_as_errors": true,
+    "device_connected": false
+  },
+  "commands": [
+    "pytest -q",
+    "pytest -q tests/test_native_contract.py -W error",
+    "ruff check src tests tools",
+    "ruff format --check src tests tools"
+  ],
+  "ruff_check": "passed",
+  "ruff_format": "passed",
+  "native_clang_format": "23.1.1; 13 files passed",
+  "patch_forward_and_reverse": "passed; byte-exact after forward apply",
+  "wheel": {
+    "file": "maatactics_mcp-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "2b6bf255ebcb2fd7d6a3e3da1401f022d96b7a68e9ae67d456fc65b9903a5687",
+    "schemas": 21,
+    "licenses_and_notices": true,
+    "native_binary_or_weights": false,
+    "unpacked_import": "passed"
+  },
+  "device_ci": "not enabled",
+  "release_stability_ten_rounds": "pending"
+}

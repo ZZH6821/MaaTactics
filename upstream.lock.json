@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "repository": "https://github.com/ZZH6821/MaaTactics",
+  "references": [
+    {
+      "repository": "https://github.com/MaaAssistantArknights/MaaAssistantArknights",
+      "branch": "dev-v2",
+      "commit": "67478591379d441e25a59156047c3f6163520fb7",
+      "license": "AGPL-3.0-only",
+      "usage": "external runtime ABI and SingleStep contract"
+    },
+    {
+      "repository": "https://github.com/MaaXYZ/MaaFramework",
+      "branch": "main",
+      "commit": "07354c4e2e09a43e7edc12b8cb377d9137e1f584",
+      "license": "LGPL-3.0",
+      "usage": "research only"
+    },
+    {
+      "repository": "https://github.com/MaaAssistantArknights/MaaAI",
+      "branch": "main",
+      "commit": "7250cacc15c3b41c334937576d881845bee1ea71",
+      "license": "MIT",
+      "usage": "research only"
+    }
+  ],
+  "tested_runtime": {
+    "platform": "windows-x86_64",
+    "version": "v6.22.0",
+    "library_sha256": "eaa40992ac107d237fb3d5a3cb877699740d770d2a3eecfcd825f4c62e0ac2d4",
+    "binary_source_commit": null,
+    "source_attestation": "unverified",
+    "contract_probe": "docs/validation/p0-maacore-contract.json",
+    "bundled": false
+  }
+}

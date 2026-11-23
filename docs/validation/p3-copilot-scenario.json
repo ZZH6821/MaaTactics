@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "scenario": "P3 original-format single-file Copilot on normal 1-7 exercise",
+  "source_commit": "67478591379d441e25a59156047c3f6163520fb7",
+  "runtime_version": "v6.22.0",
+  "library_sha256": "eaa40992ac107d237fb3d5a3cb877699740d770d2a3eecfcd825f4c62e0ac2d4",
+  "source_attested": false,
+  "document": {
+    "copilot_id": "copilot-9f0cbcb749135b34152b834640ec8c41bd4f26ddb424720ba3afdaacd906500c",
+    "sha256": "9f0cbcb749135b34152b834640ec8c41bd4f26ddb424720ba3afdaacd906500c",
+    "stage_name": "main_01-07",
+    "document_action_count": 5,
+    "size_bytes": 606,
+    "validation": {
+      "accepted": true,
+      "validation_level": "native_parser_acceptance",
+      "runtime_version": "v6.22.0",
+      "device_connected": false,
+      "tasks_started": false
+    },
+    "document_uri": "maatactics://sessions/s-ef6ec48acfb2415daf33f93267ef84a3/copilots/copilot-9f0cbcb749135b34152b834640ec8c41bd4f26ddb424720ba3afdaacd906500c.json"
+  },
+  "session_id": "s-ef6ec48acfb2415daf33f93267ef84a3",
+  "run_id": "op-417e94339992455696b50ccaef240502",
+  "started_at": "2026-11-16T21:58:22.170Z",
+  "finished_at": "2026-11-16T21:59:12.351Z",
+  "native_task_outcome": "completed",
+  "announced_action_count": 5,
+  "input_execution": "unknown",
+  "game_effect": "unknown",
+  "external_visual_review": {
+    "reviewer": "supervising Agent, independent of service inference",
+    "deployment": "Operator visibly at [4,3], available placements reduced to 7",
+    "skill_effect": "Blue/gold area effect around operator visible, DP increased",
+    "retreat": "Operator absent, placements 8, card cooldown 53.7 seconds",
+    "battle_cleared": false,
+    "evidence": {
+      "deployment": {
+        "artifact_path": "artifacts/p3-startup-recheck/monitor/14.png",
+        "sha256": "d5f084aa81590ccfcf4f3a50483d81e247f7837f65568f20cbd018d6cda360f8"
+      },
+      "skill_effect": {
+        "artifact_path": "artifacts/p3-startup-recheck/monitor/19.png",
+        "sha256": "4b9bcbe244e35f5c25b7bb7c61435ba64611e08127d60ddaf3772c6280668f9a"
+      },
+      "retreat": {
+        "artifact_path": "artifacts/p3-startup-recheck/009.after.png",
+        "sha256": "b94a66a3fd7f513f9ec9adfd9f7247ddb5a3086b60b7c5b1b62390d861792bea"
+      },
+      "final_paused": {
+        "artifact_path": "artifacts/p3-startup-recheck/011.after.png",
+        "sha256": "f8e1d355d46e6fa9a396c889199fc085a86b8cdba23685cdb90f6996cc52af3c"
+      }
+    }
+  },
+  "pause": {
+    "operation_id": "op-52aaeeddd7f04f64b205637685639965",
+    "lifecycle": "completed",
+    "game_effect": "verified"
+  },
+  "cleanup": {
+    "epoch": 4,
+    "status": "closed",
+    "game_paused": "unknown",
+    "new_inputs_stopped": true,
+    "post_cleanup_screenshot": {
+      "artifact_path": "artifacts/p3-startup-recheck/post-cleanup.png",
+      "sha256": "409fe1f4372e0ff53ea8ea26cb0c8931d368e3b8fc0a542a81d800e7d8608158",
+      "external_visual_review": "paused"
+    },
+    "visible_python_process_count": 0
+  },
+  "coverage": [
+    "English Deploy",
+    "Chinese skill and retreat",
+    "operator group alias",
+    "costs=12 condition",
+    "kills=1 condition",
+    "cached progress observed while running",
+    "post-run epoch invalidation",
+    "MCP pause and worker destruction"
+  ],
+  "limits": [
+    "Not a stage-clear strategy; intentionally ends after retreat",
+    "No claim of per-action success from native callbacks",
+    "Automatic formation success not tested on real device",
+    "Missing-operator and formation errors covered by injected native callback tests",
+    "P2 ten-round release stability gate remains unmet",
+    "Restricted start_battle transition-frame fix remains separately unverified"
+  ],
+  "verification": {
+    "full_suite_passed": 41,
+    "opt_in_native_tests_included": 2,
+    "post_revision_copilot_tests_passed": 12,
+    "ruff": "passed",
+    "wheel_import_and_resources": "passed",
+    "license_and_notices_in_wheel": true
+  },
+  "wheel": {
+    "artifact_path": "artifacts/dist/maatactics_mcp-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "9922f4de42cac8f22937f7002a249c54ca95ccb431c920d6956d63e27bd35caf"
+  }
+}

@@ -1,0 +1,258 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,6 +14,11 @@
+ option(WITH_MAC_SCK "build with macOS ScreenCaptureKit" ${APPLE})
+ option(WITH_HASH_VERSION "generate version from git hash" OFF)
+ option(BUILD_RESOURCE_UPDATER "build resource updater tool" OFF)
++option(MAATACTICS_BATTLE_ONLY "build MaaTactics' battle runtime and resource loader" OFF)
++
++if(MAATACTICS_BATTLE_ONLY AND (BUILD_WPF_GUI OR BUILD_RESOURCE_UPDATER OR INSTALL_RESOURCE))
++    message(FATAL_ERROR "The battle runtime requires a GUI-free, external resource build")
++endif()
+ 
+ if(INSTALL_FLATTEN)
+     set(RPATH_LIBRARY_INSTALL_DIR .)
+diff --git a/include/AsstCaller.h b/include/AsstCaller.h
+--- a/include/AsstCaller.h
++++ b/include/AsstCaller.h
+@@ -63,6 +63,7 @@
+     AsstHandle ASSTAPI AsstCreate();
+     // MaaTactics extension. JSON sizes exclude the trailing NUL; no input is issued by observation.
+     uint32_t ASSTAPI AsstBattleAbiVersion();
++    uint32_t ASSTAPI AsstTacticalCoreProfile();
+     AsstSize ASSTAPI AsstHybridGetState(AsstHandle handle, void* buffer, AsstSize buffer_size);
+     AsstSize ASSTAPI AsstHybridControl(AsstHandle handle, const char* command, void* buffer, AsstSize buffer_size);
+     AsstBool ASSTAPI AsstBattleReset(AsstHandle handle, const char* stage_name);
+diff --git a/src/MaaCore/Assistant.cpp b/src/MaaCore/Assistant.cpp
+--- a/src/MaaCore/Assistant.cpp
++++ b/src/MaaCore/Assistant.cpp
+@@ -335,6 +335,10 @@
+ 
+     if constexpr (false) {
+     }
++    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(CopilotTask)
++    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(SingleStepTask)
++    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(CustomTask)
++#ifndef MAATACTICS_BATTLE_ONLY
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(FightTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(StartUpTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(CloseDownTask)
+@@ -344,18 +348,16 @@
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(OperProgressTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(RecruitTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(RoguelikeTask)
+-    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(CopilotTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(SSSCopilotTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(ParadoxCopilotTask)
+-    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(SingleStepTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(VideoRecognitionTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(DepotTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(OperBoxTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(ReclamationTask)
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(SwitchThemeTask)
+-    ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(CustomTask)
+ #ifdef ASST_DEBUG
+     ASST_ASSISTANT_APPEND_TASK_FROM_STRING_IF_BRANCH(DebugTask)
++#endif
+ #endif
+     else
+     {
+diff --git a/src/MaaCore/AsstCaller.cpp b/src/MaaCore/AsstCaller.cpp
+--- a/src/MaaCore/AsstCaller.cpp
++++ b/src/MaaCore/AsstCaller.cpp
+@@ -58,9 +58,11 @@
+ 
+     auto os_path = std::filesystem::absolute(asst::utils::path(path));
+     auto res_path = os_path / "resource"_p;
++#ifndef MAATACTICS_BATTLE_ONLY
+     if (asst::ResDir.empty()) {
+         asst::ResDir.set(res_path);
+     }
++#endif
+     if (asst::UserDir.empty()) {
+         asst::UserDir.set(os_path);
+     }
+@@ -343,3 +345,12 @@
+     }
+     Log.log(asst::Logger::level(level), message);
+ }
++
++uint32_t AsstTacticalCoreProfile()
++{
++#ifdef MAATACTICS_BATTLE_ONLY
++    return 1;
++#else
++    return 0;
++#endif
++}
+diff --git a/src/MaaCore/CMakeLists.txt b/src/MaaCore/CMakeLists.txt
+--- a/src/MaaCore/CMakeLists.txt
++++ b/src/MaaCore/CMakeLists.txt
+@@ -16,7 +16,32 @@
+     endif()
+ endif()
+ 
++if(MAATACTICS_BATTLE_ONLY)
++    list(FILTER maa_src EXCLUDE REGEX "/(Task|Config|Vision)/(Roguelike|SSS|Infrast|Reclamation|MiniGame|OperProgress)/")
++    list(FILTER maa_src EXCLUDE REGEX "/Task/Fight/[^/]*[.]cpp$")
++    list(APPEND maa_src
++        "${CMAKE_CURRENT_SOURCE_DIR}/Task/Fight/DrGrandetTaskPlugin.cpp"
++        "${CMAKE_CURRENT_SOURCE_DIR}/Task/Fight/MedicineCounterTaskPlugin.cpp")
++    set(battle_interfaces CopilotTask CustomTask SingleStepTask)
++    set(battle_misc BattleFormationTask BattleProcessTask MultiCopilotTaskPlugin ScreenshotTaskPlugin)
++    foreach(source IN LISTS maa_src)
++        if(source MATCHES "/Task/(Interface|Miscellaneous)/([^/]+)[.]cpp$")
++            set(group "${CMAKE_MATCH_1}")
++            set(name "${CMAKE_MATCH_2}")
++            if((group STREQUAL "Interface" AND NOT name IN_LIST battle_interfaces)
++               OR (group STREQUAL "Miscellaneous" AND NOT name IN_LIST battle_misc))
++                list(REMOVE_ITEM maa_src "${source}")
++            endif()
++        endif()
++    endforeach()
++endif()
++
+ add_library(MaaCore SHARED ${maa_src})
++
++if(MAATACTICS_BATTLE_ONLY)
++    target_compile_definitions(MaaCore PRIVATE MAATACTICS_BATTLE_ONLY=1)
++    add_custom_target(MaaTacticsCore DEPENDS MaaCore)
++endif()
+ 
+ if(WITH_EMULATOR_EXTRAS)
+     if(EXISTS ${PROJECT_SOURCE_DIR}/3rdparty/EmulatorExtras/Mumu)
+diff --git a/src/MaaCore/Config/ResourceLoader.cpp b/src/MaaCore/Config/ResourceLoader.cpp
+--- a/src/MaaCore/Config/ResourceLoader.cpp
++++ b/src/MaaCore/Config/ResourceLoader.cpp
+@@ -18,6 +18,7 @@
+ #include "Miscellaneous/StageDropsConfig.h"
+ #include "Miscellaneous/TilePack.h"
+ #include "OnnxSessions.h"
++#ifndef MAATACTICS_BATTLE_ONLY
+ #include "Roguelike/BlackFlow/BlackFlowMapPerceptionResource.h"
+ #include "Roguelike/BlackFlow/BlackFlowMapTemplateConfig.h"
+ #include "Roguelike/BlackFlow/BlackFlowNodeExecutionConfig.h"
+@@ -31,13 +32,16 @@
+ #include "Roguelike/RoguelikeStageEncounterConfig.h"
+ #include "Roguelike/Sami/RoguelikeCollapsalParadigmConfig.h"
+ #include "Roguelike/Sami/RoguelikeFoldartalConfig.h"
++#endif
+ #include "TaskData.h"
+ #include "TemplResource.h"
+ #include "Utils/Logger.hpp"
+ 
+ asst::ResourceLoader::ResourceLoader()
+ {
++#ifndef MAATACTICS_BATTLE_ONLY
+     m_load_thread = std::thread(&ResourceLoader::load_thread_func, this);
++#endif
+ }
+ 
+ void asst::ResourceLoader::load_thread_func()
+@@ -99,6 +103,47 @@
+ 
+     std::unique_lock<std::mutex> lock(m_entry_mutex);
+     LogTraceFunction;
++
++#ifdef MAATACTICS_BATTLE_ONLY
++    // The battle profile is immutable in a worker. Open a new worker to change it.
++    if (!m_battle_path.empty()) {
++        return m_loaded && path == m_battle_path;
++    }
++    const auto profile = json::open(path / "maatactics-profile.json"_p);
++    if (!profile || profile->get("profile", "") != "battle-v1" || profile->get("schema_version", 0) != 1) {
++        LogError << "Battle resource profile is missing or unsupported" << path;
++        return false;
++    }
++    // A loader can fail after filling a singleton. Only a fresh process may try again.
++    m_battle_path = path;
++    ResDir.set(path);
++    const auto required = [&]<typename T>(const std::filesystem::path& relative) {
++        const auto file = path / relative;
++        if (!std::filesystem::exists(file) || !SingletonHolder<T>::get_instance().load(file)) {
++            LogError << "Battle resource failed to load" << file;
++            return false;
++        }
++        return true;
++    };
++    if (!required.template operator()<GeneralConfig>("config.json"_p) ||
++        !required.template operator()<BattleDataConfig>("battle_data.json"_p) ||
++        !required.template operator()<OcrConfig>("ocr_config.json"_p) ||
++        !required.template operator()<TilePack>("Arknights-Tile-Pos/overview.json"_p) ||
++        !required.template operator()<OnnxSessions>("onnx/skill_ready_cls.onnx"_p) ||
++        !required.template operator()<WordOcr>("PaddleOCR"_p) ||
++        !required.template operator()<CharOcr>("PaddleCharOCR"_p) ||
++        !required.template operator()<TaskData>("tasks"_p)) {
++        return false;
++    }
++    auto& templates = TemplResource::get_instance();
++    templates.set_load_required(Task.get_templ_required());
++    if (!required.template operator()<TemplResource>("template"_p)) {
++        return false;
++    }
++    const auto avatars = UserDir.get() / "cache/avatars"_p;
++    std::filesystem::create_directories(avatars);
++    AvatarCacheManager::get_instance().load(avatars);
++#else
+ 
+     // ==================== 辅助 lambda：资源加载与错误处理 ====================
+ 
+@@ -360,6 +405,7 @@
+         return false;
+     }
+ 
++#endif
+     m_uuid = MaaNS::make_uuid();
+     m_loaded = true;
+     Log.info(__FUNCTION__, "ret", m_loaded);
+diff --git a/src/MaaCore/Config/ResourceLoader.h b/src/MaaCore/Config/ResourceLoader.h
+--- a/src/MaaCore/Config/ResourceLoader.h
++++ b/src/MaaCore/Config/ResourceLoader.h
+@@ -61,6 +61,9 @@
+ 
+ private:
+     bool m_loaded = false;
++#ifdef MAATACTICS_BATTLE_ONLY
++    std::filesystem::path m_battle_path;
++#endif
+     std::string m_uuid;
+     std::mutex m_entry_mutex;
+ 
+diff --git a/src/MaaCore/Task/Interface/CustomTask.cpp b/src/MaaCore/Task/Interface/CustomTask.cpp
+--- a/src/MaaCore/Task/Interface/CustomTask.cpp
++++ b/src/MaaCore/Task/Interface/CustomTask.cpp
+@@ -38,6 +38,11 @@
+         std::string task_name = t.as_string();
+         std::string resolved_task = task_name;
+ 
++#ifdef MAATACTICS_BATTLE_ONLY
++        if (task_name != "BattleStartExercise") {
++            return false;
++        }
++#else
+         if (parse_and_register_secretfront(task_name, resolved_task)) {
+             Log.info("Parsed and registered SecretFront task: ", task_name, " -> ", resolved_task);
+         }
+@@ -54,6 +59,7 @@
+             LogInfo << "Parsed and registered EventShop task:" << task_name;
+         }
+ 
++#endif
+         if (Task.get(resolved_task) == nullptr) {
+             Log.error("set_params failed, task not found: ", resolved_task);
+             return false;
+@@ -66,6 +72,7 @@
+     return true;
+ }
+ 
++#ifndef MAATACTICS_BATTLE_ONLY
+ bool asst::CustomTask::parse_and_register_material_synthesis(const std::string& task_name)
+ {
+     if (task_name != "MiniGame@MaterialSynthesis@Begin") {
+@@ -284,3 +291,5 @@
+ 
+     return true;
+ }
++
++#endif

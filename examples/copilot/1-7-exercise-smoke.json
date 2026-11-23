@@ -1,0 +1,54 @@
+{
+  "stage_name": "main_01-07",
+  "minimum_required": "v4.0.0",
+  "groups": [
+    {
+      "name": "主力",
+      "opers": [
+        {
+          "name": "凛御银灰",
+          "skill": 3,
+          "skill_usage": 0
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Output",
+      "doc": "MaaTactics P3 exercise"
+    },
+    {
+      "type": "Deploy",
+      "name": "主力",
+      "location": [
+        4,
+        3
+      ],
+      "direction": "Right",
+      "costs": 12,
+      "timeout": 20000
+    },
+    {
+      "type": "技能",
+      "name": "主力",
+      "pre_delay": 2500,
+      "timeout": 15000
+    },
+    {
+      "type": "撤退",
+      "name": "主力",
+      "kills": 1,
+      "pre_delay": 3500,
+      "timeout": 20000
+    },
+    {
+      "type": "Output",
+      "doc": "P3 actions returned"
+    }
+  ],
+  "doc": {
+    "title": "P3 1-7 exercise acceptance",
+    "details": "Controlled deploy, skill, retreat; not a clear strategy"
+  }
+}

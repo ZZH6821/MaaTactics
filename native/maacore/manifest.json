@@ -1,0 +1,24 @@
+{
+  "maa_commit": "67478591379d441e25a59156047c3f6163520fb7",
+  "maautils_commit": "f093a19d07db89f2a03bf0ec50c2061a49758783",
+  "maadeps_tag": "v2.15.1",
+  "abi_version": 1,
+  "patch": "0001-p4-tactical-context.patch",
+  "patch_sha256": "118671ad4704895c9bcaa8a4ea74e88445c7e4106add3cfbc18d89a96aa7bd21",
+  "clang_format": "23.1.1",
+  "build_configuration": "Debug",
+  "verification": {
+    "debug_build": "passed; zero CRT conflict warnings",
+    "patch_forward_apply": "passed; 13 files byte-identical with core.autocrlf=false",
+    "patch_reverse_apply": "passed",
+    "clang_format": "passed; 23.1.1",
+    "unconnected_instance_contracts": "passed",
+    "concurrency_cancel_and_stale_queue": "passed",
+    "named_real_device_actions": "passed; standard MCP stdio, deploy/skill/retreat action sequence 3/4/5",
+    "absolute_speed": "passed; 1->2->2->1, middle call issued no input",
+    "stratified_vision_regression": "passed for 24 fixed private frames; alternate-skin gap retained; Ready automation disabled",
+    "release_and_cross_platform": "not certified"
+  },
+  "runtime_version": "v6.22.0-maatactics-p4.2",
+  "built_library_sha256": "fdd499b19fd7126ca9a841da41c7331cc7faecce7a79ee5db83fa8d8027fd202"
+}

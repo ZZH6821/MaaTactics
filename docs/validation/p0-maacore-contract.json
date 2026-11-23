@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "pinned_source_sha": "67478591379d441e25a59156047c3f6163520fb7",
+  "device_connected": false,
+  "tasks_started": false,
+  "provenance": "unverified_external_runtime",
+  "checks": {
+    "valid_stage": {
+      "task_id": 1,
+      "accepted": true,
+      "expected_accepted": true,
+      "passed": true
+    },
+    "invalid_stage": {
+      "task_id": 0,
+      "accepted": false,
+      "expected_accepted": false,
+      "passed": true
+    },
+    "documented_single_action": {
+      "task_id": 0,
+      "accepted": false,
+      "expected_accepted": false,
+      "passed": true
+    },
+    "source_actions_array": {
+      "task_id": 2,
+      "accepted": true,
+      "expected_accepted": true,
+      "passed": true
+    }
+  },
+  "runtime_version": "v6.22.0",
+  "passed": true,
+  "library_sha256": "eaa40992ac107d237fb3d5a3cb877699740d770d2a3eecfcd825f4c62e0ac2d4"
+}

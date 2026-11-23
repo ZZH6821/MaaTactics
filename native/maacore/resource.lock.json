@@ -1,0 +1,45 @@
+{
+  "source": "external MAA installation, not redistributed",
+  "files": {
+    "resource/onnx/BlackFlow_corridor_net.onnx": {
+      "sha256": "864655b11fef3080839a86e6ef6976364924064afb439de6a83ce3288809a9aa",
+      "bytes": 3437161
+    },
+    "resource/onnx/deploy_direction_cls.onnx": {
+      "sha256": "704fb19d4546b71864075e7824de20a55080aae2d80b055fd8d719f2b3b1aa89",
+      "bytes": 18896694
+    },
+    "resource/onnx/operators_det.onnx": {
+      "sha256": "763fbb47c944c29b5b45676c73a682177a533b980eda84be6f6350d3cf8c22b1",
+      "bytes": 12238074
+    },
+    "resource/onnx/skill_ready_cls.onnx": {
+      "sha256": "ebe43c5ae81732e35752c4264b0cff18d85706ee2fdf92e09865cf48777dfd4e",
+      "bytes": 9962074
+    },
+    "resource/PaddleCharOCR/rec/inference.onnx": {
+      "sha256": "27547490f5232685c0e67d485168ff482a502b9d8f1b6fde4d6c0185e1f21106",
+      "bytes": 12117105
+    },
+    "resource/PaddleOCR/det/inference.onnx": {
+      "sha256": "decf4b48bc8c456ef33545f5aef53e9329ab2d137b7a1f2c81a38fc30ec2f317",
+      "bytes": 9962541
+    },
+    "resource/PaddleOCR/rec/inference.onnx": {
+      "sha256": "f9439bc49866e39c5403dd73f6807cf1d19800a0c25ef014b4786d39c6bc34e2",
+      "bytes": 21224756
+    },
+    "resource/tasks/tasks.json": {
+      "sha256": "6bea94f51815d48b3f9e05f54109fd6e06690a79d759fecd9beb15078d45ae9f",
+      "bytes": 239977
+    },
+    "resource/version.json": {
+      "sha256": "cb90e68b2e06d1a46e62839bad689d0e9fdde4756f3db0fcbeb987743d09696f",
+      "bytes": 222
+    },
+    "resource/Arknights-Tile-Pos/overview.json": {
+      "sha256": "8aa5fdf8b59c7f15fa18fd490f2e72226effb3823181407b46d22b6b7f3a7089",
+      "bytes": 1464003
+    }
+  }
+}

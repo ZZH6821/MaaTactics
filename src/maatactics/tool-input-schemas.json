@@ -1,0 +1,572 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "session": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "session_id",
+        "epoch"
+      ]
+    },
+    "session_id_only": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "session_id"
+      ],
+      "additionalProperties": false
+    },
+    "operation_ref": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "session_id",
+        "operation_id"
+      ],
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "action": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "expected_snapshot_id": {
+          "$ref": "#/$defs/id"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 30000,
+          "default": 10000
+        }
+      },
+      "required": [
+        "request_id",
+        "expected_snapshot_id"
+      ]
+    },
+    "connect_device": {
+      "type": "object",
+      "properties": {
+        "device_profile": {
+          "$ref": "#/$defs/id"
+        },
+        "request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000,
+          "default": 30000
+        }
+      },
+      "required": [
+        "device_profile",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_session_status": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "disconnect_device": {
+      "$ref": "#/$defs/session_id_only"
+    },
+    "get_screenshot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "properties": {
+        "max_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000,
+          "default": 0
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "get_battle_state": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "set_stage": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "stage_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "request_id",
+        "stage_name"
+      ],
+      "unevaluatedProperties": false
+    },
+    "deploy_operator": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "direction": {
+          "enum": [
+            "Right",
+            "Down",
+            "Left",
+            "Up"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "location",
+        "direction"
+      ],
+      "unevaluatedProperties": false
+    },
+    "retreat_operator": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "unevaluatedProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "name"
+          ]
+        },
+        {
+          "required": [
+            "location"
+          ]
+        }
+      ]
+    },
+    "use_skill": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "unevaluatedProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "name"
+          ]
+        },
+        {
+          "required": [
+            "location"
+          ]
+        }
+      ]
+    },
+    "start_battle": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "pause_at_start": {
+          "type": "boolean",
+          "default": true
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000,
+          "default": 60000
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "pause_battle": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "resume_battle": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "get_operation": {
+      "$ref": "#/$defs/operation_ref"
+    },
+    "cancel_operation": {
+      "$ref": "#/$defs/operation_ref"
+    },
+    "stop_operations": {
+      "$ref": "#/$defs/session_id_only"
+    },
+    "load_copilot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "document": {
+          "type": "object",
+          "properties": {
+            "stage_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "actions": {
+              "type": "array",
+              "maxItems": 10000,
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [
+            "stage_name",
+            "actions"
+          ],
+          "additionalProperties": true
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000,
+          "default": 60000
+        }
+      },
+      "required": [
+        "request_id",
+        "document"
+      ],
+      "unevaluatedProperties": false
+    },
+    "start_copilot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "copilot_id": {
+          "$ref": "#/$defs/id"
+        },
+        "formation": {
+          "type": "boolean",
+          "default": false
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 3600000,
+          "default": 600000
+        },
+        "hybrid": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "copilot_id"
+      ],
+      "unevaluatedProperties": false
+    },
+    "get_copilot_progress": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "run_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "session_id",
+        "run_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_deployable_operators": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "get_deployed_operators": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "set_battle_speed": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "speed": {
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      },
+      "required": [
+        "speed"
+      ],
+      "unevaluatedProperties": false
+    },
+    "hybrid_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/session"
+        }
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000,
+          "default": 60000
+        }
+      },
+      "required": [
+        "run_id",
+        "request_id"
+      ]
+    },
+    "hybrid_lease": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/hybrid_request"
+        }
+      ],
+      "properties": {
+        "checkpoint_id": {
+          "$ref": "#/$defs/id"
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "action_sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "checkpoint_id",
+        "plan_revision",
+        "action_sequence"
+      ]
+    },
+    "pause_copilot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/hybrid_request"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "revise_copilot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/hybrid_lease"
+        }
+      ],
+      "properties": {
+        "edits": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "skip"
+                  },
+                  "index": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "op",
+                  "index"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "replace"
+                  },
+                  "index": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "action": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                },
+                "required": [
+                  "op",
+                  "index",
+                  "action"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "edits"
+      ],
+      "unevaluatedProperties": false
+    },
+    "resume_copilot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/hybrid_lease"
+        }
+      ],
+      "properties": {
+        "expected_snapshot_id": {
+          "$ref": "#/$defs/id"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 30000,
+          "default": 30000
+        }
+      },
+      "required": [
+        "expected_snapshot_id"
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}
