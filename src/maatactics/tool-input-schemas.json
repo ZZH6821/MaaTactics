@@ -391,6 +391,37 @@
       ],
       "additionalProperties": false
     },
+    "scan_operator_roster": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action"
+        }
+      ],
+      "properties": {
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 900000,
+          "default": 300000
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "get_operator_roster": {
+      "type": "object",
+      "properties": {
+        "account_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$"
+        }
+      },
+      "required": [
+        "account_key"
+      ],
+      "additionalProperties": false
+    },
     "get_deployable_operators": {
       "allOf": [
         {

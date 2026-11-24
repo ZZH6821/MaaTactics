@@ -11,7 +11,7 @@ uv sync --locked --python 3.12
 uv run --locked pytest -q tests/test_mcp_protocol.py
 ```
 
-该测试会启动真实 stdio MCP 会话，验证 24 个工具的发现、Mock 截图、图像 Resource 和连续动作。将以下配置加入支持 `mcpServers` 的客户端，并替换为源码目录的绝对路径。客户端启动进程后，在工具中选择 `device_profile` 为 `mock`。若客户端找不到 `uv`，将 `command` 改为 `uv.exe` 的绝对路径。
+该测试会启动真实 stdio MCP 会话，验证工具发现、Mock 截图、图像 Resource 和连续动作。将以下配置加入支持 `mcpServers` 的客户端，并替换为源码目录的绝对路径。客户端启动进程后，在工具中选择 `device_profile` 为 `mock`。若客户端找不到 `uv`，将 `command` 改为 `uv.exe` 的绝对路径。
 
 ```json
 {
@@ -36,7 +36,7 @@ Copy-Item configs/example.toml configs/mumu.local.toml
 
 | 运行时 | 用途 | 配置 |
 | --- | --- | --- |
-| 完整 MAA | 连接、截图、基础 SingleStep 和传统 Copilot。P0 验收使用 v6.22.0。 | `runtime_root` 指向包含 `MaaCore.dll` 和 `resource/` 的 MAA 安装目录。`expected_sha256` 取下方探针报告。 |
+| 完整 MAA | 连接、截图、基础 SingleStep、传统 Copilot 和账号干员识别。P0 验收使用 v6.22.0。 | `runtime_root` 指向包含 `MaaCore.dll` 和 `resource/` 的 MAA 安装目录。`expected_sha256` 取下方探针报告。 |
 | P6 `battle-v1` | 已验收的持久战斗上下文、按名技能和撤退、战场结构化观察、绝对倍率和 Copilot 混合接管。 | 本地构建战斗 DLL 并生成国服 1-7 精简资源。设置 DLL 和资源清单的两个 SHA-256。 |
 
 ### 使用完整 MAA
@@ -90,6 +90,16 @@ uv run --locked python tools/capture_device.py --config configs/mumu.local.toml 
 头像、技能就绪和暂停识别受画面条件影响。暂停状态未知时，服务会拒绝切换。自动释放 Ready 技能和精确过帧的验证进度见 [开发路线图](roadmap.md)。
 
 传统作业通过 `load_copilot` 校验原格式 JSON，`start_copilot` 开始执行，`get_copilot_progress` 查询进度。开始前核对游戏界面和关卡，普通出击可能消耗理智。混合模式使用 `start_copilot(hybrid=true)`，依次通过 `pause_copilot`、`revise_copilot` 和 `resume_copilot` 接管、修订和交还作业。详细契约见 [Copilot 接口](copilot-interface.md)、[战场观察和控制接口](p4-interface.md) 和 [混合控制接口](p5-interface.md)。
+
+## 账号干员识别
+
+在完整 MAA 设备配置中设置 `roster_account = 'main'`。这是本地账号别名，以小写字母或数字开头，之后可用小写字母、数字、下划线和连字符，最多 64 个字符。切换游戏账号时使用相应别名的设备配置。
+
+1. 通过 `connect_device` 连接。回到游戏首页后，用 `get_screenshot` 获取最新截图。MaaCore 会重新识别首页，并在进入未筛选的干员列表后开始翻页。
+2. 用同一会话的 `session_id`、`epoch`、新的 `request_id` 和 5 秒内的 `expected_snapshot_id` 调用 `scan_operator_roster`。用 `get_operation` 等待完成。扫描会翻页并独占设备输入，默认超时 5 分钟。可用 `cancel_operation` 取消。
+3. 用 `get_operator_roster(account_key="main")` 离线读取。UTF-8 JSON 保存在 `data_root/rosters/account-main.json`，包含账号别名、扫描时间、来源、MaaCore 版本以及 `operators`。每个条目包含 `id`、`name`、`rarity`（星级）、`elite`（精英阶段）、`level`（等级）和 `potential`（潜能）。P6 配置可通过同一 `data_root` 读取快照。
+
+每次成功扫描更新该账号最近一份快照。识别或保存失败、取消、超时时保留上一份。如果扫描结果缺少已保存的干员，操作返回 `ROSTER_INCOMPLETE` 并保留旧快照，请回到首页重扫。扫描结束后使用新的 `epoch` 重新观察，战术操作需要重新绑定关卡。字段取自 MaaCore 的截图识别，可能有漏项或误识别，等级 OCR 失败时上游可能回填 1。
 
 ## 本地测试
 

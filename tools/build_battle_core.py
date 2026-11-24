@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -76,9 +77,14 @@ def build(reference: Path, work: Path, cache: Path, cmake: str, jobs: int) -> di
         check=True,
     )
     patches = sorted((NATIVE / "patches").glob("*.patch"))
+    # Keep Git from discovering the outer checkout and skipping the upstream-relative paths.
+    patch_env = {**os.environ, "GIT_CEILING_DIRECTORIES": str(source.parent)}
     for patch in patches:
         subprocess.run(
-            ["git", "-c", "core.autocrlf=false", "apply", str(patch)], cwd=source, check=True
+            ["git", "-c", "core.autocrlf=false", "apply", str(patch)],
+            cwd=source,
+            env=patch_env,
+            check=True,
         )
     dependencies = source / "src/MaaUtils/MaaDeps"
     with tarfile.open(archive) as bundle:

@@ -139,6 +139,9 @@ class MaaCoreBackend:
     async def start_battle(self) -> dict:
         return await self._rpc("start_battle")
 
+    async def scan_operator_roster(self) -> dict:
+        return await self._rpc("scan_operator_roster")
+
     async def validate_copilot(self, document: dict) -> dict:
         return await validate_isolated(self.profile, document, self.data_root)
 

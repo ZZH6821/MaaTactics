@@ -129,6 +129,7 @@ class Session:
     requests: dict[str, tuple[str, str]] = field(default_factory=dict)
     controls: dict[str, str] = field(default_factory=dict)
     closed_monotonic: float | None = None
+    roster_account: str | None = None
 
     def public(self) -> dict[str, Any]:
         return {
@@ -136,6 +137,7 @@ class Session:
             "session_id": self.session_id,
             "epoch": self.epoch,
             "device_profile": self.device_profile,
+            "roster_account": self.roster_account,
             "status": self.status,
             "control_owner": self.control_owner,
             "connected": self.connected,
@@ -173,6 +175,8 @@ class Session:
                 "automatic_ready_actions": False,
                 "precise_frame_step": False,
                 "copilot": True,
+                "operator_roster_scan": self.roster_account is not None
+                and self.runtime_fingerprint.get("operator_roster_scan", False),
                 "hybrid_control": "hybrid_control_v1"
                 in self.runtime_fingerprint.get("battle_features", []),
             },
