@@ -10,5 +10,6 @@ MaaTactics 通过本地 MCP 服务将《明日方舟》的战场观察和战斗�
 - [版本更新](docs/changelog.md)
 - [开发路线图](docs/roadmap.md)
 - [实施状态与验收](docs/implementation-status.md)
+- [Agent 分支与提交流程](AGENTS.md)
 
 源码采用 [AGPL-3.0-only](LICENSE)。上游代码、依赖和资源的来源见 [第三方声明](THIRD_PARTY_NOTICES.md)。
