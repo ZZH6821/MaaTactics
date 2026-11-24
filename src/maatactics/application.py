@@ -443,7 +443,7 @@ class TacticsService(HybridSupport):
             if frame.pause_observation["state"] != "unknown":
                 raise TacticsError(
                     "ROSTER_SCAN_PRECONDITION",
-                    "Open the game home or the unfiltered operator list before scanning",
+                    "Open the game home screen before scanning",
                 )
 
             async def scan_roster(operation: Operation) -> dict:

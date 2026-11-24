@@ -67,6 +67,21 @@ class RosterStore:
             "runtime_version": runtime_version,
             "operators": normalize_operators(operators),
         }
+        try:
+            previous = self.load(account_key)
+        except TacticsError as error:
+            if error.code not in {"ROSTER_NOT_FOUND", "ROSTER_DATA_INVALID"}:
+                raise
+        else:
+            observed_ids = {operator["id"] for operator in snapshot["operators"]}
+            missing = sum(operator["id"] not in observed_ids for operator in previous["operators"])
+            if missing:
+                raise TacticsError(
+                    "ROSTER_INCOMPLETE",
+                    "Scan missed previously saved operators. Return to the game home screen and rescan",
+                    effect_may_have_occurred=True,
+                    details={"missing_operator_count": missing},
+                )
         temporary = None
         try:
             encoded = (json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n").encode("utf-8")

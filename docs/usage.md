@@ -95,11 +95,11 @@ uv run --locked python tools/capture_device.py --config configs/mumu.local.toml 
 
 在完整 MAA 设备配置中设置 `roster_account = 'main'`。这是本地账号别名，以小写字母或数字开头，之后可用小写字母、数字、下划线和连字符，最多 64 个字符。切换游戏账号时使用相应别名的设备配置。
 
-1. 通过 `connect_device` 连接。在游戏首页，或已取消筛选且滑到最左侧的干员列表，用 `get_screenshot` 获取最新截图并确认画面。
+1. 通过 `connect_device` 连接。回到游戏首页后，用 `get_screenshot` 获取最新截图。MaaCore 会重新识别首页，并在进入未筛选的干员列表后开始翻页。
 2. 用同一会话的 `session_id`、`epoch`、新的 `request_id` 和 5 秒内的 `expected_snapshot_id` 调用 `scan_operator_roster`。用 `get_operation` 等待完成。扫描会翻页并独占设备输入，默认超时 5 分钟。可用 `cancel_operation` 取消。
 3. 用 `get_operator_roster(account_key="main")` 离线读取。UTF-8 JSON 保存在 `data_root/rosters/account-main.json`，包含账号别名、扫描时间、来源、MaaCore 版本以及 `operators`。每个条目包含 `id`、`name`、`rarity`（星级）、`elite`（精英阶段）、`level`（等级）和 `potential`（潜能）。P6 配置可通过同一 `data_root` 读取快照。
 
-每次成功扫描更新该账号最近一份快照。识别或保存失败、取消、超时时保留上一份。扫描结束后使用新的 `epoch` 重新观察，战术操作需要重新绑定关卡。字段取自 MaaCore 的截图识别，可能有漏项或误识别，等级 OCR 失败时上游可能回填 1。
+每次成功扫描更新该账号最近一份快照。识别或保存失败、取消、超时时保留上一份。如果扫描结果缺少已保存的干员，操作返回 `ROSTER_INCOMPLETE` 并保留旧快照，请回到首页重扫。扫描结束后使用新的 `epoch` 重新观察，战术操作需要重新绑定关卡。字段取自 MaaCore 的截图识别，可能有漏项或误识别，等级 OCR 失败时上游可能回填 1。
 
 ## 本地测试
 

@@ -4,7 +4,7 @@ import queue
 import sys
 import threading
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, call
 
 import pytest
 from mcp.client import Client
@@ -47,7 +47,11 @@ def operbox_event(rows, *, done=True, task_id=41):
     }
 
 
-def native_driver(events, *, outcome=10002, profile="full"):
+def screen_event(task, task_id):
+    return {"message": 20001, "details": {"taskid": task_id, "details": {"task": task}}}
+
+
+def native_driver(events, *, outcome=10002, profile="full", gates=None):
     driver = NativeDriver.__new__(NativeDriver)
     driver.gate = threading.Lock()
     driver.cancelled = threading.Event()
@@ -55,9 +59,16 @@ def native_driver(events, *, outcome=10002, profile="full"):
         resource_profile=profile,
         handle=object(),
         events=queue.Queue(),
-        append=Mock(return_value=41),
+        append=Mock(side_effect=[39, 40, 41]),
         lib=SimpleNamespace(AsstRunning=lambda _: False, AsstStart=lambda _: True),
     )
+    if gates is None:
+        gates = [screen_event("Home", 39), screen_event("OperBoxRoleTab", 40)]
+    for task_id in (39, 40):
+        for event in gates:
+            if event["details"]["taskid"] == task_id:
+                driver.api.events.put(event)
+        driver.api.events.put({"message": 10002, "details": {"taskid": task_id}})
     for event in events:
         driver.api.events.put(event)
     driver.api.events.put({"message": outcome, "details": {"taskid": 41}})
@@ -73,7 +84,11 @@ def test_native_scan_commits_only_the_final_owned_records_from_its_task():
         ]
     )
     result = driver.scan_operator_roster()
-    driver.api.append.assert_called_once_with("OperBox", {})
+    assert driver.api.append.call_args_list == [
+        call("Custom", {"task_names": ["Home"]}),
+        call("Custom", {"task_names": ["OperBox"]}),
+        call("OperBox", {}),
+    ]
     assert result == {
         "native_task_outcome": "completed",
         "operators": [
@@ -116,6 +131,19 @@ def test_p6_driver_rejects_scan_before_append():
     driver.api.append.assert_not_called()
 
 
+@pytest.mark.parametrize("home_recognized", [False, True])
+def test_native_scan_requires_positive_screen_matches_before_swiping(home_recognized):
+    driver = native_driver([], gates=[screen_event("Home", 39)] if home_recognized else [])
+    with pytest.raises(TacticsError) as failure:
+        driver.scan_operator_roster()
+    assert failure.value.code == "ROSTER_SCAN_PRECONDITION"
+    assert failure.value.effect_may_have_occurred == home_recognized
+    expected = [call("Custom", {"task_names": ["Home"]})]
+    if home_recognized:
+        expected.append(call("Custom", {"task_names": ["OperBox"]}))
+    assert driver.api.append.call_args_list == expected
+
+
 class RosterBackend(MockBackend):
     def __init__(self):
         super().__init__()
@@ -124,6 +152,7 @@ class RosterBackend(MockBackend):
         self.release_scan = asyncio.Event()
         self.release_scan.set()
         self.scan_error = None
+        self.operators = [JESSICA, FANG]
 
     async def connect(self, profile):
         return {**await super().connect(profile), "operator_roster_scan": profile["full"]}
@@ -133,7 +162,7 @@ class RosterBackend(MockBackend):
         await self.release_scan.wait()
         if self.scan_error:
             raise self.scan_error
-        return {"native_task_outcome": "completed", "operators": [JESSICA, FANG]}
+        return {"native_task_outcome": "completed", "operators": self.operators}
 
 
 @pytest.fixture
@@ -256,6 +285,18 @@ async def test_unsuccessful_scan_keeps_the_previous_roster(service, lifecycle):
     assert backend.stop_count > 0
 
 
+async def test_completed_scan_missing_a_known_operator_keeps_previous_roster(service):
+    previous = service.rosters.save("main", "old", [JESSICA, FANG])
+    ref = await connect(service)
+    service.backends[ref["session_id"]].operators = [FANG]
+    receipt = await service.call("scan_operator_roster", await scan_args(service, ref))
+    result = await finish(service, receipt)
+    assert result["lifecycle"] == "failed"
+    assert result["error"]["code"] == "ROSTER_INCOMPLETE"
+    assert result["error"]["details"] == {"missing_operator_count": 1}
+    assert service.rosters.load("main") == previous
+
+
 async def test_unsupported_runtime_and_battle_hud_are_refused_before_input(service):
     full = await connect(service)
     backend = service.backends[full["session_id"]]
@@ -283,7 +324,7 @@ def test_storage_replace_error_preserves_previous_file(tmp_path, monkeypatch):
 
     monkeypatch.setattr("maatactics.roster.os.replace", replace_failed)
     with pytest.raises(TacticsError) as failure:
-        store.save("main", "new", [JESSICA])
+        store.save("main", "new", [JESSICA, FANG])
     assert failure.value.code == "ROSTER_STORAGE_ERROR"
     assert store.load("main") == old
     assert sorted(path.name for path in store.directory.iterdir()) == ["account-main.json"]

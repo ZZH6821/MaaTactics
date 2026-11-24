@@ -221,6 +221,14 @@ class NativeDriver:
     def scan_operator_roster(self) -> dict:
         if self.api.resource_profile != "full":
             raise TacticsError("CAPABILITY_UNSUPPORTED", "OperBox requires a full MaaCore runtime")
+        self._require_roster_screen("Home", "Home", "Open the game home screen before scanning")
+        # OperBox itself ignores navigation failure, so check the list before it can swipe.
+        self._require_roster_screen(
+            "OperBox",
+            "OperBoxRoleTab",
+            "Could not open the unfiltered operator list from the game home screen",
+            effect_may_have_occurred=True,
+        )
         final = None
 
         def collect(event: dict) -> None:
@@ -249,6 +257,31 @@ class NativeDriver:
                 details={"native_task_outcome": result["native_task_outcome"]},
             ) from error
         return {"native_task_outcome": result["native_task_outcome"], "operators": operators}
+
+    def _require_roster_screen(
+        self, task: str, marker: str, message: str, *, effect_may_have_occurred: bool = False
+    ) -> None:
+        try:
+            result = self._run_task("Custom", {"task_names": [task]})
+        except TacticsError as error:
+            if error.code != "NATIVE_TASK_FAILED":
+                raise
+            details = error.details
+        else:
+            # The Stop node emits SubTaskStart after recognition and before stopping.
+            if any(
+                event["message"] == 20001
+                and event["details"].get("details", {}).get("task") == marker
+                for event in result["events"]
+            ):
+                return
+            details = {"native_task_outcome": result["native_task_outcome"]}
+        raise TacticsError(
+            "ROSTER_SCAN_PRECONDITION",
+            message,
+            effect_may_have_occurred=effect_may_have_occurred,
+            details=details,
+        )
 
     def _run_task(self, task_type: str, params: dict, on_event=None) -> dict:
         with self.gate:

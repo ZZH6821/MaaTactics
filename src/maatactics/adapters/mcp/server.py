@@ -32,7 +32,7 @@ DESCRIPTIONS = {
     "get_battle_state": "Read the latest observation and unsupported fields. Intent history is not confirmed deployment.",
     "get_deployable_operators": "Read cached deployment-card observations; unidentified names remain unknown. Capture first.",
     "get_deployed_operators": "Read cached engine position estimates; these are not visually confirmed deployments.",
-    "scan_operator_roster": "Scan the configured account's owned operators and training levels with full MaaCore. Confirm the game home screen or the leftmost unfiltered operator list in a fresh screenshot first. Moves through the game UI and replaces the saved roster on success.",
+    "scan_operator_roster": "Scan the configured account's owned operators and training levels with full MaaCore. Start on the game home screen and provide a fresh screenshot ID. Moves through the game UI and preserves the saved roster if the scan misses any previously saved operator.",
     "get_operator_roster": "Read the latest locally saved operator roster by account key, without connecting to the device.",
     "set_battle_speed": "Set absolute speed 1 or 2 with before/after recognition. Already-correct speed issues no toggle; unknown UI is refused.",
     "set_stage": "Bind a validated MAA stage coordinate map; does not navigate or start a battle.",
