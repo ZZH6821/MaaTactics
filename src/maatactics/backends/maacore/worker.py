@@ -10,6 +10,7 @@ from collections import deque
 from pathlib import Path
 
 from maatactics.domain import TacticsError
+from maatactics.roster import normalize_operators
 
 from .abi import MaaCoreABI
 from .copilot_validation import copilot_params
@@ -99,6 +100,7 @@ class NativeDriver:
             "battle_abi_version": self.api.battle_abi_version,
             "hybrid_abi_version": self.api.hybrid_abi_version,
             "resource_profile": getattr(self.api, "resource_profile", "full"),
+            "operator_roster_scan": self.api.resource_profile == "full",
             "resource_manifest_sha256": getattr(self.api, "resource_manifest_sha256", None),
             "battle_features": self.api.battle_context().get("features", [])
             if self.api.battle_abi_version
@@ -216,6 +218,38 @@ class NativeDriver:
             result["hybrid"] = state
         return result
 
+    def scan_operator_roster(self) -> dict:
+        if self.api.resource_profile != "full":
+            raise TacticsError("CAPABILITY_UNSUPPORTED", "OperBox requires a full MaaCore runtime")
+        final = None
+
+        def collect(event: dict) -> None:
+            nonlocal final
+            envelope = event["details"]
+            if event["message"] == 20003 and envelope.get("what") == "OperBoxInfo":
+                details = envelope.get("details")
+                if isinstance(details, dict) and details.get("done") is True:
+                    final = details
+
+        result = self._run_task("OperBox", {}, collect)
+        rows = final.get("own_opers") if final is not None else None
+        try:
+            if final is None:
+                raise TacticsError("ROSTER_DATA_INVALID", "OperBox did not send a final result")
+            if not isinstance(rows, list) or any(
+                not isinstance(row, dict) or row.get("own") is not True for row in rows
+            ):
+                raise TacticsError("ROSTER_DATA_INVALID", "Invalid OperBox ownership records")
+            operators = normalize_operators(rows)
+        except TacticsError as error:
+            raise TacticsError(
+                error.code,
+                str(error),
+                effect_may_have_occurred=True,
+                details={"native_task_outcome": result["native_task_outcome"]},
+            ) from error
+        return {"native_task_outcome": result["native_task_outcome"], "operators": operators}
+
     def _run_task(self, task_type: str, params: dict, on_event=None) -> dict:
         with self.gate:
             self._check_cancelled()
@@ -223,7 +257,7 @@ class NativeDriver:
                 raise TacticsError("BUSY", "Native task is still running")
             task_id = self.api.append(task_type, params)
             if task_id <= 0:
-                raise TacticsError("NATIVE_REJECTED", "MaaCore rejected the tactical action")
+                raise TacticsError("NATIVE_REJECTED", f"MaaCore rejected the {task_type} task")
             if not self.api.lib.AsstStart(self.api.handle):
                 raise TacticsError("NATIVE_REJECTED", "AsstStart rejected the queued task")
         outcome = None
@@ -330,6 +364,8 @@ def _serve(connection, directory: Path) -> None:
                     value = driver.toggle_battle_speed(arguments["target"])
                 elif command == "start_battle":
                     value = driver.start_battle()
+                elif command == "scan_operator_roster":
+                    value = driver.scan_operator_roster()
                 elif command == "execute_copilot":
                     value = driver.execute_copilot(
                         arguments["document"],

@@ -225,6 +225,9 @@ class MockBackend:
         self.closed = True
         self.connected = False
 
+    async def scan_operator_roster(self) -> dict:
+        raise TacticsError("CAPABILITY_UNSUPPORTED", "OperBox requires a full MaaCore runtime")
+
     async def validate_copilot(self, document: dict) -> dict:
         await asyncio.sleep(self.delay)
         return {

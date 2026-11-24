@@ -32,7 +32,7 @@ async def completed(client, receipt):
 
 def test_expanded_input_schemas_are_closed():
     schemas = input_schemas()
-    assert len(schemas) == 24
+    assert len(schemas) == 26
     assert schemas["deploy_operator"]["required"] == [
         "session_id",
         "epoch",

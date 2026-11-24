@@ -22,6 +22,7 @@ from maatactics import __version__
 from maatactics.application import TacticsService
 from maatactics.backends.mock import MockBackend
 from maatactics.domain import TacticsError
+from maatactics.roster import valid_account_key
 
 DESCRIPTIONS = {
     "connect_device": "Connect a configured device profile; returns an asynchronous operation receipt.",
@@ -31,6 +32,8 @@ DESCRIPTIONS = {
     "get_battle_state": "Read the latest observation and unsupported fields. Intent history is not confirmed deployment.",
     "get_deployable_operators": "Read cached deployment-card observations; unidentified names remain unknown. Capture first.",
     "get_deployed_operators": "Read cached engine position estimates; these are not visually confirmed deployments.",
+    "scan_operator_roster": "Scan the configured account's owned operators and training levels with full MaaCore. Confirm the game home screen or the leftmost unfiltered operator list in a fresh screenshot first. Moves through the game UI and replaces the saved roster on success.",
+    "get_operator_roster": "Read the latest locally saved operator roster by account key, without connecting to the device.",
     "set_battle_speed": "Set absolute speed 1 or 2 with before/after recognition. Already-correct speed issues no toggle; unknown UI is refused.",
     "set_stage": "Bind a validated MAA stage coordinate map; does not navigate or start a battle.",
     "deploy_operator": "Submit one deployment using a fresh observation; task completion does not prove game effect.",
@@ -102,6 +105,7 @@ def create_server(service: TacticsService) -> Server:
             "get_copilot_progress",
             "get_deployable_operators",
             "get_deployed_operators",
+            "get_operator_roster",
         }
         return types.ListToolsResult(
             tools=[
@@ -117,7 +121,13 @@ def create_server(service: TacticsService) -> Server:
                     annotations=types.ToolAnnotations(
                         read_only_hint=name in readonly,
                         destructive_hint=name
-                        in {"deploy_operator", "retreat_operator", "use_skill", "start_copilot"},
+                        in {
+                            "deploy_operator",
+                            "retreat_operator",
+                            "use_skill",
+                            "start_copilot",
+                            "scan_operator_roster",
+                        },
                         idempotent_hint=name
                         in readonly
                         | {
@@ -278,8 +288,11 @@ def main() -> None:
         profiles = config.get("devices", {})
         if not profiles:
             parser.error("config must contain at least one [devices.NAME] profile")
+        for name, profile in profiles.items():
+            if "roster_account" in profile and not valid_account_key(profile["roster_account"]):
+                parser.error(f"devices.{name}.roster_account must match [a-z0-9][a-z0-9_-]{{0,63}}")
         data_root = Path(config.get("data_root", "runtime")).resolve()
-        service = TacticsService(lambda: MaaCoreBackend(data_root), profiles)
+        service = TacticsService(lambda: MaaCoreBackend(data_root), profiles, data_root=data_root)
     asyncio.run(serve(service))
 
 

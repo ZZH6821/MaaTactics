@@ -7,6 +7,7 @@ import json
 import time
 from collections import OrderedDict, defaultdict, deque
 from collections.abc import Awaitable, Callable
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -26,13 +27,14 @@ from maatactics.hybrid_service import HybridSupport
 from maatactics.observers.native import merge_native_observation
 from maatactics.observers.pause import observe_pause
 from maatactics.ports import BattleBackend
+from maatactics.roster import RosterStore
 
 TERMINAL = {"completed", "failed", "cancelled", "timed_out"}
 TACTICAL = {"deploy_operator", "retreat_operator", "use_skill"}
 PAUSE_CONTROL = {"pause_battle", "resume_battle"}
 GAME_CONTROL = PAUSE_CONTROL | {"start_battle", "set_battle_speed"}
 HYBRID_HANDOFF = {"pause_copilot", "resume_copilot"}
-MAY_INPUT = TACTICAL | GAME_CONTROL | HYBRID_HANDOFF | {"start_copilot"}
+MAY_INPUT = TACTICAL | GAME_CONTROL | HYBRID_HANDOFF | {"start_copilot", "scan_operator_roster"}
 
 
 def request_fingerprint(kind: str, args: dict) -> str:
@@ -48,6 +50,7 @@ class TacticsService(HybridSupport):
         *,
         capture_interval: float = 0.5,
         limits_enabled: bool = True,
+        data_root: Path | None = None,
     ):
         self.backend_factory = backend_factory
         self.profiles = profiles
@@ -65,6 +68,7 @@ class TacticsService(HybridSupport):
         self._control_lock = asyncio.Lock()
         self._closing = False
         self.hybrid_runs: dict[str, HybridRun] = {}
+        self.rosters = RosterStore(data_root) if data_root is not None else None
 
     def _rate(self, key: str, maximum: int) -> None:
         if not self.limits_enabled:
@@ -283,6 +287,10 @@ class TacticsService(HybridSupport):
                 if sid
                 else {"schema_version": "1.0", "status": "no_session"}
             )
+        if kind == "get_operator_roster":
+            if self.rosters is None:
+                raise TacticsError("ROSTER_NOT_FOUND", "No roster storage is configured")
+            return self.rosters.load(args["account_key"])
         session = self._session(args["session_id"])
         if kind == "get_operation":
             self._rate("operation", 5)
@@ -356,7 +364,12 @@ class TacticsService(HybridSupport):
                 raise
             finally:
                 self._reader = None
-        if kind not in TACTICAL | GAME_CONTROL | {"set_stage", "load_copilot", "start_copilot"}:
+        if kind not in TACTICAL | GAME_CONTROL | {
+            "set_stage",
+            "load_copilot",
+            "start_copilot",
+            "scan_operator_roster",
+        }:
             raise TacticsError("CAPABILITY_UNSUPPORTED", f"Unsupported tool: {kind}")
         duplicate = self._duplicate(session, kind, args)
         if duplicate:
@@ -407,6 +420,15 @@ class TacticsService(HybridSupport):
             not session.stage or session.control_owner != "agent"
         ):
             raise TacticsError("STAGE_UNSUPPORTED", "Bind a validated stage before acting")
+        if kind == "scan_operator_roster":
+            if not session.runtime_fingerprint.get("operator_roster_scan", False):
+                raise TacticsError(
+                    "CAPABILITY_UNSUPPORTED", "OperBox requires a full MaaCore runtime"
+                )
+            if self.rosters is None or session.roster_account is None:
+                raise TacticsError(
+                    "ROSTER_ACCOUNT_UNCONFIGURED", "Configure roster_account before scanning"
+                )
         frame = self.frames.get(args["expected_snapshot_id"])
         if (
             not frame
@@ -416,6 +438,35 @@ class TacticsService(HybridSupport):
         ):
             raise TacticsError(
                 "STALE_OBSERVATION", "A current snapshot no older than 5 seconds is required"
+            )
+        if kind == "scan_operator_roster":
+            if frame.pause_observation["state"] != "unknown":
+                raise TacticsError(
+                    "ROSTER_SCAN_PRECONDITION",
+                    "Open the game home or the unfiltered operator list before scanning",
+                )
+
+            async def scan_roster(operation: Operation) -> dict:
+                operation.before_snapshot_id = frame.snapshot_id
+                result = await self.backends[session.session_id].scan_operator_roster()
+                if session.status == "stopping":
+                    raise asyncio.CancelledError
+                snapshot = self.rosters.save(
+                    session.roster_account,
+                    session.runtime_fingerprint["version"],
+                    result["operators"],
+                )
+                self._invalidate(session)
+                return {
+                    "native_task_outcome": result["native_task_outcome"],
+                    "account_key": snapshot["account_key"],
+                    "scanned_at": snapshot["scanned_at"],
+                    "operator_count": len(snapshot["operators"]),
+                    "epoch": session.epoch,
+                }
+
+            return self._new_operation(
+                session, kind, args, args.get("timeout_ms", 300000), scan_roster
             )
         if kind == "start_copilot":
             hybrid_enabled = args.get("hybrid", False)
@@ -654,7 +705,12 @@ class TacticsService(HybridSupport):
                 return duplicate
             if previous.status != "closed":
                 raise TacticsError("BUSY", "Disconnect the current session first")
-        session = Session(args["device_profile"])
+        session = Session(
+            args["device_profile"],
+            roster_account=self.profiles[args["device_profile"]].get("roster_account")
+            if self.rosters is not None
+            else None,
+        )
         self.sessions[session.session_id] = session
         self.backends[session.session_id] = self.backend_factory()
         self.current_session_id = session.session_id

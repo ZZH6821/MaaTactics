@@ -7,6 +7,8 @@ adb_path = 'C:\path\to\adb.exe'
 address = '127.0.0.1:16384'
 config = 'General'
 touch_mode = 'maatouch'
+# Local alias for the account signed in on this device. Set to enable OperBox with full MaaCore.
+# roster_account = 'main'
 # Run maatactics-probe and copy the exact library_sha256 from its report.
 expected_sha256 = 'REPLACE_WITH_PROBE_LIBRARY_SHA256'
 # For the battle-v1 library, use the values printed by prepare_battle_resources.py.
