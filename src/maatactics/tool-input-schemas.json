@@ -106,6 +106,21 @@
       ],
       "additionalProperties": false
     },
+    "start_game": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/connect_device"
+        }
+      ],
+      "properties": {
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 600000,
+          "default": 300000
+        }
+      }
+    },
     "get_session_status": {
       "type": "object",
       "properties": {

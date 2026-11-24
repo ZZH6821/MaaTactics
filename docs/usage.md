@@ -78,9 +78,28 @@ uv run --locked python tools/capture_device.py --config configs/mumu.local.toml 
 
 连接成功后，将快速开始的客户端参数末尾从 `--mock` 改为 `"--config", "configs/mumu.local.toml"`。实机调用使用 `device_profile` 为 `mumu`。建议 MCP 客户端读超时至少 40 秒，冷启动时要加载识别模型。
 
+### 开始唤醒
+
+在设备的本机配置中添加 `[devices.mumu.startup]`，按实际游戏渠道设置 `client_type`。可选值为 `Official`、`Bilibili`、`txwy`、`YoStarEN`、`YoStarJP` 和 `YoStarKR`。外服唤醒需要完整 MAA 安装中的对应渠道资源。`battle-v1` 的战斗资源仍以已配置的国服关卡为准。
+
+```toml
+[devices.mumu.startup]
+client_type = 'Official'
+emulator_path = 'C:\path\to\MuMu Player 12\nx_main\mumu-cli.exe'
+emulator_args = ['control', '-v', '0', 'launch']
+```
+
+- `emulator_path` 和 `emulator_args` 用于设备离线时启动模拟器。示例选择 MuMu 12 的第 0 个实例，实例编号和设备配置中的 ADB 地址须对应。设备已运行时可以省略这两项。
+- `start_game_enabled` 默认为 `true`，由 MaaCore 打开客户端。设为 `false` 时，从已打开的客户端继续唤醒。可用 `account_name` 指定 MAA 已保存的登录账号，省略时沿用当前账号。如同时使用干员识别，请让 `roster_account` 对应该账号。
+- 设备使用 `battle-v1` 时，在启动配置中额外设置 `runtime_root` 和 `expected_sha256`，分别指向完整 MAA 安装目录和该安装的探针报告中的 `library_sha256`。唤醒使用单独的完整 MaaCore 进程，后续操作沿用设备配置里的 `battle-v1` 会话。设备使用完整 MaaCore 时，可以复用现有运行时。
+
+调用 `start_game`，传入 `device_profile` 和唯一的 `request_id`。工具会在需要时启动模拟器、等待 Android 就绪、执行 MAA `StartUp` 并识别游戏首页。用回执中的 `session_id` 和 `operation_id` 调用 `get_operation`。完成回执中的 `home_verified=true` 表示已识别首页，`result.epoch` 可用于后续截图或绑定关卡。已有同配置的空闲会话会被复用，并清除之前的战斗上下文。默认超时 5 分钟，可用 `timeout_ms` 覆盖，或用 `cancel_operation` 停止此次唤醒。
+
+已在 Windows x64、MuMu 12、国服和完整 MaaCore v6.23.1 上验收。`battle-v1` 配合完整 MaaCore 从关机的模拟器进入首页，完整 MaaCore 也通过了已运行设备的唤醒验证。两种配置均验证了唤醒后截图、绑定 1-7 和同会话再次唤醒时重置战斗上下文。六个客户端的资源加载及 `StartUp` 入队均通过无设备检查。
+
 ## MCP 会话操作
 
-1. 调用 `connect_device`，传入 `device_profile` 和唯一的 `request_id`。用回执中的 `session_id`、`operation_id` 调用 `get_operation`，等到 `lifecycle` 为 `completed`。
+1. 对已运行的设备调用 `connect_device`，或用 `start_game` 唤醒游戏。传入 `device_profile` 和唯一的 `request_id`。用回执中的 `session_id`、`operation_id` 调用 `get_operation`，等到 `lifecycle` 为 `completed`。
 2. 调用 `set_stage`，用 `get_session_status` 获得当前 epoch，实机普通 1-7 使用精确的 `stage_name` 值 `main_01-07`。作业或动作继续使用完成回执里的最新 epoch。`set_stage` 只绑定坐标，进入演习编队需要在游戏界面操作。
 3. 调用 `get_screenshot` 或 `get_battle_state` 查看战场。截图可读取 Image Content 或回执中的 `image_uri`，识别字段可能为 `unknown`。
 4. 已进入匹配的演习编队时，可调用 `start_battle`，默认在识别到普通战斗 HUD 后暂停。继续使用 `resume_battle` 后再发战术操作。动作使用当前 `session_id`、epoch、新 `request_id` 和 5 秒以内的 `expected_snapshot_id`。截图过期时重新观察。开始战斗或上下文重置后重新读取 epoch。

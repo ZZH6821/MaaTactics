@@ -34,7 +34,16 @@ TACTICAL = {"deploy_operator", "retreat_operator", "use_skill"}
 PAUSE_CONTROL = {"pause_battle", "resume_battle"}
 GAME_CONTROL = PAUSE_CONTROL | {"start_battle", "set_battle_speed"}
 HYBRID_HANDOFF = {"pause_copilot", "resume_copilot"}
-MAY_INPUT = TACTICAL | GAME_CONTROL | HYBRID_HANDOFF | {"start_copilot", "scan_operator_roster"}
+MAY_INPUT = (
+    TACTICAL
+    | GAME_CONTROL
+    | HYBRID_HANDOFF
+    | {
+        "start_copilot",
+        "scan_operator_roster",
+        "start_game",
+    }
+)
 
 
 def request_fingerprint(kind: str, args: dict) -> str:
@@ -131,6 +140,8 @@ class TacticsService(HybridSupport):
         args: dict,
         timeout_ms: int,
         work: Callable[[Operation], Awaitable[dict]],
+        *,
+        opening: bool = False,
     ) -> dict:
         if len(session.operations) >= 1000:
             raise TacticsError(
@@ -144,10 +155,10 @@ class TacticsService(HybridSupport):
                 operation.operation_id,
             )
         session.active_operation_id = operation.operation_id
-        if kind != "connect_device":
+        if not opening:
             session.status = "executing"
         self.tasks[operation.operation_id] = asyncio.create_task(
-            self._run(session, operation, work)
+            self._run(session, operation, work, opening=opening)
         )
         return operation.public()
 
@@ -176,7 +187,12 @@ class TacticsService(HybridSupport):
         self._invalidate(session)
 
     async def _run(
-        self, session: Session, operation: Operation, work: Callable[[Operation], Awaitable[dict]]
+        self,
+        session: Session,
+        operation: Operation,
+        work: Callable[[Operation], Awaitable[dict]],
+        *,
+        opening: bool = False,
     ) -> None:
         operation.lifecycle = "running"
         try:
@@ -190,7 +206,7 @@ class TacticsService(HybridSupport):
             operation.input_execution = result.get("input_execution", "unknown")
             operation.game_effect = (
                 result.get("game_effect", "unknown")
-                if operation.kind in GAME_CONTROL | HYBRID_HANDOFF
+                if operation.kind in GAME_CONTROL | HYBRID_HANDOFF | {"start_game"}
                 else "unknown"
             )
             operation.lifecycle = "completed"
@@ -246,6 +262,10 @@ class TacticsService(HybridSupport):
                 if failure.details.get("hybrid"):
                     operation.result["hybrid"] = failure.details["hybrid"]
         finally:
+            failed_to_open = opening and operation.lifecycle != "completed"
+            if failed_to_open:
+                session.connected = False
+                session.status = "faulted"
             if operation.kind == "start_copilot":
                 chain_outcome = operation.result.get("progress", {}).get(
                     "native_chain_outcome", "unknown"
@@ -266,10 +286,8 @@ class TacticsService(HybridSupport):
                 session.active_operation_id = hybrid.run_id
             if session.status == "executing" and session.active_operation_id is None:
                 session.status = "ready" if session.stage else "connected"
-            if operation.kind == "connect_device" and operation.lifecycle != "completed":
+            if failed_to_open:
                 await self.backends[session.session_id].close()
-                session.connected = False
-                session.status = "faulted"
 
     async def call(self, kind: str, args: dict[str, Any]) -> dict[str, Any]:
         if self._closing:
@@ -277,8 +295,8 @@ class TacticsService(HybridSupport):
         self._prune()
         if kind in {"pause_copilot", "revise_copilot", "resume_copilot"}:
             return await self._hybrid_tool(kind, args)
-        if kind == "connect_device":
-            return self._connect(args)
+        if kind in {"connect_device", "start_game"}:
+            return self._connect(kind, args)
         if kind == "get_session_status":
             self._rate("status", 10)
             sid = args.get("session_id", self.current_session_id)
@@ -695,38 +713,65 @@ class TacticsService(HybridSupport):
 
         return self._new_operation(session, kind, args, args.get("timeout_ms", 10000), execute)
 
-    def _connect(self, args: dict) -> dict:
-        if args["device_profile"] not in self.profiles:
+    def _connect(self, kind: str, args: dict) -> dict:
+        profile_name = args["device_profile"]
+        if profile_name not in self.profiles:
             raise TacticsError("PROFILE_UNKNOWN", "Use a configured local device profile")
+        profile = self.profiles[profile_name]
+        opening = True
         if self.current_session_id:
-            previous = self.sessions[self.current_session_id]
-            duplicate = self._duplicate(previous, "connect_device", args)
+            session = self.sessions[self.current_session_id]
+            duplicate = self._duplicate(session, kind, args)
             if duplicate:
                 return duplicate
-            if previous.status != "closed":
-                raise TacticsError("BUSY", "Disconnect the current session first")
-        session = Session(
-            args["device_profile"],
-            roster_account=self.profiles[args["device_profile"]].get("roster_account")
-            if self.rosters is not None
-            else None,
-        )
-        self.sessions[session.session_id] = session
-        self.backends[session.session_id] = self.backend_factory()
-        self.current_session_id = session.session_id
+            if session.status != "closed":
+                if kind != "start_game" or session.device_profile != profile_name:
+                    raise TacticsError("BUSY", "Disconnect the current session first")
+                self._idle(session)
+                hybrid = self.hybrid_runs.get(session.session_id)
+                if hybrid and hybrid.active:
+                    raise TacticsError(
+                        "CHECKPOINT_ACTIVE", "Stop the hybrid run before waking the game"
+                    )
+                if not session.runtime_fingerprint.get("game_startup", False):
+                    raise TacticsError(
+                        "CAPABILITY_UNSUPPORTED", "Configure game startup for this runtime"
+                    )
+                opening = False
+        if opening:
+            session = Session(
+                profile_name,
+                roster_account=profile.get("roster_account") if self.rosters is not None else None,
+            )
+            self.sessions[session.session_id] = session
+            self.backends[session.session_id] = self.backend_factory()
+            self.current_session_id = session.session_id
+        backend = self.backends[session.session_id]
 
         async def connect(operation: Operation) -> dict:
-            result = await self.backends[session.session_id].connect(
-                self.profiles[session.device_profile]
-            )
-            session.runtime_fingerprint = result
+            if opening:
+                if kind == "start_game":
+                    await backend.prepare_game_start(profile)
+                session.runtime_fingerprint = await backend.connect(profile)
+            result = session.runtime_fingerprint
+            if kind == "start_game":
+                result = await backend.start_game()
+                if not opening:
+                    await backend.stop()
+                    self._invalidate(session)
+                result = {**result, "epoch": session.epoch}
             session.connected = True
             session.last_health_check_at = utc_now()
             session.status = "connected"
             return result
 
         return self._new_operation(
-            session, "connect_device", args, args.get("timeout_ms", 30000), connect
+            session,
+            kind,
+            args,
+            args.get("timeout_ms", 300000 if kind == "start_game" else 30000),
+            connect,
+            opening=opening,
         )
 
     def _operation(self, session: Session, operation_id: str) -> Operation:

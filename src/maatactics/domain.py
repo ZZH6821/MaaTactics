@@ -158,6 +158,7 @@ class Session:
                 "automatic_game_effect_verification": False,
                 "game_pause": True,
                 "exercise_start": True,
+                "game_startup": self.runtime_fingerprint.get("game_startup", False),
                 "supported_state_fields": ["paused"]
                 + (
                     [

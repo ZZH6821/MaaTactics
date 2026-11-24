@@ -11,6 +11,7 @@ from typing import Any
 from maatactics.domain import TacticsError
 
 from .resources import MARKER, PROFILE, verify_battle_resources
+from .startup import CN_CLIENTS
 
 CALLBACK = (
     getattr(ctypes, "WINFUNCTYPE", ctypes.CFUNCTYPE)(
@@ -150,7 +151,15 @@ class MaaCoreABI:
         target = self.async_events if message == 4 else self.events
         target.put({"message": message, "details": payload})
 
-    def initialize(self, user_dir: Path, *, expected_resource_sha256: str | None = None) -> None:
+    def initialize(
+        self,
+        user_dir: Path,
+        *,
+        expected_resource_sha256: str | None = None,
+        startup_client_type: str | None = None,
+    ) -> None:
+        if startup_client_type and self.resource_profile != "full":
+            raise TacticsError("CAPABILITY_UNSUPPORTED", "StartUp requires a full MaaCore runtime")
         if self.resource_profile == PROFILE:
             try:
                 self.resource_manifest_sha256 = verify_battle_resources(
@@ -170,6 +179,14 @@ class MaaCoreABI:
             raise RuntimeError("AsstSetUserDir failed")
         if not self.lib.AsstLoadResource(str(self.resource_root).encode("utf-8")):
             raise RuntimeError("AsstLoadResource failed")
+        if startup_client_type and startup_client_type not in CN_CLIENTS:
+            overlay = self.resource_root / "resource" / "global" / startup_client_type
+            if not (overlay / "resource").is_dir() or not self.lib.AsstLoadResource(
+                str(overlay).encode("utf-8")
+            ):
+                raise TacticsError(
+                    "STARTUP_RESOURCES_UNAVAILABLE", "Could not load the client's MAA resources"
+                )
         self.handle = self.lib.AsstCreateEx(self._callback, None)
         if not self.handle:
             raise RuntimeError("AsstCreateEx returned a null handle")
