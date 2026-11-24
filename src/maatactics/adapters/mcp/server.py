@@ -26,6 +26,7 @@ from maatactics.roster import valid_account_key
 
 DESCRIPTIONS = {
     "connect_device": "Connect a configured device profile; returns an asynchronous operation receipt.",
+    "start_game": "Wake a configured device and run MAA StartUp to the Arknights home screen. Opens or reuses the device session and can switch to the locally configured account. Poll the operation for home verification and the current epoch.",
     "get_session_status": "Read cached session status and capabilities; this is not a game-state detector.",
     "disconnect_device": "Stop input and destroy the session worker; does not pause or abandon the game.",
     "get_screenshot": "Capture a fresh screenshot, or explicitly allow a recent cached frame. Returns image content.",
@@ -125,6 +126,7 @@ def create_server(service: TacticsService) -> Server:
                             "deploy_operator",
                             "retreat_operator",
                             "use_skill",
+                            "start_game",
                             "start_copilot",
                             "scan_operator_roster",
                         },

@@ -32,7 +32,8 @@ async def completed(client, receipt):
 
 def test_expanded_input_schemas_are_closed():
     schemas = input_schemas()
-    assert len(schemas) == 26
+    assert len(schemas) == 27
+    assert schemas["start_game"]["required"] == ["device_profile", "request_id"]
     assert schemas["deploy_operator"]["required"] == [
         "session_id",
         "epoch",

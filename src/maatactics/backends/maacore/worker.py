@@ -53,10 +53,11 @@ class NativeDriver:
             raise TacticsError(
                 "RESOURCE_UNVERIFIED", "Configure expected_resource_sha256 for battle-v1"
             )
-        if resource_pin:
-            self.api.initialize(user_dir, expected_resource_sha256=resource_pin)
-        else:
-            self.api.initialize(user_dir)
+        self.api.initialize(
+            user_dir,
+            expected_resource_sha256=resource_pin,
+            startup_client_type=profile.get("startup_client_type"),
+        )
         for key, value in ((2, profile.get("touch_mode", "maatouch")), (5, "0"), (3, "0")):
             if not self.api.lib.AsstSetInstanceOption(self.api.handle, key, value.encode()):
                 raise TacticsError("NATIVE_REJECTED", f"Instance option {key} was rejected")
@@ -187,6 +188,25 @@ class NativeDriver:
             self.api.reset_battle(stage)
         return self._run_task("Custom", {"task_names": ["BattleStartExercise"]})
 
+    def start_game(self, params: dict) -> dict:
+        if self.api.resource_profile != "full":
+            raise TacticsError("CAPABILITY_UNSUPPORTED", "StartUp requires a full MaaCore runtime")
+        result = self._run_task("StartUp", params)
+        self._require_screen(
+            "Home",
+            "Home",
+            "StartUp completed without reaching the game home screen",
+            error_code="GAME_HOME_UNVERIFIED",
+            effect_may_have_occurred=True,
+        )
+        return {
+            "native_task_id": result["native_task_id"],
+            "native_task_outcome": result["native_task_outcome"],
+            "game_effect": "verified",
+            "home_verified": True,
+            "client_type": params["client_type"],
+        }
+
     def execute_copilot(
         self, document: dict, formation: bool, on_event, hybrid: bool = False
     ) -> dict:
@@ -221,9 +241,9 @@ class NativeDriver:
     def scan_operator_roster(self) -> dict:
         if self.api.resource_profile != "full":
             raise TacticsError("CAPABILITY_UNSUPPORTED", "OperBox requires a full MaaCore runtime")
-        self._require_roster_screen("Home", "Home", "Open the game home screen before scanning")
+        self._require_screen("Home", "Home", "Open the game home screen before scanning")
         # OperBox itself ignores navigation failure, so check the list before it can swipe.
-        self._require_roster_screen(
+        self._require_screen(
             "OperBox",
             "OperBoxRoleTab",
             "Could not open the unfiltered operator list from the game home screen",
@@ -258,8 +278,14 @@ class NativeDriver:
             ) from error
         return {"native_task_outcome": result["native_task_outcome"], "operators": operators}
 
-    def _require_roster_screen(
-        self, task: str, marker: str, message: str, *, effect_may_have_occurred: bool = False
+    def _require_screen(
+        self,
+        task: str,
+        marker: str,
+        message: str,
+        *,
+        error_code: str = "ROSTER_SCAN_PRECONDITION",
+        effect_may_have_occurred: bool = False,
     ) -> None:
         try:
             result = self._run_task("Custom", {"task_names": [task]})
@@ -277,7 +303,7 @@ class NativeDriver:
                 return
             details = {"native_task_outcome": result["native_task_outcome"]}
         raise TacticsError(
-            "ROSTER_SCAN_PRECONDITION",
+            error_code,
             message,
             effect_may_have_occurred=effect_may_have_occurred,
             details=details,
@@ -397,6 +423,8 @@ def _serve(connection, directory: Path) -> None:
                     value = driver.toggle_battle_speed(arguments["target"])
                 elif command == "start_battle":
                     value = driver.start_battle()
+                elif command == "start_game":
+                    value = driver.start_game(arguments)
                 elif command == "scan_operator_roster":
                     value = driver.scan_operator_roster()
                 elif command == "execute_copilot":

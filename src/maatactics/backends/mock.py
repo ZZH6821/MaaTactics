@@ -48,6 +48,7 @@ class MockBackend:
             "backend": "mock",
             "version": "fixture-1",
             "provenance": "generated_fixture",
+            "game_startup": True,
             "battle_abi_version": 1 if self.native_extensions else 0,
             "hybrid_abi_version": 1 if self.native_extensions else 0,
             "battle_features": [
@@ -59,6 +60,19 @@ class MockBackend:
             ]
             if self.native_extensions
             else [],
+        }
+
+    async def prepare_game_start(self, profile: dict[str, Any]) -> None:
+        await asyncio.sleep(self.delay)
+
+    async def start_game(self) -> dict[str, Any]:
+        await asyncio.sleep(self.delay)
+        self.in_battle = False
+        self.paused = False
+        return {
+            "native_task_outcome": "completed",
+            "game_effect": "verified",
+            "home_verified": True,
         }
 
     async def capture(self) -> bytes:

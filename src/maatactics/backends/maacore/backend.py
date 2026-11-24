@@ -9,6 +9,7 @@ from typing import Any
 from maatactics.domain import TacticsError, new_id
 
 from .copilot_validation import check_runtime, validate_isolated
+from .startup import CN_CLIENTS, startup_settings, startup_worker_profile, wait_for_device
 from .worker import worker_main
 
 
@@ -21,6 +22,7 @@ class MaaCoreBackend:
         self.progress_handlers: dict = {}
         self.profile: dict = {}
         self.battle_abi_version = 0
+        self.resource_profile = None
         self._loop = None
         self._reader = None
         self._closed = False
@@ -46,6 +48,13 @@ class MaaCoreBackend:
         self._reader.start()
         result = await self._rpc("initialize", dict(profile))
         self.battle_abi_version = result.get("battle_abi_version", 0)
+        self.resource_profile = result.get("resource_profile")
+        settings = profile.get("startup", {})
+        result["game_startup"] = (
+            isinstance(settings, dict)
+            and bool(settings)
+            and (self.resource_profile == "full" or "runtime_root" in settings)
+        )
         return result
 
     def _receive(self) -> None:
@@ -138,6 +147,39 @@ class MaaCoreBackend:
 
     async def start_battle(self) -> dict:
         return await self._rpc("start_battle")
+
+    async def prepare_game_start(self, profile: dict) -> None:
+        settings = startup_settings(profile)
+        check_runtime(profile)
+        if profile.get("expected_resource_sha256") and "runtime_root" not in settings:
+            raise TacticsError(
+                "CAPABILITY_UNSUPPORTED", "Configure a full startup runtime for battle-v1"
+            )
+        if "runtime_root" in settings:
+            check_runtime(startup_worker_profile(profile, settings))
+        await wait_for_device(profile, settings)
+
+    async def start_game(self) -> dict:
+        settings = startup_settings(self.profile)
+        client_type = settings["client_type"]
+        params = {
+            "client_type": client_type,
+            "start_game_enabled": settings.get("start_game_enabled", True),
+        }
+        if "account_name" in settings:
+            params["account_name"] = settings["account_name"]
+        if self.resource_profile != "full" and "runtime_root" not in settings:
+            raise TacticsError(
+                "CAPABILITY_UNSUPPORTED", "Configure a full startup runtime for battle-v1"
+            )
+        if "runtime_root" not in settings and client_type in CN_CLIENTS:
+            return await self._rpc("start_game", params)
+        startup = MaaCoreBackend(self.data_root)
+        try:
+            await startup.connect(startup_worker_profile(self.profile, settings))
+            return await startup._rpc("start_game", params)
+        finally:
+            await startup.close()
 
     async def scan_operator_roster(self) -> dict:
         return await self._rpc("scan_operator_roster")

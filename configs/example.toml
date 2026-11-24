@@ -14,3 +14,15 @@ expected_sha256 = 'REPLACE_WITH_PROBE_LIBRARY_SHA256'
 # For the battle-v1 library, use the values printed by prepare_battle_resources.py.
 # resource_root = 'PATH_TO_BATTLE_PROFILE'
 # expected_resource_sha256 = 'REPLACE_WITH_PROFILE_MANIFEST_SHA256'
+
+# Opt in to the start_game MCP tool for this device.
+# [devices.mumu.startup]
+# client_type = 'Official'
+# start_game_enabled = true
+# account_name = '123****4567'
+# For a stopped MuMu 12 instance, adjust the executable and instance index.
+# emulator_path = 'C:\path\to\MuMu Player 12\nx_main\mumu-cli.exe'
+# emulator_args = ['control', '-v', '0', 'launch']
+# With battle-v1, supply a complete MAA installation and its probe SHA-256.
+# runtime_root = 'C:\path\to\MAA'
+# expected_sha256 = 'REPLACE_WITH_FULL_MAACORE_PROBE_SHA256'
